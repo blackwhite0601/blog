@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>UVA11105 H-半素数 Semi-prime H-numbers | 黑_白 的博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://https://blackwhite0601.github.io/favicon.ico?v=1633154390746">
+<link rel="stylesheet" href="https://https://blackwhite0601.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="这题用到了同余的结论
+我们可以用筛选法判断H数是否是H-素数
+模拟样例可以发现，如果数 iii 为H-素数，则 4∗i∗x+5∗i4*i*x+ 5*i4∗i∗x+5∗i 一定不是H-素数。所以可得出以下代码：
+#include&lt;bit..." />
+    <meta name="keywords" content="UVA" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://https://blackwhite0601.github.io">
+        <img src="https://https://blackwhite0601.github.io/images/avatar.png?v=1633154390746" class="site-logo">
+        <h1 class="site-title">黑_白 的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            文章
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      我永远喜欢珂朵莉
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://https://blackwhite0601.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">UVA11105 H-半素数 Semi-prime H-numbers</h2>
+            <div class="post-date">2021-10-02</div>
+            
+            <div class="post-content" v-pre>
+              <p>这题用到了同余的结论</p>
+<p>我们可以用筛选法判断H数是否是H-素数</p>
+<p>模拟样例可以发现，如果数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 为H-素数，则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mi>i</mi><mo>∗</mo><mi>x</mi><mo>+</mo><mn>5</mn><mo>∗</mo><mi>i</mi></mrow><annotation encoding="application/x-tex">4*i*x+ 5*i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 一定不是H-素数。所以可得出以下代码：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+bool hp[1000020],hsp[1000020];
+int hpr[1000020],sum[1000020],n,t;
+
+int main(){
+	for(int i=5;i&lt;1000020;i+=4){
+		if(hp[i])continue;//若i不是H-素数，则不讨论
+		hpr[++n]=i;
+		for(int j=i*5;j&lt;1000020;j+=i*4)hp[j]=1;
+	}
+	for(int i=1;i&lt;=n;i++)
+		for(int j=1;j&lt;=i&amp;&amp;hpr[i]*hpr[j]&lt;1000020;j++)
+			hsp[hpr[i]*hpr[j]]=1;//H-合成数
+	for(int i=1;i&lt;1000020;i++)sum[i]=sum[i-1]+hsp[i];//计算H-合成数的个数
+	while(1){
+		scanf(&quot;%d&quot;,&amp;t);
+		if(t==0)break;
+		printf(&quot;%d %d\n&quot;,t,sum[t]);
+	}
+	return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://https://blackwhite0601.github.io/tag/EMORrlbou/" class="tag">
+                    UVA
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://https://blackwhite0601.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/">
+                  <h3 class="post-title">
+                    图的几种存储方式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
