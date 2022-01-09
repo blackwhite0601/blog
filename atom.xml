@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-09T03:29:26.422Z</updated>
+    <updated>2022-01-09T10:51:55.706Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -11,38 +11,208 @@
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
     <entry>
-        <title type="html"><![CDATA[CF222B Cosmic Tables 题解]]></title>
+        <title type="html"><![CDATA[CSP-J2021 题解]]></title>
         <id>https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/</id>
         <link href="https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/">
         </link>
         <updated>2022-01-09T03:08:08.000Z</updated>
-        <content type="html"><![CDATA[<p>首先，这题的时间限制很大，但是暴力做法需要一些技巧，这里介绍的是更优的方法。</p>
-<p>我们看到这里一整行一整列的交换。每次交换可以只交换各行各列的标号即可。</p>
-<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示原标号为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>，现在为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-<p>同样的，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示原标号为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>，现在为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-<p>这样，原下表为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span> 的格子，现下标为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>x</mi><mi>a</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mi>b</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(x_a,y_b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</p>
-<p>代码：</p>
+        <content type="html"><![CDATA[<h2 id="分糖果">分糖果</h2>
+<h3 id="题意">题意</h3>
+<p>选择<code>L~R</code>中的某个数 ， 使得<code>x mod k</code>的结果最大。</p>
+<h3 id="思路">思路</h3>
+<p>分两种情况考虑：</p>
+<p>若 L 和 R 对 K 取模后在同一区间，则必然在 x=R 位置取到最大值；<br>
+否则 L~R 必然跨越多个区间，则取模后的结果必然有 k-1。<br>
+而对于是否在同一区间，在除以 k 后，商是否一致判断即可。</p>
+<h3 id="参考代码">参考代码</h3>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-#define N 1005
 using namespace std;
-int n,m,k,a[N][N];
-int x[N],y[N];
-int main(){
-    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
-    for(int i=1;i&lt;=n;i++)
-        for(int j=1;j&lt;=m;j++)
-            scanf(&quot;%d&quot;,&amp;a[i][j]);
-    for(int i=1;i&lt;=n;i++)x[i]=i;
-    for(int i=1;i&lt;=m;i++)y[i]=i;
-    for(int i=1;i&lt;=k;i++){
-        char t[5];
-        int X,Y;
-        scanf(&quot;%s%d%d&quot;,t,&amp;X,&amp;Y);
-        if(t[0]=='c')swap(y[X],y[Y]);
-    	else if(t[0]=='r')swap(x[X],x[Y]);
-        else printf(&quot;%d\n&quot;,a[x[X]][y[Y]]);
+typedef long long ll;
+int main() {
+  ll n, l, r;
+  cin &gt;&gt; n &gt;&gt; l &gt;&gt; r;
+  if (l / n != r / n) cout &lt;&lt; n - 1 &lt;&lt; endl;
+  else cout &lt;&lt; r % n &lt;&lt; endl;
+  return 0;
+}
+</code></pre>
+<h2 id="插入排序">插入排序</h2>
+<h3 id="题意-2">题意</h3>
+<p>给定长度为 n 的整数序列 ，有 Q 种操作：</p>
+<p>1：x v 修改序列 a 中的第 x 个元素 <code>a[x]</code> 为 v ，该操作次数不超过5000次；<br>
+2：x 将数组进行稳定排序，求原先第 x 个元素排序后的位置。</p>
+<h3 id="思路-2">思路</h3>
+<p>不如维护将原先所有的 a 排序后的升序数组。对于所有操作，我们需要维护原位置到有序数组中的映射。</p>
+<p>对于 1 操作，找到 <code>a[x]</code> 对应位置，显然修改值将使其往前或往后。联系到题目中提示的插入排序，可以不断向前/向后比较。注意同时维护映射关系。<br>
+对于 2 操作，直接输出映射即可。<br>
+注：如果该题中的数组长度更长、操作次数更多，我们可使用平衡树来解决该题。</p>
+<h3 id="参考代码-2">参考代码</h3>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef pair&lt;int, int&gt; pii;
+const int N = 8e3+5;
+int a[N];
+pii p[N];
+
+int main() {
+  ios::sync_with_stdio(false);
+  int n, q; cin &gt;&gt; n &gt;&gt; q;
+  for (int i = 1; i &lt;= n; i++) {
+    cin &gt;&gt; a[i];
+    p[i] = {a[i], i};
+  }
+  sort(p + 1, p + 1 + n);
+  for (int i = 1; i &lt;= n; i++) a[p[i].second] = i;
+  for (int i = 0, op, x, v; i &lt; q; i++) {
+    cin &gt;&gt; op; 
+    // 5000 * 8000 = 4e7
+    if (op == 1) {
+      cin &gt;&gt; x &gt;&gt; v;
+      int pos = a[x];
+      p[pos].first = v;
+      while (pos &gt; 1 &amp;&amp; p[pos] &lt; p[pos - 1]) {
+        swap(a[p[pos].second], a[p[pos - 1].second]);
+        swap(p[pos], p[pos - 1]);
+        pos--;
+      } 
+      while (pos &lt; n &amp;&amp; p[pos] &gt; p[pos + 1]) {
+        swap(a[p[pos].second], a[p[pos + 1].second]);
+        swap(p[pos], p[pos + 1]);
+        pos++;
+      }
+    } else {
+      cin &gt;&gt; x;
+      cout &lt;&lt; a[x] &lt;&lt; endl;
     }
-    return 0;
+  }
+  return 0;
+}
+</code></pre>
+<h2 id="网络连接">网络连接</h2>
+<h3 id="题意-3">题意</h3>
+<p>解析带端口的IP地址串，按服务器和客户端角色判断连接情况。</p>
+<h3 id="思路-3">思路</h3>
+<p>若将带端口的IP地址串记为 a.b.c.d:e，则需要检查的项目有：</p>
+<ul>
+<li>有三个点号和一个冒号分隔字符串，且冒号出现在最后；</li>
+<li>a,b,c,d,e均不为空，且不含有前导零；</li>
+</ul>
+<p>可将对字符串的解析抽象为函数，简化代码逻辑。</p>
+<h3 id="参考代码-3">参考代码</h3>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+map&lt;string, int&gt; dict;
+const int IP = 256;
+const int PORT = 65536;
+
+bool check(string s, int limit) {
+  // &quot;.0.0.1:80&quot; -&gt; &quot;&quot;
+  if (s.empty()) return false;
+  // &quot;0127.0.0.1:80&quot; -&gt; &quot;0127&quot;
+  if (s[0] == '0' &amp;&amp; s.size() &gt; 1) return false;
+  int val = 0;
+  for (int i = 0; i &lt; s.size(); i++) {
+    val = val * 10 + s[i] - '0'; 
+    if (val &gt;= limit) return false;
+  }
+  return true;
+}
+
+bool parse(string ip) {
+  string s = &quot;&quot;;
+  int dot_cnt = 0, port_cnt = 0;
+  for (int i = 0; i &lt; ip.size(); i++) {
+    if (ip[i] == '.') dot_cnt += 1;
+    if (ip[i] == ':') {
+      if (dot_cnt != 3) return false;
+      port_cnt += 1;
+    }
+    if (!isdigit(ip[i])) {
+      if (!check(s, IP)) return false;
+      s = &quot;&quot;;
+    } else s += ip[i];
+  }
+  return check(s, PORT) &amp;&amp; dot_cnt == 3 &amp;&amp; port_cnt == 1;
+}
+
+void process_server(string ip, int id) {
+  bool valid = parse(ip);
+  if (!valid) {cout &lt;&lt; &quot;ERR&quot; &lt;&lt; endl; return;}
+  if (dict.count(ip)) {cout &lt;&lt; &quot;FAIL&quot; &lt;&lt; endl; return;}
+  dict[ip] = id;
+  cout &lt;&lt; &quot;OK&quot; &lt;&lt; endl;
+}
+
+void process_client(string ip) {
+  bool valid = parse(ip);
+  if (!valid) {cout &lt;&lt; &quot;ERR&quot; &lt;&lt; endl; return;}
+  if (!dict.count(ip)) {cout &lt;&lt; &quot;FAIL&quot; &lt;&lt; endl; return;}
+  cout &lt;&lt; dict[ip] &lt;&lt; endl;
+}
+
+int main() {
+  ios::sync_with_stdio(false);
+  int n; cin &gt;&gt; n;
+  for (int i = 1; i &lt;= n; i++) {
+    string name, ip;
+    cin &gt;&gt; name &gt;&gt; ip;
+    if (name[0] == 'S') process_server(ip, i);
+    else process_client(ip);
+  }
+  return 0;
+}
+</code></pre>
+<h2 id="小熊的果篮">小熊的果篮</h2>
+<h3 id="题意-4">题意</h3>
+<p>有两类共 n 个水果拍成一排，称连续的排在一起的同一种水果称为“块”。</p>
+<p>每次将每一个“块”中最左边的水果同时挑出。重复该操作直至水果用完。</p>
+<p>每次水果被挑出后“块”会发生动态变化。</p>
+<h3 id="思路-4">思路</h3>
+<p>尝试建模每个块，使用块头来表示每个块的开始位置，即第一个元素或与上一个元素类型不同的位置。</p>
+<p>每个元素之间使用双向链表相连接。</p>
+<p>对于每次输出选出的元素，我们只需要依次输出块头元素，并从双向链表中删除该元素。</p>
+<p>当块头元素输出后，需要更新块头列表。<br>
+考虑在原块头位置的下一个元素，只有当：</p>
+<ul>
+<li>该下一个元素与原块头位置的上一个元素类型不同；</li>
+<li>该下一个元素不是原块头。</li>
+</ul>
+<p>则能够成为新的块头位置。</p>
+<h3 id="参考代码-4">参考代码</h3>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 2e5+5;
+struct Node {
+  int pre, nxt, v;
+}a[N];
+vector&lt;int&gt; head, nxt_head;
+
+int main() {
+  ios::sync_with_stdio(false);
+  int n; cin &gt;&gt; n;
+  a[0].v = a[n + 1].v = -1;
+  a[0].nxt = 1;
+  a[n + 1].pre = n;
+  for (int i = 1; i &lt;= n; i++) {
+    cin &gt;&gt; a[i].v;
+    a[i].pre = i - 1;
+    a[i].nxt = i + 1;
+    if (a[i].v != a[i - 1].v) head.push_back(i);
+  }
+  while(head.size()) {
+    nxt_head.clear();
+    for (int id : head) {
+      cout &lt;&lt; id &lt;&lt; &quot; &quot;;
+      Node&amp; node = a[id];
+      a[node.pre].nxt = node.nxt;
+      a[node.nxt].pre = node.pre;
+      if (node.v == a[node.nxt].v &amp;&amp; node.v != a[node.pre].v)
+        nxt_head.push_back(node.nxt);
+    }
+    cout &lt;&lt; endl;
+    swap(head, nxt_head);
+  }
+  return 0;
 }
 </code></pre>
 ]]></content>
