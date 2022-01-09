@@ -1,59 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://yydcc-blog.github.io/</id>
-    <title>永远的CC的博客</title>
-    <updated>2022-01-09T03:13:43.731Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://yydcc-blog.github.io/"/>
-    <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
-    <subtitle>永远的CC，永远为你</subtitle>
-    <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
-    <icon>https://yydcc-blog.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2022, 永远的CC的博客</rights>
-    <entry>
-        <title type="html"><![CDATA[CF222B Cosmic Tables 题解]]></title>
-        <id>https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/</id>
-        <link href="https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/">
-        </link>
-        <updated>2022-01-09T03:08:08.000Z</updated>
-        <content type="html"><![CDATA[<p>首先，这题的时间限制很大，但是暴力做法需要一些技巧，这里介绍的是更优的方法。</p>
-<p>我们看到这里一整行一整列的交换。每次交换可以只交换各行各列的标号即可。</p>
-<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示原标号为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>，现在为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-<p>同样的，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示原标号为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>，现在为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。</p>
-<p>这样，原下表为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span> 的格子，现下标为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>x</mi><mi>a</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mi>b</mi></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(x_a,y_b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</p>
-<p>代码：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-#define N 1005
-using namespace std;
-int n,m,k,a[N][N];
-int x[N],y[N];
-int main(){
-    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
-    for(int i=1;i&lt;=n;i++)
-        for(int j=1;j&lt;=m;j++)
-            scanf(&quot;%d&quot;,&amp;a[i][j]);
-    for(int i=1;i&lt;=n;i++)x[i]=i;
-    for(int i=1;i&lt;=m;i++)y[i]=i;
-    for(int i=1;i&lt;=k;i++){
-        char t[5];
-        int X,Y;
-        scanf(&quot;%s%d%d&quot;,t,&amp;X,&amp;Y);
-        if(t[0]=='c')swap(y[X],y[Y]);
-    	else if(t[0]=='r')swap(x[X],x[Y]);
-        else printf(&quot;%d\n&quot;,a[x[X]][y[Y]]);
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[树形DP总结]]></title>
-        <id>https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/</id>
-        <link href="https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/">
-        </link>
-        <updated>2022-01-09T03:04:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="part-0-前言">Part 0 前言</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>树形DP总结 | 永远的CC的博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://yydcc-blog.github.io//favicon.ico?v=1641698021965">
+<link rel="stylesheet" href="https://yydcc-blog.github.io//styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Part 0 前言
+刚学完了树形DP，是时候来总结一下了！😀
+Part 1 基础部分
+树形DP就是在树上的DP。
+这里先放一下遍历树的模板：
+void dfs(int u,int fa){
+	for(int i=head[u];i;i=n..." />
+    <meta name="keywords" content="C++" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://yydcc-blog.github.io/">
+        <img src="https://yydcc-blog.github.io//images/avatar.png?v=1641698021965" class="site-logo">
+        <h1 class="site-title">永远的CC的博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            文章
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/tui-jian" class="site-nav">
+            推荐网站
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      永远的CC，永远为你
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://yydcc-blog.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">树形DP总结</h2>
+            <div class="post-date">2022-01-09</div>
+            
+              <div class="feature-container" style="background-image: url('http://cdn-ali-img-shstaticbz.shanhutech.cn/bizhi/staticwp/202102/019f1a507aa46177d9ae69f54d1ae451--684241431.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="part-0-前言">Part 0 前言</h1>
 <p>刚学完了树形DP，是时候来总结一下了！😀</p>
 <h1 id="part-1-基础部分">Part 1 基础部分</h1>
 <p>树形DP就是在树上的DP。</p>
@@ -304,86 +360,54 @@ int main() {
 	return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[图的几种存储方式]]></title>
-        <id>https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/</id>
-        <link href="https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/">
-        </link>
-        <updated>2022-01-09T02:24:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="1邻接矩阵">1.邻接矩阵</h1>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20190128175511539.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzcyMTQyMw==,size_16,color_FFFFFF,t_70" alt="" loading="lazy"></figure>
-<p>邻接矩阵是表示顶点之间相邻关系的矩阵。</p>
-<p>例如：用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>不为0时表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>有一条边（也可以用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>不为0时表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>有一条长度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>的边）</p>
-<h3 id="实现">实现：</h3>
-<pre><code>int x,y,z;//无向图带权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;z);
-mp[x][y]=z;
-mp[y][x]=z;
 
-int x,y,z;//有向图带权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;z);
-mp[x][y]=z;
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://yydcc-blog.github.io/tag/6CprhTvCM/" class="tag">
+                    C++
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/">
+                  <h3 class="post-title">
+                    图的几种存储方式
+                  </h3>
+                </a>
+              </div>
+            
 
-int x,y;//无向图无权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y);
-mp[x][y]=1;
-mp[y][x]=1;
+            
 
-int x,y;//有向图无权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y);
-mp[x][y]=1;
-</code></pre>
-<h3 id="邻接矩阵的好处">邻接矩阵的好处：</h3>
-<p>1.直观、简单、好理解</p>
-<p>2.方便检查任意一对定点间是否存在边</p>
-<p>3.方便找任一顶点的所有“邻接点”（有边直接相连的顶点）</p>
-<p>4.方便计算任一顶点的度</p>
-<p>对于无向图，邻接矩阵的第i行（或第i列）非零元素（或非∞元素）的个数正好是第i个顶点的度。</p>
-<p>对于有向图，邻接矩阵的第i行（或第i列）非零元素（或非∞元素）的个数正好是第i个顶点的出度（或入度）。</p>
-<h3 id="邻接矩阵的缺点">邻接矩阵的缺点：</h3>
-<p>1.浪费空间（特别是在稀疏图中，有大量空余空间）</p>
-<p>2.浪费时间（要确定图中有多少条边，则必须按行、按列对每个元素进行检测，所花费的时间代价很大。）</p>
-<p>所以我们需要下面这两个：</p>
-<h1 id="2邻接表">2.邻接表</h1>
-<p>图的邻接表存储方法是一种顺序分配与链式分配相结合的存储方法。</p>
-<p>在邻接表中，对图中每个顶点建立一个单链表，第i个单链表中的节点表示依附于顶点i的边（对有向图是以顶点i为尾的边）。每个单链表上附设一个表头节点。</p>
-<p>邻接表的特点如下：</p>
-<p>1.邻接表表示不唯一。这是因为在每个顶点对应的单链表中，各边节点的链接次序可以是任意的，取决于建立邻接表的算法以及边的输入次序。</p>
-<p>2.对于有n个顶点和e条边的无向图，其邻接表有n个顶点节点和2e个边节点。显然，在总的边数小于n(n-1)/2的情况下，邻接表比邻接矩阵要节省空间。</p>
-<p>3.对于无向图，邻接表的顶点i对应的第i个链表的边节点数目正好是顶点i的度。</p>
-<p>4.对于有向图，邻接表的顶点i对应的第i个链表的边节点数目仅仅是顶点i的出度。其入度为邻接表中所有adjvex域值为i的边节点数目。</p>
-<h1 id="3链式前向星">3.链式前向星</h1>
-<h3 id="1-结构">1. 结构</h3>
-<p>这里用两个东西：</p>
-<p>1 结构体数组edge存边，edge[i]表示第i条边,</p>
-<p>2 head[i]存以i为起点的第一条边(在edge中的下标)</p>
-<pre><code class="language-cpp">struct EDGE{
-	int next;   //下一条边的存储下标(默认0) 
-	int to;     //这条边的终点 
-	int w;      //权值 
-}edge[500010];
-</code></pre>
-<h3 id="2增边">2.增边</h3>
-<p>若以点i为起点的边新增了一条，在edge中的下标为j.</p>
-<p>那么edge[j].next=head[i];然后head[i]=j.</p>
-<p><strong>即每次新加的边作为第一条边，最后倒序遍历</strong></p>
-<pre><code class="language-cpp">
-void Add(int u, int v, int w) {  //起点u, 终点v, 权值w 
-	//cnt为边的计数，从1开始计 
-	edge[++cnt].next = head[u];
-	edge[cnt].w = w;
-	edge[cnt].to = v;
-	head[u] = cnt;    //第一条边为当前边 
-}
-</code></pre>
-<h3 id="3-遍历">3. 遍历</h3>
-<p>遍历以st为起点的边</p>
-<pre><code class="language-c++">for(int i=head[st]; i!=0; i=edge[i].next)
-</code></pre>
-<p>i开始为第一条边，每次指向下一条(以0为结束标志)  （若下标从0开始，next应初始化-1）</p>
-<h1 id="然后就没有然后了">然后就没有然后了...</h1>
-]]></content>
-    </entry>
-</feed>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
