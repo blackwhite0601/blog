@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-10T12:07:33.614Z</updated>
+    <updated>2022-01-11T12:27:31.036Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,58 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[你好！CSP-J-2021]]></title>
+        <id>https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/</id>
+        <link href="https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/">
+        </link>
+        <updated>2022-01-11T12:11:46.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="day-27">Day -27：</h3>
+<p>今年复赛终于进了，压线两分。</p>
+<p>我觉得只要进了就好，没别的要求。</p>
+<p>S组差亿点点QWQ。<br>
+<img src="https://xn--9zr.tk/kk" alt="" loading="lazy"></p>
+<hr>
+<h3 id="day-26">Day -26：</h3>
+<p>开始准备复赛。</p>
+<p>搞了一些网课什么的，模拟赛打一打。<s>鱼摸一摸</s></p>
+<hr>
+<h3 id="day-1-afternoon">Day -1 afternoon：</h3>
+<p>逃了学校的两堂课，直接出发去酒店。</p>
+<p>晚上大吃一顿然后看看防爆零事项什么的。</p>
+<p>总体来说准备很充分，剩下的看老天爷了。</p>
+<hr>
+<h3 id="day-1-night">Day -1 night：</h3>
+<p>杭州真的好热，晚上有睡没睡的。<br>
+<img src="https://xn--9zr.tk/kk" alt="" loading="lazy"></p>
+<hr>
+<h3 id="day-1-morning">Day 1 morning：</h3>
+<p>在酒店大堂吃了顿早餐就出发了。</p>
+<p>在门口遇见一堆大佬（wjz ghj yjy sk）</p>
+<p>进场时绕了好久，在考场外等了好久。</p>
+<hr>
+<h3 id="day-1-csp-j-2021">Day 1 CSP-J-2021：</h3>
+<p>今年出题人是真的良心。</p>
+<p>四道题三道模拟一道暴力。（bushi）</p>
+<p>T1就是一道数学题，模几个样例就想到做法了。</p>
+<p>然后我先做了T3，根据大样例找了好久的错。</p>
+<p>这时比赛已经过半了（T3 98行代码自愧不如）<br>
+<img src="https://xn--9zr.tk/kk" alt="" loading="lazy"></p>
+<p>T2读了好久的题，草稿纸都快写满了。</p>
+<p>突然发现好水然后测了大样例就去做T4了。</p>
+<p>T4链表写炸，最后用了个暴力。</p>
+<p>一开始直接用肉眼看大样例答案，后来想到可以用cmd的fc，但又不会改目录，就写了一个check来判断。</p>
+<hr>
+<h3 id="day-1-noon">Day 1 noon：</h3>
+<p>比完后在附近吃了饭，然后就退房返城。</p>
+<hr>
+<h3 id="day-n">Day n:</h3>
+<p>洛谷自测300+</p>
+<p>J组1=，满足了</p>
+<h2 id="再见csp-j-2021">再见！CSP-J-2021</h2>
+<h6 id="补充个人认为难度t4t2t3t1">补充：个人认为难度T4&gt;T2&gt;T3&gt;T1</h6>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[yorg.io 进阶攻略]]></title>
         <id>https://yydcc-blog.github.io/post/yorgio-jin-jie-gong-lue/</id>
