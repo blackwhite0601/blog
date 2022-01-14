@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-13T11:56:54.133Z</updated>
+    <updated>2022-01-14T13:11:34.958Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,119 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[匈牙利算法总结]]></title>
+        <id>https://yydcc-blog.github.io/post/xiong-ya-li-suan-fa-zong-jie/</id>
+        <link href="https://yydcc-blog.github.io/post/xiong-ya-li-suan-fa-zong-jie/">
+        </link>
+        <updated>2022-01-14T12:28:51.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="part-0前言">Part 0：前言</h3>
+<p>学了这个算法好多次了，是时候总结一下啦😆</p>
+<h3 id="part-1几个概念">Part 1：几个概念</h3>
+<ul>
+<li><strong>二分图</strong>：一类特殊的图，它可以被划分为两个部分，每个部分内的点互不相连。</li>
+<li><strong>最大匹配数</strong>：二分图中没有公共端点的边的数量的最大值。</li>
+<li><strong>最小点覆盖</strong>：我们想找到最少的一些点，使二分图所有的边都至少有一个端点在这些点之中。倒过来说就是，删除包含这些点的边，可以删掉所有边。</li>
+<li><strong>匈牙利算法</strong>：一种用来解决<strong>最大匹配数</strong>和<strong>最小点覆盖</strong>问题的算法。</li>
+</ul>
+<h3 id="part-2二分图最大匹配问题">Part 2：二分图最大匹配问题</h3>
+<figure data-type="image" tabindex="1"><img src="https://yydcc-blog.github.io//post-images/1642164375763.png" alt="" loading="lazy"></figure>
+<p>这里举例一个二分图，来模拟匹配的过程。</p>
+<p>很明显，这里的最大匹配是3。</p>
+<h4 id="匈牙利算法的过程模拟">匈牙利算法的过程模拟：</h4>
+<p>我们先暂时把1和2连在一起。</p>
+<p>现在3也可以和2连，这时我们返过去看和2相连的1。</p>
+<p>由于1只能和2连，所以3连不上2。</p>
+<p>那么3还有选择么？有，可以和6连。</p>
+<p>这时6只能和3连。</p>
+<p>再看4，和5连即可。</p>
+<p>这就是匈牙利算法的流程，至于具体实现，我们来看看代码：</p>
+<pre><code class="language-cpp">int M, N;            //M, N分别表示左、右侧集合的元素数量
+int Map[MAXM][MAXN]; //邻接矩阵存图
+int p[MAXN];         //记录当前右侧元素所对应的左侧元素
+bool vis[MAXN];      //记录右侧元素是否已被访问过
+bool match(int i){
+    for (int j = 1; j &lt;= N; ++j)
+        if (Map[i][j] &amp;&amp; !vis[j]){ //有边且未访问
+            vis[j] = true;                 //记录状态为访问过
+            if (p[j] == 0 || match(p[j])){ //如果暂无匹配，或者原来匹配的左侧元素可以找到新的匹配
+                p[j] = i;    //当前左侧元素成为当前右侧元素的新匹配
+                return true; //返回匹配成功
+            }
+        }
+    return false; //循环结束，仍未找到匹配，返回匹配失败
+}
+int Hungarian(){
+    int cnt = 0;
+    for (int i = 1; i &lt;= M; ++i){
+        memset(vis, 0, sizeof(vis)); //重置vis数组
+        if (match(i))
+            cnt++;
+    }
+    return cnt;
+}
+</code></pre>
+<p>通过算法我们可以发现，单次找边的过程是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span> 的，一共有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个点，所以总体复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(nm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>。</p>
+<p>（因为复杂度大，所以题目的限制一般较大，可以直接用邻接矩阵存储）</p>
+<h3 id="part-3二分图最小点覆盖问题">Part 3：二分图最小点覆盖问题</h3>
+<p>这里引入<strong>König定理</strong>：</p>
+<blockquote>
+<p>一个二分图中的最大匹配数等于这个图中的最小点覆盖数。</p>
+</blockquote>
+<p>直接解决。</p>
+<h3 id="part-4例题">Part 4：例题</h3>
+<p>这里只举例一题：<strong>洛谷 P1129 [ZJOI2007] 矩阵游戏</strong></p>
+<blockquote>
+<p>小 Q 是一个非常聪明的孩子，除了国际象棋，他还很喜欢玩一个电脑益智游戏――矩阵游戏。矩阵游戏在一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 黑白方阵进行（如同国际象棋一般，只是颜色是随意的）。每次可以对该矩阵进行两种操作：<br>
+行交换操作：选择矩阵的任意两行，交换这两行（即交换对应格子的颜色）。<br>
+列交换操作：选择矩阵的任意两列，交换这两列（即交换对应格子的颜色）。<br>
+游戏的目标，即通过若干次操作，使得方阵的主对角线(左上角到右下角的连线)上的格子均为黑色。<br>
+对于某些关卡，小 Q 百思不得其解，以致他开始怀疑这些关卡是不是根本就是无解的！于是小 Q 决定写一个程序来判断这些关卡是否有解。</p>
+</blockquote>
+<p>通过枚举样例，我们发现：任意2个黑色方块，如果它们初始状态时不在同一行（列），那么无论如何交换，它们都不会在同一行（列）。</p>
+<p>所以我们只需判断每一行是否都可以合法匹配即可。</p>
+<p>AC代码：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int mp[205][205],p[205],vis[205],n,T;
+bool match(int i){
+	for(int j=1;j&lt;=n;j++) {
+		if(mp[i][j]&amp;&amp;!vis[j]){
+			vis[j]=1;
+			if(!p[j]||match(p[j])) {
+				p[j]=i;
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+int Hungarian(){
+	int cnt=0;
+	for (int i=1;i&lt;=n;i++) {
+		memset(vis,0,sizeof(vis));
+		if (match(i))cnt++;
+	}
+	return cnt;
+}
+int main() {
+	scanf(&quot;%d&quot;,&amp;T);
+	while(T--){
+		scanf(&quot;%d&quot;,&amp;n);
+		memset(p,0,sizeof(p));
+		for(int i=1;i&lt;=n;i++)
+			for(int j=1;j&lt;=n;j++)
+				scanf(&quot;%d&quot;,&amp;mp[i][j]);
+		if(Hungarian()==n)puts(&quot;Yes&quot;);
+		else puts(&quot;No&quot;);
+	}
+	return 0;
+}
+</code></pre>
+<h3 id="part-5总结">Part 5：总结</h3>
+<p>匈牙利算法是一个比较基础的图论算法，思路较简单，一定要记牢啊😙</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[你好！CSP-J-2021]]></title>
         <id>https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/</id>

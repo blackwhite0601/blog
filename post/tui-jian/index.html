@@ -9,7 +9,7 @@
 <meta name="description" content="永远的CC，永远为你">
 <meta name="theme-color" content="#000">
 <title>推荐 | 永远的CC的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1642075008443">
+<link rel="shortcut icon" href="/favicon.ico?v=1642165891898">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -228,7 +228,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">5</span>
+        <span class="site-item-stat-count">6</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -357,7 +357,7 @@
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
       <span
-        >64<span class="pc-show language" data-lan="words"
+        >67<span class="pc-show language" data-lan="words"
           >字数</span
         ></span
       >
@@ -381,6 +381,7 @@
 <li>MC：<a href="https://classic.minecraft.net/">Classic MC</a></li>
 <li>UT牛逼：<a href="https://sans.nyaasu.top/">Sans Fight</a></li>
 <li>好玩：<a href="http://cav2.maougame.com/">卡牌冒险者</a></li>
+<li>画图：<a href="https://csacademy.com/app/graph_editor/">csacademy</a></li>
 </ul>
 
             </div>
@@ -903,6 +904,116 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/xiong-ya-li-suan-fa-zong-jie/"" data-c="
+          &lt;h3 id=&#34;part-0前言&#34;&gt;Part 0：前言&lt;/h3&gt;
+&lt;p&gt;学了这个算法好多次了，是时候总结一下啦😆&lt;/p&gt;
+&lt;h3 id=&#34;part-1几个概念&#34;&gt;Part 1：几个概念&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;二分图&lt;/strong&gt;：一类特殊的图，它可以被划分为两个部分，每个部分内的点互不相连。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最大匹配数&lt;/strong&gt;：二分图中没有公共端点的边的数量的最大值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最小点覆盖&lt;/strong&gt;：我们想找到最少的一些点，使二分图所有的边都至少有一个端点在这些点之中。倒过来说就是，删除包含这些点的边，可以删掉所有边。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;匈牙利算法&lt;/strong&gt;：一种用来解决&lt;strong&gt;最大匹配数&lt;/strong&gt;和&lt;strong&gt;最小点覆盖&lt;/strong&gt;问题的算法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;part-2二分图最大匹配问题&#34;&gt;Part 2：二分图最大匹配问题&lt;/h3&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://yydcc-blog.github.io//post-images/1642164375763.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;p&gt;这里举例一个二分图，来模拟匹配的过程。&lt;/p&gt;
+&lt;p&gt;很明显，这里的最大匹配是3。&lt;/p&gt;
+&lt;h4 id=&#34;匈牙利算法的过程模拟&#34;&gt;匈牙利算法的过程模拟：&lt;/h4&gt;
+&lt;p&gt;我们先暂时把1和2连在一起。&lt;/p&gt;
+&lt;p&gt;现在3也可以和2连，这时我们返过去看和2相连的1。&lt;/p&gt;
+&lt;p&gt;由于1只能和2连，所以3连不上2。&lt;/p&gt;
+&lt;p&gt;那么3还有选择么？有，可以和6连。&lt;/p&gt;
+&lt;p&gt;这时6只能和3连。&lt;/p&gt;
+&lt;p&gt;再看4，和5连即可。&lt;/p&gt;
+&lt;p&gt;这就是匈牙利算法的流程，至于具体实现，我们来看看代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int M, N;            //M, N分别表示左、右侧集合的元素数量
+int Map[MAXM][MAXN]; //邻接矩阵存图
+int p[MAXN];         //记录当前右侧元素所对应的左侧元素
+bool vis[MAXN];      //记录右侧元素是否已被访问过
+bool match(int i){
+    for (int j = 1; j &amp;lt;= N; ++j)
+        if (Map[i][j] &amp;amp;&amp;amp; !vis[j]){ //有边且未访问
+            vis[j] = true;                 //记录状态为访问过
+            if (p[j] == 0 || match(p[j])){ //如果暂无匹配，或者原来匹配的左侧元素可以找到新的匹配
+                p[j] = i;    //当前左侧元素成为当前右侧元素的新匹配
+                return true; //返回匹配成功
+            }
+        }
+    return false; //循环结束，仍未找到匹配，返回匹配失败
+}
+int Hungarian(){
+    int cnt = 0;
+    for (int i = 1; i &amp;lt;= M; ++i){
+        memset(vis, 0, sizeof(vis)); //重置vis数组
+        if (match(i))
+            cnt++;
+    }
+    return cnt;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过算法我们可以发现，单次找边的过程是 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;O(m)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 的，一共有 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 个点，所以总体复杂度为 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;O(nm)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;O&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;（因为复杂度大，所以题目的限制一般较大，可以直接用邻接矩阵存储）&lt;/p&gt;
+&lt;h3 id=&#34;part-3二分图最小点覆盖问题&#34;&gt;Part 3：二分图最小点覆盖问题&lt;/h3&gt;
+&lt;p&gt;这里引入&lt;strong&gt;König定理&lt;/strong&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一个二分图中的最大匹配数等于这个图中的最小点覆盖数。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;直接解决。&lt;/p&gt;
+&lt;h3 id=&#34;part-4例题&#34;&gt;Part 4：例题&lt;/h3&gt;
+&lt;p&gt;这里只举例一题：&lt;strong&gt;洛谷 P1129 [ZJOI2007] 矩阵游戏&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;小 Q 是一个非常聪明的孩子，除了国际象棋，他还很喜欢玩一个电脑益智游戏――矩阵游戏。矩阵游戏在一个 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;×&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;n \times n&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.66666em;vertical-align:-0.08333em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;×&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 黑白方阵进行（如同国际象棋一般，只是颜色是随意的）。每次可以对该矩阵进行两种操作：&lt;br&gt;
+行交换操作：选择矩阵的任意两行，交换这两行（即交换对应格子的颜色）。&lt;br&gt;
+列交换操作：选择矩阵的任意两列，交换这两列（即交换对应格子的颜色）。&lt;br&gt;
+游戏的目标，即通过若干次操作，使得方阵的主对角线(左上角到右下角的连线)上的格子均为黑色。&lt;br&gt;
+对于某些关卡，小 Q 百思不得其解，以致他开始怀疑这些关卡是不是根本就是无解的！于是小 Q 决定写一个程序来判断这些关卡是否有解。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;通过枚举样例，我们发现：任意2个黑色方块，如果它们初始状态时不在同一行（列），那么无论如何交换，它们都不会在同一行（列）。&lt;/p&gt;
+&lt;p&gt;所以我们只需判断每一行是否都可以合法匹配即可。&lt;/p&gt;
+&lt;p&gt;AC代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include&amp;lt;bits/stdc++.h&amp;gt;
+using namespace std;
+int mp[205][205],p[205],vis[205],n,T;
+bool match(int i){
+	for(int j=1;j&amp;lt;=n;j++) {
+		if(mp[i][j]&amp;amp;&amp;amp;!vis[j]){
+			vis[j]=1;
+			if(!p[j]||match(p[j])) {
+				p[j]=i;
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+int Hungarian(){
+	int cnt=0;
+	for (int i=1;i&amp;lt;=n;i++) {
+		memset(vis,0,sizeof(vis));
+		if (match(i))cnt++;
+	}
+	return cnt;
+}
+int main() {
+	scanf(&amp;quot;%d&amp;quot;,&amp;amp;T);
+	while(T--){
+		scanf(&amp;quot;%d&amp;quot;,&amp;amp;n);
+		memset(p,0,sizeof(p));
+		for(int i=1;i&amp;lt;=n;i++)
+			for(int j=1;j&amp;lt;=n;j++)
+				scanf(&amp;quot;%d&amp;quot;,&amp;amp;mp[i][j]);
+		if(Hungarian()==n)puts(&amp;quot;Yes&amp;quot;);
+		else puts(&amp;quot;No&amp;quot;);
+	}
+	return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;part-5总结&#34;&gt;Part 5：总结&lt;/h3&gt;
+&lt;p&gt;匈牙利算法是一个比较基础的图论算法，思路较简单，一定要记牢啊😙&lt;/p&gt;
+">匈牙利算法总结</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/"" data-c="
@@ -1469,6 +1580,7 @@ int main() {
 &lt;li&gt;MC：&lt;a href=&#34;https://classic.minecraft.net/&#34;&gt;Classic MC&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;UT牛逼：&lt;a href=&#34;https://sans.nyaasu.top/&#34;&gt;Sans Fight&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;好玩：&lt;a href=&#34;http://cav2.maougame.com/&#34;&gt;卡牌冒险者&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;画图：&lt;a href=&#34;https://csacademy.com/app/graph_editor/&#34;&gt;csacademy&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 ">推荐</a>
       </div>
