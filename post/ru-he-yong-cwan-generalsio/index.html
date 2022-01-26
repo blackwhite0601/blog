@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="永远的CC，永远为你">
 <meta name="theme-color" content="#000">
-<title>图的几种存储方式 | 永远的CC的博客</title>
+<title>如何用C++玩generals.io | 永远的CC的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1643182167635">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -41,8 +41,8 @@
 
 
 
-  <meta name="description" content="图的几种存储方式" />
-  <meta name="keywords" content="C++" />
+  <meta name="description" content="如何用C++玩generals.io" />
+  <meta name="keywords" content="颓废" />
 </head>
 
 <body>
@@ -268,24 +268,9 @@
   <div class="toc-wrapper  auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li><a href="#1%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5">1.邻接矩阵</a><br>
-*
-<ul>
-<li><a href="#%E5%AE%9E%E7%8E%B0">实现：</a></li>
-<li><a href="#%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E7%9A%84%E5%A5%BD%E5%A4%84">邻接矩阵的好处：</a></li>
-<li><a href="#%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E7%9A%84%E7%BC%BA%E7%82%B9">邻接矩阵的缺点：</a></li>
-</ul>
-</li>
-<li><a href="#2%E9%82%BB%E6%8E%A5%E8%A1%A8">2.邻接表</a></li>
-<li><a href="#3%E9%93%BE%E5%BC%8F%E5%89%8D%E5%90%91%E6%98%9F">3.链式前向星</a><br>
-*
-<ul>
-<li><a href="#1-%E7%BB%93%E6%9E%84">1. 结构</a></li>
-<li><a href="#2%E5%A2%9E%E8%BE%B9">2.增边</a></li>
-<li><a href="#3-%E9%81%8D%E5%8E%86">3. 遍历</a></li>
-</ul>
-</li>
-<li><a href="#%E7%84%B6%E5%90%8E%E5%B0%B1%E6%B2%A1%E6%9C%89%E7%84%B6%E5%90%8E%E4%BA%86">然后就没有然后了...</a></li>
+<li><a href="#%E5%8D%95%E4%BA%BA%E7%89%88%E9%80%9A%E7%94%A8%E8%A7%84%E5%88%99">单人版&amp;&amp;通用规则</a></li>
+<li><a href="#%E9%9B%B6%E4%BA%BA%E7%89%88">零人版</a></li>
+<li><a href="#%E5%8F%8C%E4%BA%BA%E7%89%88">双人版</a></li>
 </ul>
 
   </div>
@@ -551,14 +536,14 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/"> 图的几种存储方式 </a>
+    <a class="post-title-link" href="https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/"> 如何用C++玩generals.io </a>
   </h1>
   <div class="post-meta">
     
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2022-01-09 10:24:39">2022-01-09</span>
+      <span class="publish-time" data-t="2022-01-26 15:23:54">2022-01-26</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -566,8 +551,8 @@
       <i class="fa fa-folder-o"></i>
       <span class="pc-show language" data-lan="category-in">标签:</span>
        
-      <a href="https://yydcc-blog.github.io/tag/6CprhTvCM/">
-        <span>C++</span>
+      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/">
+        <span>颓废</span>
       </a>
        
     </span>
@@ -576,7 +561,7 @@
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
       <span
-        >4<span class="language" data-lan="minute"
+        >17<span class="language" data-lan="minute"
           >分钟</span
         ></span
       >
@@ -585,7 +570,7 @@
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
       <span
-        >970<span class="pc-show language" data-lan="words"
+        >2953<span class="pc-show language" data-lan="words"
           >字数</span
         ></span
       >
@@ -595,78 +580,599 @@
 </section>
 
             <div class="post-body next-md-body" id="post_body">
-              <h1 id="1邻接矩阵">1.邻接矩阵</h1>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20190128175511539.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzcyMTQyMw==,size_16,color_FFFFFF,t_70" alt="" loading="lazy"></figure>
-<p>邻接矩阵是表示顶点之间相邻关系的矩阵。</p>
-<p>例如：用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>不为0时表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>有一条边（也可以用<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>不为0时表示<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>有一条长度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>的边）</p>
-<h3 id="实现">实现：</h3>
-<pre><code>int x,y,z;//无向图带权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;z);
-mp[x][y]=z;
-mp[y][x]=z;
+              <p>源自generals.io</p>
+<p>大洋彼岸的服务器体验极差！</p>
+<p>使用说明</p>
+<p>整合了零人、单人、双人版</p>
+<h1 id="单人版通用规则">单人版&amp;&amp;通用规则</h1>
+<p>图片：https://www.picb.cc/image/tAJbks和https://www.picb.cc/image/tAJ7Nj</p>
+<p>先输入0/1/2，代表游戏人数</p>
+<p>然后要输入一个随机数种子（更新：长度可以任意），相同种子（相同编译器？）生成相同地图</p>
+<p>地图：X为障碍，黑色背景的数为原有城市，红色为玩家的，蓝色为电脑的，城市和普通地面颜色不同</p>
+<p>数字表示：数大于99时只显示最高位和一个字母 （e代表100，k代表1000，w代表10000），数大于99999就显示&quot;ju&quot; （巨）</p>
+<p>在屏幕左下角可以看到光标所指的数的精确值（hp）</p>
+<p>光标是一个小于号&quot;&lt;&quot;，用方向键控制光标</p>
+<p>按下w/s/a/d时，光标的左边那个数（前提是自己的）会随光标移动</p>
+<p>按下z，再按w/s/a/d，光标的左边那个数（前提是自己的）的一半会随光标移动</p>
+<p>无法移动的情况：遇到障碍/下一个位置上的数不是自己的，且&gt;=自己的数-1</p>
+<p>时间以回合（count）为单位，在屏幕左下角</p>
+<p>移动光标不算回合，移动数字算，按到空格键视作放弃一回合</p>
+<p>城市每回合+2，其余被占领的地面每10回合+1</p>
+<p>屏幕左下角的&quot;army&quot;指一方数字和，&quot;land&quot;指一方占领的格子数</p>
+<h1 id="零人版">零人版</h1>
+<p>两个一样的bfs算法对打</p>
+<p>只要观战就可以啦</p>
+<p>可以按方向键移动光标，但不能移动任何数</p>
+<p>按下空格键进入下一回合</p>
+<p>如果想快点看到结果，按f键，之后无法移动光标</p>
+<h1 id="双人版">双人版</h1>
+<p>红方键盘：(z/x+) w/s/a/d，默认只移动光标，按z移一半<br>
+数，按x移全部</p>
+<p>蓝方键盘：(n/m+) 方向键，默认只移动光标，按n移一半数，按m移全部</p>
+<p>任何一方按空格可以放弃一回合</p>
+<p>游戏时间会很漫长</p>
+<p>地图有概率出现“封城”，城市也可能分布不公平，换一个种<br>
+子重启（继续碰运气）即可</p>
+<p>当一方操作结束，光标会移到地图的左上角或右下角，（希望）能方便操作</p>
+<p>结束条件：占领所有主塔（最开始的塔再【1】【1】或【n】【n】）</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt; 
+#include&lt;cstdio&gt; 
+#include&lt;fstream&gt; 
+#include&lt;algorithm&gt; 
+#include&lt;cmath&gt; 
+#include&lt;deque&gt; 
+#include&lt;vector&gt; 
+#include&lt;queue&gt; 
+#include&lt;string&gt; 
+#include&lt;cstring&gt; 
+#include&lt;map&gt; 
+#include&lt;stack&gt; 
+#include&lt;set&gt; 
+#include&lt;windows.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;ctime&gt;
+using namespace std;
 
-int x,y,z;//有向图带权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;z);
-mp[x][y]=z;
+const int cA=5;//red城市 
+const int cB=3;//blue城市 
+const int ca=4;//red地面 
+const int cb=1;//blue地面 
+const int cC=0;//black原有城市 
+const int msize=16;//地图大小 
+const int mount=16;//障碍数量 
+const int grey=16;//城市数量 
+const int pmain=2;//城市hp每回合增加量 
+const int lcnt=10;//地面hp增加1所需回合 
 
-int x,y;//无向图无权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y);
-mp[x][y]=1;
-mp[y][x]=1;
+char cMap[msize][msize];//大写字母表示城市，小写表示地面，Aa是红，Bb是蓝，C是白，X是障碍 
+int hp[msize][msize];
+int nCount,sx,sy;//回合累加，和光标的坐标 
+bool bVis[msize][msize];//bfs
+int dir[4][2]={1,0,-1,0,0,1,0,-1};//bfs
 
-int x,y;//有向图无权加边 
-scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y);
-mp[x][y]=1;
-</code></pre>
-<h3 id="邻接矩阵的好处">邻接矩阵的好处：</h3>
-<p>1.直观、简单、好理解</p>
-<p>2.方便检查任意一对定点间是否存在边</p>
-<p>3.方便找任一顶点的所有“邻接点”（有边直接相连的顶点）</p>
-<p>4.方便计算任一顶点的度</p>
-<p>对于无向图，邻接矩阵的第i行（或第i列）非零元素（或非∞元素）的个数正好是第i个顶点的度。</p>
-<p>对于有向图，邻接矩阵的第i行（或第i列）非零元素（或非∞元素）的个数正好是第i个顶点的出度（或入度）。</p>
-<h3 id="邻接矩阵的缺点">邻接矩阵的缺点：</h3>
-<p>1.浪费空间（特别是在稀疏图中，有大量空余空间）</p>
-<p>2.浪费时间（要确定图中有多少条边，则必须按行、按列对每个元素进行检测，所花费的时间代价很大。）</p>
-<p>所以我们需要下面这两个：</p>
-<h1 id="2邻接表">2.邻接表</h1>
-<p>图的邻接表存储方法是一种顺序分配与链式分配相结合的存储方法。</p>
-<p>在邻接表中，对图中每个顶点建立一个单链表，第i个单链表中的节点表示依附于顶点i的边（对有向图是以顶点i为尾的边）。每个单链表上附设一个表头节点。</p>
-<p>邻接表的特点如下：</p>
-<p>1.邻接表表示不唯一。这是因为在每个顶点对应的单链表中，各边节点的链接次序可以是任意的，取决于建立邻接表的算法以及边的输入次序。</p>
-<p>2.对于有n个顶点和e条边的无向图，其邻接表有n个顶点节点和2e个边节点。显然，在总的边数小于n(n-1)/2的情况下，邻接表比邻接矩阵要节省空间。</p>
-<p>3.对于无向图，邻接表的顶点i对应的第i个链表的边节点数目正好是顶点i的度。</p>
-<p>4.对于有向图，邻接表的顶点i对应的第i个链表的边节点数目仅仅是顶点i的出度。其入度为邻接表中所有adjvex域值为i的边节点数目。</p>
-<h1 id="3链式前向星">3.链式前向星</h1>
-<h3 id="1-结构">1. 结构</h3>
-<p>这里用两个东西：</p>
-<p>1 结构体数组edge存边，edge[i]表示第i条边,</p>
-<p>2 head[i]存以i为起点的第一条边(在edge中的下标)</p>
-<pre><code class="language-cpp">struct EDGE{
-	int next;   //下一条边的存储下标(默认0) 
-	int to;     //这条边的终点 
-	int w;      //权值 
-}edge[500010];
-</code></pre>
-<h3 id="2增边">2.增边</h3>
-<p>若以点i为起点的边新增了一条，在edge中的下标为j.</p>
-<p>那么edge[j].next=head[i];然后head[i]=j.</p>
-<p><strong>即每次新加的边作为第一条边，最后倒序遍历</strong></p>
-<pre><code class="language-cpp">
-void Add(int u, int v, int w) {  //起点u, 终点v, 权值w 
-	//cnt为边的计数，从1开始计 
-	edge[++cnt].next = head[u];
-	edge[cnt].w = w;
-	edge[cnt].to = v;
-	head[u] = cnt;    //第一条边为当前边 
+struct dRet//决策信息：位置为(x,y)的数移到(x+dx,y+dy) 
+{
+	int x;
+	int y;
+	int dx;
+	int dy;
+};
+
+struct node//bfs 
+{
+	int x;
+	int y;
+	int step;
+};
+
+void vInit();//生成地图 
+void vMove(int dx,int dy);//移动光标 
+//以下5个函数，保证A=='A'||A=='B' 
+void vMoveNum(int dx,int dy,char A);
+void vMoveNum(int x,int y,int dx,int dy,char A);
+void vDiv(int dx,int dy,char A);
+void vDecide(char A);
+dRet bfs(int x,int y,char A);
+void vPlus();//每回合数值增加，计算army和land 
+void vChange(int x,int y);//刷新屏幕上指定坐标的数 
+void gotoxy(int x,int y);//移动输出的位置 
+void color(int t,int b);//设置输出颜色，t为文字色，b为背景色 
+void vMain0();
+void vMain1();
+void vMain2();
+void vEnd();//判断游戏结束 
+
+int main()
+{
+	int p; 
+	cout&lt;&lt;&quot;player:&quot;&lt;&lt;endl;
+	cin&gt;&gt;p;
+	system(&quot;cls&quot;);
+	if(p==0) vMain0();
+	if(p==1) vMain1();
+	if(p==2) vMain2();
+	return 0;
+}
+
+void vMain0()
+{
+	int in;
+	bool cur=true;
+	vInit();
+	for(nCount=0;;nCount++)
+	{
+		gotoxy(msize,0);
+		color(15,0);
+		cout&lt;&lt;&quot;count=&quot;&lt;&lt;nCount&lt;&lt;endl;
+		if(cur)
+		{
+			do
+			{
+				in=getch();
+				if(in==224) 
+				{
+					in=getch();
+					if(in==72) vMove(-1,0);
+					if(in==80) vMove(1,0);
+					if(in==75) vMove(0,-1);
+					if(in==77) vMove(0,1);
+				}
+			}while(in!=' '&amp;&amp;in!='f');
+			if(in=='f') cur=false;
+		}
+		vDecide('A');
+		vDecide('B');
+		vPlus();
+	}
+}
+
+void vMain1()
+{
+	int in;
+	vInit();
+	for(nCount=0;;nCount++)
+	{
+		gotoxy(msize,0);
+		color(15,0);
+		cout&lt;&lt;&quot;count=&quot;&lt;&lt;nCount&lt;&lt;endl;
+		do
+		{
+			in=getch();
+			if(in==224) 
+			{
+				in=getch();
+				if(in==72) vMove(-1,0);
+				if(in==80) vMove(1,0);
+				if(in==75) vMove(0,-1);
+				if(in==77) vMove(0,1);
+			}
+		}while(in!='w'&amp;&amp;in!='s'&amp;&amp;in!='a'&amp;&amp;in!='d'&amp;&amp;in!='z'&amp;&amp;in!=' ');
+		if(in=='w') vMoveNum(-1,0,'A');
+		if(in=='s') vMoveNum(1,0,'A');
+		if(in=='a') vMoveNum(0,-1,'A');
+		if(in=='d') vMoveNum(0,1,'A');
+		if(in=='z')
+		{
+			in=getch();
+			if(in=='w') vDiv(-1,0,'A');
+			if(in=='s') vDiv(1,0,'A');
+			if(in=='a') vDiv(0,-1,'A');
+			if(in=='d') vDiv(0,1,'A');
+		}
+		vDecide('B');
+		vPlus();
+	}
+}
+
+void vMain2()
+{
+	int in;
+	vInit();
+	for(nCount=0;;nCount++)
+	{
+		gotoxy(msize,0);
+		color(15,0);
+		cout&lt;&lt;&quot;count=&quot;&lt;&lt;nCount;
+		vMove(-sx,-sy);
+		gotoxy(msize+1,0);
+		cout&lt;&lt;&quot;red &quot;;
+		do
+		{
+			in=getch();
+			if(in=='w') vMove(-1,0);
+			if(in=='s') vMove(1,0);
+			if(in=='a') vMove(0,-1);
+			if(in=='d') vMove(0,1);
+		}while(in!='x'&amp;&amp;in!='z'&amp;&amp;in!=' ');
+		if(in=='x')
+		{
+			in=getch();
+			if(in=='w') vMoveNum(-1,0,'A');
+			if(in=='s') vMoveNum(1,0,'A');
+			if(in=='a') vMoveNum(0,-1,'A');
+			if(in=='d') vMoveNum(0,1,'A');
+		}
+		else if(in=='z')
+		{
+			in=getch();
+			if(in=='w') vDiv(-1,0,'A');
+			if(in=='s') vDiv(1,0,'A');
+			if(in=='a') vDiv(0,-1,'A');
+			if(in=='d') vDiv(0,1,'A');
+		}
+		vEnd();
+		////////////////////////////////
+		vMove(msize-1-sx,msize-1-sy);
+		gotoxy(msize+1,0);
+		color(15,0);
+		cout&lt;&lt;&quot;blue&quot;;
+		do
+		{
+			in=getch();
+			if(in==224) 
+			{
+				in=getch();
+				if(in==72) vMove(-1,0);
+				if(in==80) vMove(1,0);
+				if(in==75) vMove(0,-1);
+				if(in==77) vMove(0,1);
+			}
+		}while(in!='n'&amp;&amp;in!='m'&amp;&amp;in!=' ');
+		if(in=='m')
+		{
+			in=getch();
+			if(in==224) 
+			{
+				in=getch();
+				if(in==72) vMoveNum(-1,0,'B');
+				if(in==80) vMoveNum(1,0,'B');
+				if(in==75) vMoveNum(0,-1,'B');
+				if(in==77) vMoveNum(0,1,'B');
+			}
+		}
+		else if(in=='n')
+		{
+			in=getch();
+			if(in==224) 
+			{
+				in=getch();
+				if(in==72) vDiv(-1,0,'B');
+				if(in==80) vDiv(1,0,'B');
+				if(in==75) vDiv(0,-1,'B');
+				if(in==77) vDiv(0,1,'B');
+			}
+		}
+		vPlus();
+	}
+}
+
+void vInit()
+{
+	int i,j,x,y;
+	string sSeed; 
+	unsigned int sd=20190622;
+	cout&lt;&lt;&quot;seed:&quot;&lt;&lt;endl;
+	cin&gt;&gt;sSeed;
+	system(&quot;cls&quot;);
+	for(i=0;i&lt;sSeed.size();i++) sd=sd*233+sSeed[i];
+	srand(sd);
+	cMap[0][0]='A';
+	hp[0][0]=pmain;
+	vChange(0,0);
+	cMap[msize-1][msize-1]='B';
+	hp[msize-1][msize-1]=pmain;
+	vChange(msize-1,msize-1);
+	for(i=1;i&lt;=mount;i++)
+	{
+		x=rand()%msize;
+		y=rand()%msize;
+		if(cMap[x][y]!=0) i--;
+		else
+		{
+			cMap[x][y]='X';
+			gotoxy(x,y*3);
+			color(15,0);
+			cout&lt;&lt;&quot; X&quot;;
+		}
+	}
+	for(i=1;i&lt;=grey;i++)
+	{
+		x=rand()%msize;
+		y=rand()%msize;
+		if(cMap[x][y]!=0) i--;
+		else
+		{
+			cMap[x][y]='C';
+			hp[x][y]=40+rand()%10;
+			vChange(x,y);
+		}
+	}
+	sx=sy=0;
+	gotoxy(0,2);
+	color(15,0);
+	cout&lt;&lt;&quot;&lt;&quot;;
+}
+
+void vMove(int dx,int dy)
+{
+	color(15,0);
+	dx+=sx;dy+=sy;
+	if(!(dx&gt;=0&amp;&amp;dx&lt;msize&amp;&amp;dy&gt;=0&amp;&amp;dy&lt;msize)) return;
+	gotoxy(sx,sy*3+2);
+	cout&lt;&lt;&quot; &quot;;
+	sx=dx;sy=dy;
+	gotoxy(sx,sy*3+2);
+	cout&lt;&lt;&quot;&lt;&quot;;
+	gotoxy(msize+1,0);
+	cout&lt;&lt;&quot;cMap=&quot;&lt;&lt;cMap[dx][dy]&lt;&lt;&quot;,hp=&quot;&lt;&lt;hp[dx][dy]&lt;&lt;&quot;            &quot;;
+}
+
+void vMoveNum(int x,int y,int dx,int dy,char A)
+{
+	char a,B,b;
+	a=A-'A'+'a';
+	B=(A=='A')?'B':'A';
+	b=B-'A'+'a';
+	if(cMap[x][y]!=a&amp;&amp;cMap[x][y]!=A) return;
+	dx+=x;dy+=y;
+	if(!(dx&gt;=0&amp;&amp;dx&lt;msize&amp;&amp;dy&gt;=0&amp;&amp;dy&lt;msize&amp;&amp;cMap[dx][dy]!='X')) return;
+	char &amp;cd=cMap[dx][dy];
+	int &amp;hd=hp[dx][dy],&amp;hs=hp[x][y];
+	if(cd!=a&amp;&amp;cd!=A&amp;&amp;hd&gt;=hs-1) return;
+	if(cd==0)
+	{
+		cd=a;
+		hd=hs-1;
+	}
+	else if(cd==A||cd==a)
+	{
+		hd+=hs-1;
+	}
+	else if(cd==B||cd==b)
+	{
+		if(B=='B') cd--;
+		else cd++;
+		hd=hs-1-hd;
+	}
+	else//'C'
+	{
+		cd=A;
+		hd=hs-1-hd;
+	}
+	hs=1;
+	vChange(dx,dy);
+	vChange(x,y);
+}
+
+void vMoveNum(int dx,int dy,char A)
+{
+	vMoveNum(sx,sy,dx,dy,A);
+	vMove(dx,dy);
+}
+
+void vDiv(int dx,int dy,char A)
+{
+	char a,B,b;
+	a=A-'A'+'a';
+	B=(A=='A')?'B':'A';
+	b=B-'A'+'a';
+	if(cMap[sx][sy]!=a&amp;&amp;cMap[sx][sy]!=A) return;
+	dx+=sx;dy+=sy;
+	if(!(dx&gt;=0&amp;&amp;dx&lt;msize&amp;&amp;dy&gt;=0&amp;&amp;dy&lt;msize&amp;&amp;cMap[dx][dy]!='X')) return;
+	char &amp;cd=cMap[dx][dy];
+	int &amp;hd=hp[dx][dy],&amp;hs=hp[sx][sy],tmp=hs/2;
+	if(tmp==0) return;
+	if(cd!=a&amp;&amp;cd!=A&amp;&amp;hd&gt;=tmp-1) return;
+	if(cd==0)
+	{
+		cd=a;
+		hd=tmp;
+	}
+	else if(cd==A||cd==a)
+	{
+		hd+=tmp;
+	}
+	else if(cd==B||cd==b)
+	{
+		if(B=='B') cd--;
+		else cd++;
+		hd=tmp-hd;
+	}
+	else//'C'
+	{
+		cd=A;
+		hd=tmp-hd;
+	}
+	hs-=tmp;
+	vChange(dx,dy);
+	vChange(sx,sy);
+	vMove(dx-sx,dy-sy);
+}
+
+void vDecide(char A)
+{
+	char a,B,b;
+	a=A-'A'+'a';
+	B=(A=='A')?'B':'A';
+	b=B-'A'+'a';
+	int i,j,k,x,y,dx,dy;
+	dRet tmp,res;
+	bool bd=false,bm=false;
+	for(i=(A=='A')?0:(msize-1);(A=='A')?(i&lt;=msize-1):(i&gt;=0);(A=='A')?(i++):(i--))
+	{
+		for(j=(A=='A')?0:(msize-1);(A=='A')?(j&lt;=msize-1):(j&gt;=0);(A=='A')?(j++):(j--))
+		{
+			if(!bd&amp;&amp;(cMap[i][j]==B||cMap[i][j]=='C'))
+			{
+				tmp=bfs(i,j,A);
+				if(tmp.dx+tmp.dy==0) continue;
+				bd=true;
+				res=tmp;
+			}
+			if(!bd&amp;&amp;!bm&amp;&amp;(cMap[i][j]==A||cMap[i][j]==a)&amp;&amp;hp[i][j]&gt;1)
+			{
+				for(k=0;k&lt;4;k++)
+				{
+					dx=dir[k][0]+i;
+					dy=dir[k][1]+j;
+					if(!(dx&gt;=0&amp;&amp;dx&lt;msize&amp;&amp;dy&gt;=0&amp;&amp;dy&lt;msize)) continue;
+					if((cMap[dx][dy]==0||cMap[dx][dy]==b)&amp;&amp;hp[dx][dy]&lt;hp[i][j]-1)
+					{
+						bm=true;
+						res.dx=dir[k][0];
+						res.dy=dir[k][1];
+						res.x=i;
+						res.y=j;
+						break;
+					}
+				}
+			}
+			if(bd) break;
+		}
+		if(bd) break;
+	}
+	if(!bd&amp;&amp;!bm) return;
+	vMoveNum(res.x,res.y,res.dx,res.dy,A);
+}
+
+dRet bfs(int x,int y,char A)
+{
+	char a,B,b;
+	a=A-'A'+'a';
+	B=(A=='A')?'B':'A';
+	b=B-'A'+'a';
+	int i,dx,dy;
+	dRet ret;
+	node now,nxt;
+	queue&lt;node&gt;q;
+	now.step=hp[x][y]+2;
+	now.x=x;
+	now.y=y;
+	q.push(now);
+	memset(bVis,false,sizeof bVis);
+	bVis[x][y]=true;
+	while(!q.empty())
+	{
+		now=q.front();
+		q.pop();
+		for(i=0;i&lt;4;i++)
+		{
+			dx=dir[i][0]+now.x;
+			dy=dir[i][1]+now.y;
+			if(dx&gt;=0&amp;&amp;dx&lt;msize&amp;&amp;dy&gt;=0&amp;&amp;dy&lt;msize&amp;&amp;!bVis[dx][dy]&amp;&amp;cMap[dx][dy]!='X')
+			{
+				bVis[dx][dy]=true;
+				if(cMap[dx][dy]==0) nxt.step=now.step+1;
+				if(cMap[dx][dy]==b||cMap[dx][dy]==B||cMap[dx][dy]=='C') nxt.step=now.step+hp[dx][dy]+2;
+				else
+				{
+					nxt.step=now.step-hp[dx][dy]+1;
+					if(nxt.step&lt;-5&amp;&amp;(cMap[dx][dy]==A||cMap[dx][dy]==a))
+					{
+						ret.dx=-dir[i][0];
+						ret.dy=-dir[i][1];
+						ret.x=dx;
+						ret.y=dy;
+						return ret;
+					}
+				}
+				nxt.x=dx;
+				nxt.y=dy;
+				q.push(nxt);
+			}
+		}
+	}
+	ret.dx=ret.dy=0;
+	return ret;
+}
+
+void vPlus()
+{
+	int i,j,aa=0,ba=0,al=0,bl=0;
+	if(nCount%lcnt==0)
+	{
+		for(i=0;i&lt;msize;i++)
+		{
+			for(j=0;j&lt;msize;j++)
+			{
+				if(cMap[i][j]=='a'||cMap[i][j]=='b')
+				{
+					hp[i][j]++;
+					vChange(i,j);
+				}
+			}
+		}
+	}
+	for(i=0;i&lt;msize;i++)
+	{
+		for(j=0;j&lt;msize;j++)
+		{
+			if(cMap[i][j]=='A'||cMap[i][j]=='B')
+			{
+				hp[i][j]+=pmain;
+				vChange(i,j);
+			}
+			if(cMap[i][j]=='A'||cMap[i][j]=='a') al++,aa+=hp[i][j];
+			if(cMap[i][j]=='B'||cMap[i][j]=='b') bl++,ba+=hp[i][j];
+		}
+	}
+	color(15,0);
+	gotoxy(msize+2,0);
+	cout&lt;&lt;&quot;red army:&quot;&lt;&lt;aa&lt;&lt;&quot;   &quot;&lt;&lt;endl;
+	cout&lt;&lt;&quot;red land:&quot;&lt;&lt;al&lt;&lt;&quot;   &quot;&lt;&lt;endl;
+	cout&lt;&lt;&quot;blue army:&quot;&lt;&lt;ba&lt;&lt;&quot;   &quot;&lt;&lt;endl;
+	cout&lt;&lt;&quot;blue land:&quot;&lt;&lt;bl&lt;&lt;&quot;   &quot;&lt;&lt;endl;
+	vEnd();
+}
+
+void vEnd()
+{
+
+	if(cMap[0][0]=='B')
+	{
+		cout&lt;&lt;&quot;blue win&quot;&lt;&lt;endl;
+		while(1);
+	}
+	if(cMap[msize-1][msize-1]=='A')
+	{
+		cout&lt;&lt;&quot;red win&quot;&lt;&lt;endl;
+		while(1);
+	}
+}
+
+void vChange(int x,int y)
+{
+	int c;
+	char cm=cMap[x][y];
+	if(cm=='A') c=cA;
+	if(cm=='a') c=ca;
+	if(cm=='B') c=cB;
+	if(cm=='b') c=cb;
+	if(cm=='C') c=cC;
+	gotoxy(x,y*3);
+	color(15,c);
+	int val=hp[x][y];
+	if(val&lt;10) cout&lt;&lt;&quot; &quot;&lt;&lt;val;
+	else if(val&lt;100) cout&lt;&lt;val;
+	else if(val&lt;1000) cout&lt;&lt;val/100&lt;&lt;&quot;e&quot;;
+	else if(val&lt;10000) cout&lt;&lt;val/1000&lt;&lt;&quot;k&quot;;
+	else if(val&lt;100000) cout&lt;&lt;val/10000&lt;&lt;&quot;w&quot;;
+	else cout&lt;&lt;&quot;ju&quot;;
+}
+
+void gotoxy(int x,int y)
+{
+	COORD c;
+	c.X=y;
+	c.Y=x;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),c);
+}
+
+void color(int t,int b)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),t+b*16);
 }
 </code></pre>
-<h3 id="3-遍历">3. 遍历</h3>
-<p>遍历以st为起点的边</p>
-<pre><code class="language-c++">for(int i=head[st]; i!=0; i=edge[i].next)
-</code></pre>
-<p>i开始为第一条边，每次指向下一条(以0为结束标志)  （若下标从0开始，next应初始化-1）</p>
-<h1 id="然后就没有然后了">然后就没有然后了...</h1>
 
             </div>
             
@@ -679,7 +1185,7 @@ void Add(int u, int v, int w) {  //起点u, 终点v, 权值w
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/" title="图的几种存储方式">https://yydcc-blog.github.io/post/tu-de-ji-chong-cun-chu-fang-shi/</a>
+      <a href="https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/" title="如何用C++玩generals.io">https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -688,18 +1194,18 @@ void Add(int u, int v, int w) {  //起点u, 终点v, 权值w
   </ul>
   <div class="tags">
     
-      <a href="https://yydcc-blog.github.io/tag/6CprhTvCM/"># C++</a>
+      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/"># 颓废</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="树形DP总结" href="https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/">树形DP总结</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="树形DP总结" href="https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/">上一篇</a>
-      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="匈牙利算法总结" href="https://yydcc-blog.github.io/post/xiong-ya-li-suan-fa-zong-jie/">匈牙利算法总结</a>
+        <a class="nav-mobile-next" title="匈牙利算法总结" href="https://yydcc-blog.github.io/post/xiong-ya-li-suan-fa-zong-jie/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
