@@ -9,7 +9,7 @@
 <meta name="description" content="永远的CC，永远为你">
 <meta name="theme-color" content="#000">
 <title>永远的CC的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1643182216507">
+<link rel="shortcut icon" href="/favicon.ico?v=1643358088255">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -225,7 +225,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">7</span>
+        <span class="site-item-stat-count">8</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -279,6 +279,50 @@
       
         
           
+            
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            
+      
+        
+      
+        
+          
+            
+      
+        
+      
+      <a class="cloud-tag" href="https://yydcc-blog.github.io/tag/6CprhTvCM/" rel="4">C++</a>
+    
+      
+      
+        
+          
+        
+      
+        
+          
+            
+      
+        
+          
+        
+      
+        
+          
         
       
         
@@ -308,38 +352,6 @@
         
           
         
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-      
-        
-          
-            
-      
-        
-      
-      <a class="cloud-tag" href="https://yydcc-blog.github.io/tag/6CprhTvCM/" rel="3">C++</a>
-    
-      
       
         
           
@@ -376,6 +388,10 @@
       <a class="cloud-tag" href="https://yydcc-blog.github.io/tag/ANYYmWV2G/" rel="1">游记</a>
     
       
+      
+        
+          
+        
       
         
           
@@ -734,6 +750,76 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/kuai-du-kuai-xie-shi-shi-me-zen-me-xie-ke-yi-yong-lai-qia-chang-ma/"" data-c="
+          &lt;h1 id=&#34;part-0前言&#34;&gt;Part 0：前言&lt;/h1&gt;
+&lt;p&gt;突发奇想，来介绍快读快写。&lt;/p&gt;
+&lt;p&gt;希望大家喜欢！😉&lt;/p&gt;
+&lt;h1 id=&#34;part-1快读快写是什么&#34;&gt;Part 1：快读快写是什么？&lt;/h1&gt;
+&lt;p&gt;因为&lt;code&gt;getchar()&lt;/code&gt;和&lt;code&gt;putchar()&lt;/code&gt;很快，所以我们可以利用这个把输入输出的速度提到很快。&lt;/p&gt;
+&lt;h1 id=&#34;part-2怎么写&#34;&gt;Part 2：怎么写？&lt;/h1&gt;
+&lt;h2 id=&#34;part-21快读&#34;&gt;Part 2.1：快读&lt;/h2&gt;
+&lt;h3 id=&#34;写法&#34;&gt;写法：&lt;/h3&gt;
+&lt;p&gt;首先定义函数&lt;code&gt;int read()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;既然是读入整数，那么就要把多余的空格和负数考虑到：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int f=1;
+char ch=getchar();
+while(ch&amp;lt;&#39;0&#39;||ch&amp;gt;&#39;9&#39;){
+	if(ch==&#39;-&#39;)
+	f=-1;
+	ch=getchar();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后边输入边加在一个变量上：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int s=0;
+while(ch&amp;gt;=&#39;0&#39;&amp;amp;&amp;amp;ch&amp;lt;=&#39;9&#39;){
+	s=s*10+ch-&#39;0&#39;;
+	ch=getchar();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里还不够快，把&lt;code&gt;s*10&lt;/code&gt;改成位运算：&lt;code&gt;(s&amp;lt;&amp;lt;1+s&amp;lt;&amp;lt;3)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;最后输出（别忘把负数的情况考虑上）：&lt;code&gt;return s*f&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;完整代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int read(){
+	int s=0,f=1;
+	char ch=getchar();
+	while(ch&amp;lt;&#39;0&#39;||ch&amp;gt;&#39;9&#39;){
+		if(ch==&#39;-&#39;)
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&amp;gt;=&#39;0&#39;&amp;amp;&amp;amp;ch&amp;lt;=&#39;9&#39;){
+		s=(s&amp;lt;&amp;lt;1+s&amp;lt;&amp;lt;3)+ch-&#39;0&#39;;
+		ch=getchar();
+	}
+	return s*f;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;解析&#34;&gt;解析：&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;定义函数和变量。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;while()&lt;/code&gt;输入直到&lt;code&gt;-&lt;/code&gt;或数字，记录负数的情况。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;while()&lt;/code&gt;边输入边累加。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;return&lt;/code&gt;返回值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;part-22快写&#34;&gt;Part 2.2：快写&lt;/h2&gt;
+&lt;p&gt;递归写法，比较简单。&lt;/p&gt;
+&lt;p&gt;完整代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;void write(int x){
+    if(x&amp;lt;0){
+    	putchar(&#39;-&#39;);
+		x=-x;
+	}
+    if(x&amp;gt;9) 
+		write(x/10);
+    putchar(x%10+&#39;0&#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;part3可以用来卡常吗&#34;&gt;Part3：可以用来卡常吗？&lt;/h1&gt;
+&lt;p&gt;可以。&lt;/p&gt;
+">快读快写是什么？怎么写？可以用来卡常吗？</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/"" data-c="

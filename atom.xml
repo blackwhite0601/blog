@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-26T07:30:35.887Z</updated>
+    <updated>2022-01-28T08:21:31.071Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,79 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[快读快写是什么？怎么写？可以用来卡常吗？]]></title>
+        <id>https://yydcc-blog.github.io/post/kuai-du-kuai-xie-shi-shi-me-zen-me-xie-ke-yi-yong-lai-qia-chang-ma/</id>
+        <link href="https://yydcc-blog.github.io/post/kuai-du-kuai-xie-shi-shi-me-zen-me-xie-ke-yi-yong-lai-qia-chang-ma/">
+        </link>
+        <updated>2022-01-28T07:36:58.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="part-0前言">Part 0：前言</h1>
+<p>突发奇想，来介绍快读快写。</p>
+<p>希望大家喜欢！😉</p>
+<h1 id="part-1快读快写是什么">Part 1：快读快写是什么？</h1>
+<p>因为<code>getchar()</code>和<code>putchar()</code>很快，所以我们可以利用这个把输入输出的速度提到很快。</p>
+<h1 id="part-2怎么写">Part 2：怎么写？</h1>
+<h2 id="part-21快读">Part 2.1：快读</h2>
+<h3 id="写法">写法：</h3>
+<p>首先定义函数<code>int read()</code></p>
+<p>既然是读入整数，那么就要把多余的空格和负数考虑到：</p>
+<pre><code class="language-cpp">int f=1;
+char ch=getchar();
+while(ch&lt;'0'||ch&gt;'9'){
+	if(ch=='-')
+	f=-1;
+	ch=getchar();
+}
+</code></pre>
+<p>然后边输入边加在一个变量上：</p>
+<pre><code class="language-cpp">int s=0;
+while(ch&gt;='0'&amp;&amp;ch&lt;='9'){
+	s=s*10+ch-'0';
+	ch=getchar();
+}
+</code></pre>
+<p>这里还不够快，把<code>s*10</code>改成位运算：<code>(s&lt;&lt;1+s&lt;&lt;3)</code>。</p>
+<p>最后输出（别忘把负数的情况考虑上）：<code>return s*f</code>。</p>
+<p>完整代码：</p>
+<pre><code class="language-cpp">int read(){
+	int s=0,f=1;
+	char ch=getchar();
+	while(ch&lt;'0'||ch&gt;'9'){
+		if(ch=='-')
+			f=-1;
+		ch=getchar();
+	}
+	while(ch&gt;='0'&amp;&amp;ch&lt;='9'){
+		s=(s&lt;&lt;1+s&lt;&lt;3)+ch-'0';
+		ch=getchar();
+	}
+	return s*f;
+}
+</code></pre>
+<h3 id="解析">解析：</h3>
+<ul>
+<li>定义函数和变量。</li>
+<li><code>while()</code>输入直到<code>-</code>或数字，记录负数的情况。</li>
+<li><code>while()</code>边输入边累加。</li>
+<li><code>return</code>返回值。</li>
+</ul>
+<h2 id="part-22快写">Part 2.2：快写</h2>
+<p>递归写法，比较简单。</p>
+<p>完整代码：</p>
+<pre><code class="language-cpp">void write(int x){
+    if(x&lt;0){
+    	putchar('-');
+		x=-x;
+	}
+    if(x&gt;9) 
+		write(x/10);
+    putchar(x%10+'0');
+}
+</code></pre>
+<h1 id="part3可以用来卡常吗">Part3：可以用来卡常吗？</h1>
+<p>可以。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何用C++玩generals.io]]></title>
         <id>https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/</id>
