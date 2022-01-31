@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-31T04:09:42.697Z</updated>
+    <updated>2022-01-31T13:59:48.363Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,32 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[LIVE-活着]]></title>
+        <id>https://yydcc-blog.github.io/post/live-huo-zhao/</id>
+        <link href="https://yydcc-blog.github.io/post/live-huo-zhao/">
+        </link>
+        <updated>2022-01-31T13:48:51.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>by 黑_白（永远的CC）</p>
+<h1 id="更新日志">更新日志</h1>
+<ul>
+<li>写了第一个版本</li>
+<li>添加了不同人数</li>
+<li>添加了对作弊者的惩治</li>
+<li>添加了亡语</li>
+</ul>
+<h1 id="判定数字机制">判定数字机制</h1>
+<p>第一个1/1<br>
+第二个1/2<br>
+第三个1/3<br>
+第四个1/4<br>
+第五个1/5<br>
+第六个1/6</p>
+<h1 id="游戏下载">游戏下载：</h1>
+<p><a href="https://hydro.ac/file/2867/LIVE.exe">link</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[人类沦陷-史诗级巨作]]></title>
         <id>https://yydcc-blog.github.io/post/ren-lei-lun-xian-shi-shi-ji-ju-zuo/</id>
