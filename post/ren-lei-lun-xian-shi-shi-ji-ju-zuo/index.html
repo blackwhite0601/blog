@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="永远的CC，永远为你">
 <meta name="theme-color" content="#000">
-<title>永远的CC的博客</title>
+<title>人类沦陷-史诗级巨作 | 永远的CC的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1643602157138">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -41,6 +41,8 @@
 
 
 
+  <meta name="description" content="人类沦陷-史诗级巨作" />
+  <meta name="keywords" content="颓废" />
 </head>
 
 <body>
@@ -205,10 +207,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  pisces">
+      class="section-layout pisces ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -244,110 +262,2614 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper  auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E5%89%A7%E6%83%85">剧情</a>
+<ul>
+<li><a href="#%E6%80%BB%E5%89%A7%E6%83%85">总剧情</a></li>
+<li><a href="#%E5%88%86%E5%89%A7%E6%83%851default%E6%9C%80%E5%90%8E%E5%A0%A1%E5%9E%92">分剧情1：default:最后堡垒</a></li>
+<li><a href="#%E5%88%86%E5%89%A7%E6%83%852beta%E5%A4%B1%E8%90%BD%E5%9F%8E%E9%82%A6">分剧情2：beta:失落城邦</a></li>
+</ul>
+</li>
+<li><a href="#%E6%94%BB%E7%95%A5">攻略</a></li>
+<li><a href="#%E5%90%84%E4%B8%96%E7%95%8C%E5%B1%9E%E6%80%A7">各世界属性</a></li>
+<li><a href="#tips">Tips</a></li>
+<li><a href="#%E6%B8%B8%E6%88%8F%E4%BB%A3%E7%A0%81">游戏代码</a></li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box tag-line box-shadow-wrapper">
-          <section class="section tags-section posts-expand bg-color">
-            <div class="padding-wrapper">
-  <div class="tag-timeline-box">
-    <div class="tag-timeline-wrapper">
-      <div class="tag-timeline-title">
-        <h2>
-          颓废
-          <small class="language" data-lan="tag">标签</small>
-        </h2>
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
       </div>
-      
-      
-      
-      <a href="https://yydcc-blog.github.io/post/ren-lei-lun-xian-shi-shi-ji-ju-zuo/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              01-31
-              <small>人类沦陷-史诗级巨作</small>
-            </h1>
-          </div>
-        </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    jQuery.Velocity(hideElement, 'stop');
+    jQuery.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        jQuery.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://yydcc-blog.github.io/post/ren-lei-lun-xian-shi-shi-ji-ju-zuo/"> 人类沦陷-史诗级巨作 </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item">
+      <i class="fa fa-thumb-tack"></i>
+      <span class="language" data-lan="top">置顶</span>
+      <span class="post-meta-divider">|</span>
+    </span>
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2022-01-31 11:55:17">2022-01-31</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">标签:</span>
+       
+      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/">
+        <span>颓废</span>
       </a>
+       
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span
+        >64<span class="language" data-lan="minute"
+          >分钟</span
+        ></span
+      >
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span
+        >11935<span class="pc-show language" data-lan="words"
+          >字数</span
+        ></span
+      >
+    </span>
+    
+  </div>
+</section>
+
+            <div class="post-body next-md-body" id="post_body">
+              <h1 id="前言">前言</h1>
+<p>黑_白(永远的CC)和段建泽共同出品。</p>
+<h1 id="剧情">剧情</h1>
+<h2 id="总剧情">总剧情</h2>
+<blockquote>
+<p>在千年以前，有一群人类被感染成了异种<br>
+它们变得与常人不同,拥有更强大的力量与更强大的身体<br>
+正常人类带着排斥接受着它们<br>
+不知过了多久，人类异种窃取了正常人类的技术，但仍然没能继承人类的人性<br>
+人类异种YZ带着他的亲卫队，妄图与创世主CC抗衡，夺取世界能量的来源——定界石<br>
+那次人类使出了全力对抗异种<br>
+双方死伤惨重,人类花了200年才恢复过来<br>
+而人类异种从此销声匿迹<br>
+但现在，他们卷土重来了！！！<br>
+作为人类守护联盟的盟主，你能否担起重任，像千年以前的CC一样拯救世界？</p>
+</blockquote>
+<h2 id="分剧情1default最后堡垒">分剧情1：default:最后堡垒</h2>
+<blockquote>
+<p>这是人类最后的希望...<br>
+你将坚守最后的城池，保卫身后那颗普蓝色的定界石<br>
+这个阶段，史称<br>
+最后堡垒!!!</p>
+</blockquote>
+<h2 id="分剧情2beta失落城邦">分剧情2：beta:失落城邦</h2>
+<blockquote>
+<p>人类从曾经摔倒的地方重新站起<br>
+我们即将迎来第一场反击战!<br>
+目光灼灼地望向前方，那曾是我们的家园<br>
+这个阶段，史称<br>
+失落城邦!!!</p>
+</blockquote>
+<h1 id="攻略">攻略</h1>
+<pre><code>首先，你可以一直按0大约10次，攒到大约200
+然后，你可以建一层护盾和一个哨兵塔，用来进攻
+接着，继续攒钱，建高射炮来防御坦克及飞机
+最后，只需要在建筑有破损时重建就行了
+</code></pre>
+<h1 id="各世界属性">各世界属性</h1>
+<pre><code>造物主模式初始资源很多
+生存模式资源中等
+衰竭模式资源匮乏，每回合我方扣固定的100血量
+</code></pre>
+<h1 id="tips">Tips</h1>
+<pre><code>高射炮不仅可以打飞机，把它压下来也可以打地面敌人！
+迫击炮不仅可以打小兵，还能打敌方基地！
+小兵打敌方基地的伤害十分可观。
+导弹可以直接打对方的基地！
+千万别让小兵接近你的基地，你的建筑十分危险！
+激光炮可以攻击小兵、坦克、飞机或直接进攻敌方，十分强大！
+护盾可以抵挡敌方的一次远程进攻哦！
+克隆法术可以将小兵数量变成原来的两倍，在关键时刻能起到意想不到的作用
+岩石地雷可以在五回合后炸死敌方所有小兵哦！
+晶坷垃是一种新型货币，不可与金币互换。
+头铁少年破盾，钻地少年清兵。但需要耗费晶坷垃，且没有动静。
+歼击机攻击力极高，无法被防御塔击毁，需要谨慎防备。
+</code></pre>
+<h1 id="游戏代码">游戏代码</h1>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+#include&lt;windows.h&gt;
+#include&lt;conio.h&gt;
+#include&lt;iomanip&gt;
+#include&lt;iostream&gt;
+#include&lt;ctime&gt;
+#include&lt;windows.h&gt;
+#include&lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;windows.h&gt;
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &lt;conio.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;ctime&gt;
+#include&lt;mmsystem.h&gt;
+//#pragma comment(lib, &quot;winmm.lib&quot;)
+using namespace std;
+int e,g=50,o1=3000,o2,e1=3000,e2,o1_max=3000,Lv;//金币：g, 晶坷垃 jkl
+int s,l,sl,pj,dd,i,ts,k,tk,tke,tkk,xx,bt,gs,fj,fje,jjj,jjje;
+int fk,jg,jk,hd,hde,jd,jde,zx,iii,pz,lzpz,pze,lzpze;
+int dl,dle,jkl,jkl_kc,tt,zd,reblood,water;
+//bdaguai
+int Rand;
+int dgsr;
+int fy=15;
+int gj=30;
+int Rand2;
+int hp=100;
+int gwhp;
+int moneyrand;
+int jbrand;
+int jklrand;
+int mjrand;
+int gfrand;
+int grand;
+int frand;
+int dgcs;
+//bdaguai
+int hxcs;
+//kaibx
+int ksr;
+int gbrand1;
+int jklrand1;
+int Rand1;
+int gfrand1;
+int grand1;
+int frand1;
+int kxcs;
+int zjay;//买到终极宝箱（终极奥义）1
+int fxjs;//买宝箱20次  （奉献精神）1
+int gwlr;//杀死20个怪  （怪物猎人）1
+int hxds;//买回血器5个 （回血大师）1
+int dgds;//打死十级怪物（打怪大师）1
+//（打怪大师）
+//（终极奥义）
+//（奉献精神）
+//（怪物猎人）
+//（回血大师）
+//kaibx
+//2048
+int game_answer=0;
+//2048
+char d,ch;
+bool beta;
+string ssss;
+//cj
+int qqqq;
+int www,jjj1,zzz,lll,vvv,hhh;
+int cjcs;
+//cj
+/*设置背景颜色*/int setBackColor(unsigned char bColor){
+    HANDLE hd = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbInfo;
+    GetConsoleScreenBufferInfo(hd, &amp;csbInfo);
+    return SetConsoleTextAttribute(hd, (bColor &lt;&lt; 4) | (csbInfo.wAttributes&amp;~0xF0));
+}
+void appGotoXY(int x,int y)  //移动光标
+{
+    swap(x,y);
+    CONSOLE_SCREEN_BUFFER_INFO    csbiInfo;
+    HANDLE    hConsoleOut;
+    hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    GetConsoleScreenBufferInfo(hConsoleOut,&amp;csbiInfo);
+    csbiInfo.dwCursorPosition.X = x;
+    csbiInfo.dwCursorPosition.Y = y;
+    SetConsoleCursorPosition(hConsoleOut,csbiInfo.dwCursorPosition);
+}
+void appGetXY() //得到光标位置
+{
+    HANDLE hStdout;
+    CONSOLE_SCREEN_BUFFER_INFO pBuffer;
+    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    GetConsoleScreenBufferInfo(hStdout, &amp;pBuffer);
+    cout &lt;&lt; pBuffer.dwCursorPosition.X &lt;&lt;&quot; &quot;&lt;&lt; pBuffer.dwCursorPosition.Y &lt;&lt;endl;;
+}
+/*设置字体颜色*/int setTextColor(unsigned char fColor){
+    HANDLE hd = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbInfo;
+    GetConsoleScreenBufferInfo(hd, &amp;csbInfo);
+    return SetConsoleTextAttribute(hd, fColor | (csbInfo.wAttributes&amp;~0x0F));
+}
+void START(){
+    appGotoXY(0,0);
+    setBackColor(15);//大背景颜色
+    for(int i=1;i&lt;=26*80;i++)
+        cout&lt;&lt;&quot; &quot;;
+    appGotoXY(0,0);
+    cout&lt;&lt;&quot; &quot;;
+    appGotoXY(20,19);
+    setBackColor(7);//小背景颜色
+    for(int i=1;i&lt;=42;i++)
+        cout&lt;&lt;&quot; &quot;;
+    setTextColor(0);//字体颜色
+    appGotoXY(3,19);
+    printf(&quot;┏━━━━┳━━━━┳━━━━┳━━━━┓\n&quot;);
+    appGotoXY(4,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(5,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(6,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(7,19);
+    printf(&quot;┣━━━━╋━━━━╋━━━━╋━━━━┫\n&quot;);
+    appGotoXY(8,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(9,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(10,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(11,19);
+    printf(&quot;┣━━━━╋━━━━╋━━━━╋━━━━┫\n&quot;);
+    appGotoXY(12,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(13,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(14,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(15,19);
+    printf(&quot;┣━━━━╋━━━━╋━━━━╋━━━━┫\n&quot;);
+    appGotoXY(16,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(17,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(18,19);
+    printf(&quot;┃        ┃        ┃        ┃        ┃\n&quot;);
+    appGotoXY(19,19);
+    printf(&quot;┗━━━━┻━━━━┻━━━━┻━━━━┛\n&quot;);
+    //Sleep(100000);
+    return ;
+}
+inline int Get_X(int x,int y){
+    if(x==1)    return 5;
+    if(x==2)    return 9;
+    if(x==3)    return 13;
+    if(x==4)    return 17;
+}
+inline int Get_Y(int x,int y){
+    if(y==1)    return 24;
+    if(y==2)    return 34;
+    if(y==3)    return 44;
+    if(y==4)    return 54;
+}
+
+void HideCursor(){//隐藏光标
+    CONSOLE_CURSOR_INFO cursor_info = {1, 0};
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &amp;cursor_info);
+}
+
+int a[5][5];
+bool if_game_over(){
+    for(int i=1;i&lt;=4;i++)
+        for(int j=1;j&lt;=4;j++)
+            if(!a[i][j])
+                return 1;
+    for(int i=2;i&lt;=4;i++)
+        for(int j=1;j&lt;=4;j++){
+            if(a[j][i]==a[j][i-1])
+                return 1;
+            if(a[i][j]==a[i-1][j])
+                return 1;
+        }
+    return 0;
+}
+bool vis[20];
+
+void Pr_a_num_with_color(int x){
+    switch (x){/*
+        1 = 蓝色   9  = 淡蓝色
+        2 = 绿色   10 = 淡绿色
+        3 = 湖蓝色 11 = 淡浅绿色
+        4 = 红色   12 = 淡红色
+        5 = 紫色   13 = 淡紫色
+        6 = 黄色   14 = 淡黄色
+        7 = 白色   15 = 亮白色*/
+        case 2:setTextColor(9);printf(&quot;CE&quot;);setTextColor(0);break ;
+        case 4:setTextColor(10);printf(&quot;RE&quot;);setTextColor(0);break ;
+        case 8:setTextColor(11);printf(&quot;TLE&quot;);setTextColor(0);break ;
+        case 16:setTextColor(12);printf(&quot;MLE&quot;);setTextColor(0);break ;
+        case 32:setTextColor(13);printf(&quot;ILE&quot;);setTextColor(0);break ;
+        case 64:setTextColor(14);printf(&quot;OLE&quot;);setTextColor(0);break ;
+        case 128:setTextColor(15);printf(&quot;UKE&quot;);setTextColor(0);break ;
+        case 256:setTextColor(1);printf(&quot;WA&quot;);setTextColor(0);break ;
+        case 512:setTextColor(2);printf(&quot;AC&quot;);setTextColor(0);break ;
+        case 1024:setTextColor(3);printf(&quot;AU&quot;);setTextColor(0);break ;
+        case 2048:setTextColor(4);printf(&quot;AK&quot;);setTextColor(0);break ;
+    }
+}
+
+void Pr_all_num(){
+    for(int i=1;i&lt;=4;i++)
+        for(int j=1;j&lt;=4;j++){
+            int x=Get_X(i,j),y=Get_Y(i,j);
+            appGotoXY(x,y);
+            if(a[i][j]==0)
+                printf(&quot;    &quot;);
+            else{
+                Pr_a_num_with_color(a[i][j]);
+                //printf(&quot;%4d&quot;,a[i][j]);
+            }
+        }
+    return ;
+}
+//**************************************************
+bool clear_up(){
+    bool bb=0;
+    for(int k=1;k&lt;=4;k++)
+        for(int i=3;i&gt;=1;i--)
+            for(int j=1;j&lt;=4;j++)
+                if(a[i][j]==0&amp;&amp;a[i+1][j]!=0){
+                    swap(a[i][j],a[i+1][j]);
+                    bb=1;
+                }
+    if(bb==1)
+        return 1;
+    return 0;
+}
+bool do_up(){
+    if(!if_game_over())
+        return 1;
+    bool bb=1;
+    if(!clear_up())//没空间不能移动
+        bb=0;
+    for(int j=1;j&lt;=4;j++){
+        int i=1;
+        while(i&lt;4){
+            if(!a[i+1][j])
+                break ;
+            if(a[i][j]!=a[i+1][j]){
+                i++;
+                continue ;
+            }
+            if(a[i][j]==a[i+1][j]){
+                a[i][j]+=a[i+1][j]; game_answer+=a[i+1][j];
+                a[i+1][j]=0;
+                i+=2;
+                bb=1;//可以合并
+            }
+        }
+    }
+    if(bb==0)//没空间又不能合并
+        return 0;
+    clear_up();
+    return 1;
+}
+//**************************************************
+bool clear_down(){
+    bool bb=0;
+    for(int k=1;k&lt;=4;k++)
+        for(int i=2;i&lt;=4;i++)
+            for(int j=1;j&lt;=4;j++)
+                if(a[i][j]==0&amp;&amp;a[i-1][j]!=0){
+                    swap(a[i][j],a[i-1][j]);
+                    bb=1;
+                }
+    if(bb==1)
+        return 1;
+    return 0;
+}
+bool do_down(){
+    if(!if_game_over())
+        return 1;
+    bool bb=1;
+    if(!clear_down())
+        bb=0;
+    for(int j=1;j&lt;=4;j++){
+        int i=4;
+        while(i&gt;1){
+            if(!a[i-1][j])
+                break ;
+            if(a[i][j]!=a[i-1][j]){
+                i--;
+                continue ;
+            }
+            if(a[i][j]==a[i-1][j]){
+                a[i][j]+=a[i-1][j];  game_answer+=a[i-1][j];
+                a[i-1][j]=0;
+                i-=2;
+                bb=1;
+            }
+        }
+    }
+    if(bb==0)
+        return 0;
+    clear_down();
+    return 1;
+}
+//**************************************************
+bool clear_left(){
+    bool bb=0;
+    for(int k=1;k&lt;=4;k++)
+        for(int i=1;i&lt;=4;i++)
+            for(int j=3;j&gt;=1;j--)
+                if(a[i][j]==0&amp;&amp;a[i][j+1]!=0){
+                    swap(a[i][j],a[i][j+1]);
+                    bb=1;
+                }
+    if(bb==1)
+        return 1;
+    return 0;
+}
+bool do_left(){
+    if(!if_game_over())
+        return 1;
+    bool bb=1;
+    if(!clear_left())
+        bb=0;
+    for(int i=1;i&lt;=4;i++){
+        int j=1;
+        while(j&lt;4){
+            if(!a[i][j+1])
+                break ;
+            if(a[i][j]!=a[i][j+1]){
+                j++;
+                continue ;
+            }
+            if(a[i][j]==a[i][j+1]){
+                a[i][j]+=a[i][j+1];  game_answer+=a[i][j+1];
+                a[i][j+1]=0;
+                j+=2;
+                bb=1;
+            }
+        }
+    }
+    if(bb==0)
+        return 0;
+    clear_left();
+    return 1;
+}
+//**************************************************
+bool clear_right(){
+    bool bb=0;
+    for(int k=1;k&lt;=4;k++)
+        for(int i=1;i&lt;=4;i++)
+            for(int j=2;j&lt;=4;j++)
+                if(a[i][j]==0&amp;&amp;a[i][j-1]!=0){
+                    swap(a[i][j],a[i][j-1]);
+                    bb=1;
+                }
+    if(bb==1)
+        return 1;
+    return 0;
+}
+bool do_right(){
+    if(!if_game_over())
+        return 1;
+    bool bb=1;
+    if(!clear_right())
+        bb=0;
+    for(int i=1;i&lt;=4;i++){
+        int j=4;
+        while(j&gt;1){
+            if(!a[i][j-1])
+                break ;
+            if(a[i][j]!=a[i][j-1]){
+                j--;
+                continue ;
+            }
+            if(a[i][j]==a[i][j-1]){
+                a[i][j]+=a[i][j-1];  game_answer+=a[i][j-1];
+                a[i][j-1]=0;
+                j-=2;
+                bb=1;
+            }
+        }
+    }
+    if(bb==0)
+        return 0;
+    clear_right();
+    return 1;
+}
+void END(){
+    setBackColor(15);
+    appGotoXY(21,30);
+    char s_1[30]=&quot;游戏结束，您的得分为：&quot;;
+    for(int i=0;i&lt;22;i++){
+        cout&lt;&lt;s_1[i];
+        Sleep(30);
+    }
+    Sleep(500);
+    cout&lt;&lt;game_answer&lt;&lt;endl;
+    g+=game_answer;
+    Sleep(500);
+    appGotoXY(22,30);
+    char s_2[30]=&quot;请按任意键结束游戏。&quot;;
+    for(int i=0;i&lt;20;i++){
+        cout&lt;&lt;s_2[i];
+        Sleep(30);
+    }
+}
+void rlsb(){
+    srand(time(0));
+    HideCursor();//隐藏光标
+
+    START();
+
+    while(if_game_over()){
+        //system(&quot;cls&quot;);
+        //appGotoXY(0,0);
+
+        int bb=0;//bb判断是否有空位
+        for(int i=1;i&lt;=4;i++)
+            for(int j=1;j&lt;=4;j++)
+                if(!a[i][j])
+                    bb=1;
+        if(bb==1){
+            int num_new=rand()%10+1;//新出现4还是2
+            if(num_new==1)  num_new=4;
+            else    num_new=2;
+            int place_new=0,x=0,y=0;
+            while(1){
+                place_new=rand()%16+1;
+                x=(place_new-1)/4+1,y=place_new%4+1;
+                if(!a[x][y])
+                    break ;
+            }
+            a[x][y]=num_new;
+        }
+
+        Pr_all_num();
+
+    again:
+        char ch_1=getch(),ch_2;
+        if(ch_1!=-32){
+            appGotoXY(20,30);
+            char s_1[30]=&quot;您输入的字符不合法。&quot;;
+            for(int i=0;i&lt;20;i++){
+                cout&lt;&lt;s_1[i];
+                Sleep(1);
+            }
+            Sleep(200);
+            for(int i=1;i&lt;=19;i++)
+                printf(&quot;\b \b&quot;);
+            goto again;
+        }
+        ch_2=getch();
+        if(ch_2==72)//up
+            if(!do_up())
+                goto again;
+        if(ch_2==80)//down
+            if(!do_down())
+                goto again;
+        if(ch_2==75)//left
+            if(!do_left())
+                goto again;
+        if(ch_2==77)//right
+            if(!do_right())
+                goto again;
+        appGotoXY(20,30);
+        printf(&quot;您当前的总分为:%d&quot;,game_answer);
+    }
+    appGotoXY(20,30);
+    printf(&quot;                     &quot;);
+    END();
+    return;
+}
+void cj(){
+	system(&quot;cls&quot;);
+	while(1){
+		giao:
+		system(&quot;cls&quot;);
+		printf(&quot;0 退出\n&quot;);
+		printf(&quot;1 查看几率\n&quot;);
+		printf(&quot;2 抽奖\n&quot;);
+		printf(&quot;纯属娱乐\n&quot;);
+		scanf(&quot;%d&quot;,&amp;qqqq);
+		if(qqqq==0) return;
+		if(qqqq==1){
+			system(&quot;cls&quot;);
+			printf(&quot;200次%65几率抽到金色传说，%10抽中透明无敌\n&quot;);
+			printf(&quot;100次%30几率抽到金色传说，%5抽中透明无敌\n&quot;);
+			printf(&quot;50次%15几率抽到金色传说，%2抽中透明无敌\n&quot;);
+			printf(&quot;10次%4几率抽到金色传说，%1抽中透明无敌\n&quot;);
+			printf(&quot;5次%2几率抽中金色传说，%0.5抽中透明无敌\n&quot;);
+			printf(&quot;1次%0.4几率抽中金色传说，%0.1抽中透明无敌\n&quot;);
+			Sleep(5000);
+		}else if(qqqq==2){
+			printf(&quot;输入次数：\n&quot;);
+			scanf(&quot;%d&quot;,&amp;cjcs);
+			if(g&lt;cjcs*5){
+				system(&quot;cls&quot;);
+				printf(&quot;钱不够\n&quot;);
+				Sleep(5000);
+				goto giao;
+			}else{
+				system(&quot;cls&quot;);
+				g-=cjcs*5;
+				while(cjcs--){
+					int x=std::rand()%1000*rand()%10000;
+					if(x&lt;=1){
+						printf(&quot;透明无敌！！！\n&quot;);
+						MessageBox(NULL,&quot;你竟然抽中了爆率为%0.1的透明无敌！&quot;,&quot;透明无敌！&quot;,MB_OK);
+						www++;
+						goto f;
+					}
+					if(x&lt;=30){
+						printf(&quot;金色传说！\n&quot;);
+						MessageBox(NULL,&quot;金色传说&quot;,&quot;nb&quot;,MB_OK);
+						jjj1++;
+						goto f;
+					}
+					if(x&lt;=100){
+						printf(&quot;紫色史诗\n&quot;);
+						zzz++;
+						goto f;
+					}
+					if(x&lt;=1000){
+						printf(&quot;蓝色精英\n&quot;);
+						lll++;
+						goto f;
+					}
+					if(x&lt;=2000){
+						printf(&quot;绿色普通\n&quot;);
+						vvv++;
+						goto f;
+					}
+					printf(&quot;灰色渣渣\n&quot;),hhh++;
+					f:
+					Sleep(30);
+				}
+				printf(&quot;透明无敌：%d\n&quot;,www);
+				printf(&quot;金色传说：%d\n&quot;,jjj1);
+				printf(&quot;紫色史诗：%d\n&quot;,zzz);
+				printf(&quot;蓝色精英：%d\n&quot;,lll);
+				printf(&quot;绿色普通：%d\n&quot;,vvv);
+				printf(&quot;灰色渣渣：%d\n&quot;,hhh);
+				Sleep(3000);
+				goto giao;
+			}
+		}
+	}
+}
+void kaibx(){
+	bugo:
+	if(kxcs&gt;=20&amp;&amp;fxjs!=1){
+		fxjs=1;
+		system(&quot;cls&quot;);
+		printf(&quot;恭喜你取得了奉献精神的成就！！！\n&quot;);
+		Sleep(5000);
+		printf(&quot;奖励50晶坷垃,150金币&quot;);
+		g+=150;
+		jkl+=50;
+		Sleep(5000);
+	}
+	system(&quot;cls&quot;);
+	printf(&quot;▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉\n&quot;);
+	printf(&quot;▉                宝箱                ▉\n&quot;);
+	printf(&quot;▉1.  木头宝箱（10金币）              ▉\n&quot;);
+	printf(&quot;▉2.  白银宝箱（20金币）              ▉\n&quot;);
+	printf(&quot;▉3.  黄金宝箱（20金币，10晶坷垃）    ▉\n&quot;);
+	printf(&quot;▉4.  钻石宝箱（50金币，20晶坷垃）    ▉\n&quot;);
+	printf(&quot;▉5.  电击宝箱（100金币，40晶坷垃）   ▉\n&quot;);
+	printf(&quot;▉6.  雷电宝箱（500金币，100晶坷垃）  ▉\n&quot;);
+	printf(&quot;▉7.  终极宝箱（5000金币，500晶坷垃） ▉\n&quot;);
+	printf(&quot;▉8.  退出                            ▉\n&quot;);
+	printf(&quot;▉▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▉\n&quot;);
+	printf(&quot;  金币：%d                              \n&quot;,g);
+	printf(&quot;  晶坷垃：%d                            \n&quot;,jkl);
+	printf(&quot;  开箱次数：%d                          \n&quot;,kxcs);
+	printf(&quot;▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉\n&quot;);
+	scanf(&quot;%d&quot;,&amp;ksr);
+	if(ksr==0){
+		return;
+	}
+	if(ksr==1){
+		if(g&gt;=10){
+			kxcs++;
+			g-=10;
+			Rand1=std::rand()%2;
+			if(Rand1==1){
+				gbrand1=std::rand()%15+5;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				jklrand1=std::rand()%6+2;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==2){
+		if(g&gt;=20){
+			kxcs++;
+			g-=20;
+			Rand1=std::rand()%2;
+			if(Rand1==1){
+				gbrand1=std::rand()%25+10;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				jklrand1=std::rand()%15+5;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==3){
+		if(g&gt;=20 &amp;&amp; jkl&gt;=10){
+			kxcs++;
+			g-=20;
+			jkl-=10;
+			Rand1=std::rand()%3;
+			if(Rand1==1){
+				gbrand1=std::rand()%35+25;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else if(Rand1==2){
+				jklrand1=std::rand()%15+15;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				gfrand=std::rand()%2;
+				if(gfrand==1){
+					system(&quot;cls&quot;);
+					grand1=std::rand()%5+3;
+					printf(&quot;奖励%d攻击力&quot;,grand1);
+					gj+=grand1;
+					Sleep(4000);
+					goto bugo;
+				}else{
+					system(&quot;cls&quot;);
+					frand1=std::rand()%5+3;
+					printf(&quot;奖励%d防御力&quot;,frand1);
+					fy+=frand1;
+					Sleep(4000);
+					goto bugo;
+				}
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==4){
+		if(g&gt;=50 &amp;&amp; jkl&gt;=20){
+			kxcs++;
+			g-=50;
+			jkl-=20;
+			Rand1=std::rand()%3;
+			if(Rand1==1){
+				gbrand1=std::rand()%60+30;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else if(Rand1==2){
+				jklrand1=std::rand()%40+30;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				gfrand=std::rand()%2;
+				if(gfrand==1){
+					system(&quot;cls&quot;);
+					grand1=std::rand()%10+5;
+					printf(&quot;奖励%d攻击力&quot;,grand1);
+					gj+=grand1;
+					Sleep(4000);
+					goto bugo;
+				}else{
+					system(&quot;cls&quot;);
+					frand1=std::rand()%10+5;
+					printf(&quot;奖励%d防御力&quot;,frand1);
+					fy+=frand1;
+					Sleep(4000);
+					goto bugo;
+				}
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==5){
+		if(g&gt;=100 &amp;&amp; jkl&gt;=40){
+			kxcs++;
+			g-=100;
+			jkl-=40;
+			Rand1=std::rand()%3;
+			if(Rand1==1){
+				gbrand1=std::rand()%190+80;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else if(Rand1==2){
+				jklrand1=std::rand()%100+40;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				gfrand=std::rand()%2;
+				if(gfrand==1){
+					system(&quot;cls&quot;);
+					grand1=std::rand()%20+5;
+					printf(&quot;奖励%d攻击力&quot;,grand1);
+					gj+=grand1;
+					Sleep(4000);
+					goto bugo;
+				}else{
+					system(&quot;cls&quot;);
+					frand1=std::rand()%20+5;
+					printf(&quot;奖励%d防御力&quot;,frand1);
+					fy+=frand1;
+					Sleep(4000);
+					goto bugo;
+				}
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==6){
+		if(g&gt;=500 &amp;&amp; jkl&gt;=100){
+			kxcs++;
+			g-=500;
+			jkl-=100;
+			Rand1=std::rand()%3;
+			if(Rand1==1){
+				gbrand1=std::rand()%700+250;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else if(Rand1==2){
+				jklrand1=std::rand()%250+70;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				gfrand=std::rand()%2;
+				if(gfrand==1){
+					system(&quot;cls&quot;);
+					grand1=std::rand()%30+10;
+					printf(&quot;奖励%d攻击力&quot;,grand1);
+					gj+=grand1;
+					Sleep(4000);
+					goto bugo;
+				}else{
+					system(&quot;cls&quot;);
+					frand1=std::rand()%30+10;
+					printf(&quot;奖励%d防御力&quot;,frand1);
+					fy+=frand1;
+					Sleep(4000);
+					goto bugo;
+				}
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+	else if(ksr==7){
+		if(g&gt;=5000 &amp;&amp; jkl&gt;=500){
+			if(zjay!=1){
+				zjay=1;
+				system(&quot;cls&quot;);
+				printf(&quot;恭喜你取得了终极奥义的成就！！！\n&quot;);
+				Sleep(5000);
+				printf(&quot;奖励100晶坷垃,500金币&quot;);
+				g+=500;
+				jkl+=100;
+				Sleep(5000);
+			}
+			kxcs++;
+			g-=5000;
+			jkl-=500;
+			Rand1=std::rand()%3;
+			if(Rand1==1){
+				gbrand1=std::rand()%5000+3500;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d金币\n&quot;,gbrand1);
+				g+=gbrand1;
+				Sleep(4000);
+				goto bugo;
+			}else if(Rand1==2){
+				jklrand1=std::rand()%2000+700;
+				system(&quot;cls&quot;);
+				printf(&quot;奖励%d晶坷垃&quot;,jklrand1);
+				jkl+=jklrand1;
+				Sleep(4000);
+				goto bugo;
+			}else{
+				gfrand=std::rand()%2;
+				if(gfrand==1){
+					system(&quot;cls&quot;);
+					grand1=std::rand()%100+30;
+					printf(&quot;奖励%d攻击力&quot;,grand1);
+					gj+=grand1;
+					Sleep(4000);
+					goto bugo;
+				}else{
+					system(&quot;cls&quot;);
+					frand1=std::rand()%100+30;
+					printf(&quot;奖励%d防御力&quot;,frand1);
+					fy+=frand1;
+					Sleep(4000);
+					goto bugo;
+				}
+			}
+		}else{
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(4000);
+			goto bugo;
+		}
+	}
+}
+void bdaguai(){
+	shengli:
+	if(dgcs&gt;=20&amp;&amp;gwlr!=1){
+		gwlr=1;
+		system(&quot;cls&quot;);
+		printf(&quot;恭喜你取得了怪物猎人的成就！！！\n&quot;);
+		Sleep(5000);
+		printf(&quot;奖励20晶坷垃,100金币&quot;);
+		g+=100;
+		jkl+=20;
+		Sleep(5000);
+	}
+	system(&quot;cls&quot;);
+	printf(&quot;杀死怪物：%d\n&quot;,dgcs);
+	printf(&quot;血量：%d\n&quot;,hp);
+	printf(&quot;攻击力：%d\n&quot;,gj);
+	printf(&quot;防御力：%d\n&quot;,fy);
+	printf(&quot;1. 购买血瓶(10$/20hp)\n&quot;);
+	printf(&quot;2. 返回\n&quot;);
+	printf(&quot;3. 继续\n&quot;);
+	scanf(&quot;%d&quot;,&amp;dgsr);
+	if(dgsr==2) return;
+	else if(dgsr==1){
+		if(g&lt;20){
+			system(&quot;cls&quot;);
+			printf(&quot;钱不够\n&quot;);
+			Sleep(2000);
+			goto shengli;
+		}else{
+			g-=10;
+			hp+=20;
+			system(&quot;cls&quot;);
+			printf(&quot;回血成功\n&quot;);
+			Sleep(2000);
+			goto shengli;
+		}
+	}else if(dgsr==3){
+		system(&quot;cls&quot;);
+		if(hp&lt;=0){
+			system(&quot;cls&quot;);
+			printf(&quot;血量不足无法冒险\n&quot;);
+			printf(&quot;1. 购买血瓶(10$/20hp)\n&quot;);
+			printf(&quot;2. 返回\n&quot;);
+			scanf(&quot;%d&quot;,&amp;dgsr);
+			if(dgsr==2) return;
+			else{
+				if(g&lt;20){
+					system(&quot;cls&quot;);
+					printf(&quot;钱不够\n&quot;);
+					Sleep(2000);
+					goto shengli;
+				}else{
+					g-=10;
+					hp+=20;
+					system(&quot;cls&quot;);
+					printf(&quot;回血成功\n&quot;);
+					Sleep(2000);
+					goto shengli;
+				}
+			}
+			return;
+		}
+		Rand=std::rand()%10+1;
+		gwhp=Rand*30;
+		printf(&quot;你遇到了%d级怪物\n&quot;,Rand);
+		printf(&quot;血量：%d\n&quot;,hp);
+		printf(&quot;攻击力：%d\n&quot;,gj);
+		printf(&quot;防御力：%d\n&quot;,fy);
+		printf(&quot;怪物血量：%d\n&quot;,gwhp);
+		printf(&quot;怪物攻击力：%d\n&quot;,Rand*10);
+		printf(&quot;怪物防御力：%d\n&quot;,Rand*5);
+		printf(&quot;1. 迎战\n&quot;);
+		printf(&quot;2. 逃跑\n&quot;);
+		scanf(&quot;%d&quot;,&amp;dgsr);
+		if(dgsr==2) goto shengli;
+		else{
+			while(1){
+				system(&quot;cls&quot;);
+				printf(&quot;血量：%d\n&quot;,hp);
+				printf(&quot;攻击力：%d\n&quot;,gj);
+				printf(&quot;防御力：%d\n&quot;,fy);
+				printf(&quot;怪物血量：%d\n&quot;,gwhp);
+				printf(&quot;怪物攻击力：%d\n&quot;,Rand*10);
+				printf(&quot;怪物防御力：%d\n&quot;,Rand*5);
+				printf(&quot;1. 攻击\n&quot;);
+				printf(&quot;2. 防御\n&quot;);
+				scanf(&quot;%d&quot;,&amp;dgsr);
+				if(dgsr==1){
+					system(&quot;cls&quot;);
+					Rand2=std::rand()%5;
+					if(Rand2==0){
+						system(&quot;cls&quot;);
+						printf(&quot;怪物暴击\n&quot;);
+						hp-=(Rand*20-fy);
+						if(hp&lt;=0){
+							system(&quot;cls&quot;);
+							printf(&quot;KO\n&quot;);
+							Sleep(2000);
+							return;
+						}
+						Sleep(2000);
+					}else{
+						hp-=(Rand*10-fy);
+						if(hp&lt;=0){
+							system(&quot;cls&quot;);
+							printf(&quot;KO\n&quot;);
+							Sleep(2000);
+							return;
+						}
+					}
+					Rand2=std::rand()%5;
+					if(Rand2==0){
+						system(&quot;cls&quot;);
+						printf(&quot;暴击&quot;);
+						gwhp-=(gj*2-Rand*5);
+						if(gwhp&lt;=0){
+							dgcs++;
+							if(Rand==10) dgds=1;
+							system(&quot;cls&quot;);
+							printf(&quot;胜利\n&quot;);
+							mjrand=std::rand()%3;
+							if(mjrand==0){
+								jbrand=std::rand()%(Rand*15)+5;
+								printf(&quot;奖励%d金币\n&quot;,jbrand);
+								g+=jbrand;
+							}else if(mjrand==1){
+								jklrand=std::rand()%(Rand*10)+1;
+								printf(&quot;奖励%d晶坷垃\n&quot;,jklrand);
+								jkl+=jklrand;
+							}else{
+								gfrand=std::rand()%2;
+								if(gfrand==0){
+									grand=std::rand()%(Rand*3)+1;
+									printf(&quot;增加%d攻击力\n&quot;,grand);
+									gj+=grand;
+								}else{
+									frand=std::rand()%(Rand*3)+1;
+									printf(&quot;增加%d防御力\n&quot;,frand);
+									fy+=frand;
+								}
+							}
+							Sleep(2000);
+							goto shengli;
+						}
+						Sleep(2000);
+					}else{
+						gwhp-=(gj-Rand*5);
+						if(gwhp&lt;=0){
+							dgcs++;
+							if(Rand==10 &amp;&amp; dgds!=1){
+								dgds=1;
+								system(&quot;cls&quot;);
+								printf(&quot;恭喜你取得了打怪大师的成就！！！\n&quot;);
+								Sleep(5000);
+								printf(&quot;奖励200晶坷垃,1000金币&quot;);
+								g+=1000;
+								jkl+=200;
+								Sleep(5000);
+							}
+							system(&quot;cls&quot;);
+							printf(&quot;胜利\n&quot;);
+							mjrand=std::rand()%5;
+							if(mjrand==0){
+								jbrand=std::rand()%(Rand*15)+5;
+								printf(&quot;奖励%d金币\n&quot;,jbrand);
+								g+=jbrand;
+
+							}else if(mjrand==1){
+								jklrand=std::rand()%(Rand*10)+5;
+								printf(&quot;奖励%d晶坷垃\n&quot;,jklrand);
+								jkl+=jklrand;
+							}else{
+								gfrand=std::rand()%2;
+								if(gfrand==0){
+									grand=std::rand()%(Rand*3)+1;
+									printf(&quot;增加%d攻击力\n&quot;,grand);
+									gj+=grand;
+								}else{
+									frand=std::rand()%(Rand*3)+1;
+									printf(&quot;增加%d防御力\n&quot;,frand);
+									fy+=frand;
+								}
+							}
+							Sleep(2000);
+							goto shengli;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+void xs(char ccc){
+	cout&lt;&lt;&quot;金币数($)：&quot;&lt;&lt;g&lt;&lt;endl;
+	cout&lt;&lt;&quot;晶坷垃(G)：&quot;&lt;&lt;jkl&lt;&lt;endl;
+	cout&lt;&lt;&quot;我方人数：&quot;&lt;&lt;o2+jde&lt;&lt;endl;
+	cout&lt;&lt;&quot;敌方人数：&quot;&lt;&lt;e2+jd&lt;&lt;endl;
+	cout&lt;&lt;&quot;我方血量：&quot;&lt;&lt;o1&lt;&lt;endl;
+	cout&lt;&lt;&quot;敌方血量：&quot;&lt;&lt;e1&lt;&lt;endl;
+	if(beta) cout&lt;&lt;&quot;主塔级别：&quot;&lt;&lt;Lv&lt;&lt;endl;
+	if(ccc=='3') cout&lt;&lt;&quot;已生存天数：&quot;&lt;&lt;iii&lt;&lt;endl;
+	if(zx!=0) cout&lt;&lt;&quot;已处于诈降状态&quot;&lt;&lt;endl;
+	return ;
+}
+void bg();
+void aa(string sssss){
+	if(e1&lt;1000) bg();
+	if(ssss==&quot;16391639&quot;){
+		g=50000;
+		e1=1000000;
+		hd=10;
+		o1=5000;
+	}
+	if(ssss!=&quot;test&quot;&amp;&amp;ssss!=&quot;16391639&quot;){
+		cout&lt;&lt;&quot;在千年以前，有一群人类被感染成了异种\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;它们变得与常人不同,拥有更强大的力量与更强大的身体\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;正常人类带着排斥接受着它们\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;不知过了多久，人类异种窃取了正常人类的技术，但仍然没能继承人类的人性\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;人类异种YZ带着他的亲卫队，妄图与创世主CC抗衡，夺取世界能量的来源——定界石\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;那次人类使出了全力对抗异种\n&quot;;
+		Sleep(2000);
+		cout&lt;&lt;&quot;双方死伤惨重,人类花了200年才恢复过来\n&quot;;
+		cout&lt;&lt;&quot;而人类异种从此销声匿迹\n&quot;;
+		Sleep(2000);
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;但现在，他们卷土重来了！！！&quot;;
+		Sleep(2000);
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;作为人类守护联盟的盟主，你能否担起重任，像千年以前的CC一样拯救世界？&quot;;
+		Sleep(2000);
+	}
+	while(true){
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;请选择模式\n&quot;;
+		cout&lt;&lt;&quot;1 default:最后堡垒\n&quot;;
+		cout&lt;&lt;&quot;2 beta:失落城邦\n&quot;;
+		ch=getch();
+		system(&quot;cls&quot;);
+		if(ch=='1'){
+			if(MessageBox(NULL,&quot;你真的要进入default模式吗？&quot;,&quot;提示&quot;,MB_YESNO)==IDYES){
+				cout&lt;&lt;&quot;这是人类最后的希望...\n&quot;;
+				Sleep(2000);
+				cout&lt;&lt;&quot;你将坚守最后的城池，保卫身后那颗普蓝色的定界石\n&quot;;
+				Sleep(3500);
+				cout&lt;&lt;&quot;这个阶段，史称\n&quot;;
+				Sleep(1000);
+				system(&quot;cls&quot;);
+				cout&lt;&lt;&quot;最后堡垒!!!\n&quot;;
+				break;
+			}
+		}
+		else if(ch=='2'){
+			if(MessageBox(NULL,&quot;你真的要进入beta模式吗？&quot;,&quot;提示&quot;,MB_YESNO)==IDYES){
+				cout&lt;&lt;&quot;人类从曾经摔倒的地方重新站起\n&quot;;
+				Sleep(2000);
+				cout&lt;&lt;&quot;我们即将迎来第一场反击战!\n&quot;;
+				Sleep(2000);
+				cout&lt;&lt;&quot;目光灼灼地望向前方，那曾是我们的家园\n&quot;;
+				Sleep(2000);
+				cout&lt;&lt;&quot;这个阶段，史称\n&quot;;
+				Sleep(2000);
+				system(&quot;cls&quot;);
+				cout&lt;&lt;&quot;失落城邦!!!\n&quot;;
+				beta=true;
+				break;
+			}
+		}
+	}
+	Sleep(2000);
+	while(true){
+		system(&quot;cls&quot;);
+		if(!beta){
+			cout&lt;&lt;&quot;战争 7.5.7\n&quot;;
+			cout&lt;&lt;&quot;1 攻略\n&quot;;
+			cout&lt;&lt;&quot;2 各世界属性\n&quot;;
+			cout&lt;&lt;&quot;3 造物主模式\n&quot;;
+			cout&lt;&lt;&quot;4 生存模式\n&quot;;
+			cout&lt;&lt;&quot;5 衰竭模式\n&quot;;
+			cout&lt;&lt;&quot;6 普通模式\n&quot;;
+		}else{
+			cout&lt;&lt;&quot;战争-beta 1.2.1\n&quot;;//beta模式版本号-6,-3,-6
+			cout&lt;&lt;&quot;开始\n&quot;;
+		}
+		ch=getch();
+		if(beta){
+			system(&quot;cls&quot;);
+			g=200;
+			jkl=50;
+			e1=8000;
+			o1=5000;
+			o1_max=5000;
+			break;
+		}
+		if(!beta&amp;&amp;ch=='1'){
+			cout&lt;&lt;char(7);
+			cout&lt;&lt;&quot;首先，你可以一直按0大约10次，攒到大约200\n&quot;;
+			cout&lt;&lt;&quot;然后，你可以建一层护盾和一个哨兵塔，用来进攻\n&quot;;
+			cout&lt;&lt;&quot;接着，继续攒钱，建高射炮来防御坦克及飞机\n&quot;;
+			cout&lt;&lt;&quot;最后，只需要在建筑有破损时重建就行了\n&quot;;
+			getch();
+		}
+		else if(!beta&amp;&amp;ch=='2'){
+			system(&quot;cls&quot;);
+			cout&lt;&lt;&quot;造物主模式初始资源很多\n&quot;;
+			cout&lt;&lt;&quot;生存模式资源中等\n&quot;;
+			cout&lt;&lt;&quot;衰竭模式资源匮乏，每回合我方扣固定的100血量\n&quot;;
+			Sleep(5000);
+		}
+		else if(!beta&amp;&amp;ch=='3'){
+			system(&quot;cls&quot;);
+			g=10000;
+			jkl=500;
+			e1=100000;
+			hd=10;
+			o1=5000;
+			o1_max=5000;
+			break;
+		}
+		else if(!beta&amp;&amp;ch=='4'){
+			system(&quot;cls&quot;);
+			g=1000;
+			e1=100000;
+			hd=5;
+			o1=5000;
+			o1_max=5000;
+			break;
+		}
+		else if(!beta&amp;&amp;ch=='5'){
+			system(&quot;cls&quot;);
+			e=100;
+			break;
+		}
+		else if(!beta&amp;&amp;ch=='@'){
+			cout&lt;&lt;char(7)&lt;&lt;char(7)&lt;&lt;char(7)&lt;&lt;char(7);
+			cout&lt;&lt;&quot;此版本已上传至永远的CC的博客\n&quot;;
+			Sleep(1500);
+		}
+		else if(!beta&amp;&amp;ch=='6'){
+			system(&quot;cls&quot;);
+			g=200;
+			jkl=50;
+			e1=8000;
+			o1=5000;
+			o1_max=5000;
+			break;
+		}
+		else cout&lt;&lt;&quot;不要乱输\n&quot;,Sleep(1500);
+	}
+	system(&quot;cls&quot;);
+	if(ssss!=&quot;test&quot;){
+		cout&lt;&lt;&quot;加载中...&quot;;
+		cout&lt;&lt;endl;
+		srand(time(0));
+		xx=rand()%int(rand?12:11);
+		switch(xx){
+			case 0:cout&lt;&lt;&quot;高射炮不仅可以打飞机，把它压下来也可以打地面敌人！&quot;;break;
+			case 1:cout&lt;&lt;&quot;迫击炮不仅可以打小兵，还能打敌方基地！&quot;;break;
+			case 2:cout&lt;&lt;&quot;小兵打敌方基地的伤害十分可观。&quot;;break;
+			case 3:cout&lt;&lt;&quot;导弹可以直接打对方的基地！&quot;;break;
+			case 4:cout&lt;&lt;&quot;千万别让小兵接近你的基地，你的建筑十分危险！&quot;;break;
+			case 5:cout&lt;&lt;&quot;激光炮可以攻击小兵、坦克、飞机或直接进攻敌方，十分强大！&quot;;break;
+			case 6:cout&lt;&lt;&quot;护盾可以抵挡敌方的一次远程进攻哦！&quot;;break;
+			case 7:cout&lt;&lt;&quot;克隆法术可以将小兵数量变成原来的两倍，在关键时刻能起到意想不到的作用&quot;;break;
+			case 8:cout&lt;&lt;&quot;岩石地雷可以在五回合后炸死敌方所有小兵哦！&quot;;break;
+			case 9:cout&lt;&lt;&quot;晶坷垃是一种新型货币，不可与金币互换。&quot;;break;
+			case 10:cout&lt;&lt;&quot;头铁少年破盾，钻地少年清兵。但需要耗费晶坷垃，且没有动静。&quot;;break;
+			case 11:cout&lt;&lt;&quot;歼击机攻击力极高，无法被防御塔击毁，需要谨慎防备。&quot;;break;
+		}
+		cout&lt;&lt;'\n';
+		for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+		Beep(1500,200);
+		for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+		Beep(1500,200);
+		for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+		Beep(1500,200);
+		for(i=0;i&lt;=14;i++) cout&lt;&lt;'&lt;',Sleep(100);
+		Beep(2000,1000);
+		cout&lt;&lt;&quot; 100%&quot;;
+		Sleep(1500);
+		system(&quot;cls&quot;);
+	}else
+	{
+		cout&lt;&lt;&quot;ji guang pao (ji fang):&quot;;
+		cin&gt;&gt;jg;
+		cout&lt;&lt;&quot;di fang gong ji li:&quot;;
+		cin&gt;&gt;e;
+	}
+	//system(&quot;taskkill -f -im f_bgm.exe&quot;);
+	//system(&quot;start bgm.exe&quot;);
+	system(&quot;cls&quot;);
+	while(o1&gt;0&amp;&amp;e1&gt;0&amp;&amp;(sssss==&quot;16391639&quot;||ch=='3'||ch=='2'||g&lt;=100000&amp;&amp;o1&lt;=300000)){
+		int ttt=o2;
+		int fff=e2;
+		o1-=e;
+		int last_hp=o1;
+		int last_hpe=e1;
+		jkl++;
+		jkl+=jkl_kc;
+		water++;
+		xs(ch);
+		d=' ';
+		srand(time(NULL));
+		for(i=1;i&lt;=1+int(beta);i++){
+			l=rand()%30+1;
+			if(zx!=0){
+				zx--;
+				l=12;
+			}
+			if(l&gt;=0&amp;&amp;l&lt;=1){
+				sl=rand()%20+1;
+				cout&lt;&lt;sl&lt;&lt;&quot;个小兵出现了\n&quot;;
+				e2+=sl;
+			}
+			if(l&gt;=2&amp;&amp;l&lt;=3){
+				if(hd==0){
+					o1-=100;
+					cout&lt;&lt;&quot;一颗导弹在空中画出了一道完美的弧线\n&quot;;
+				}
+				else{
+					hd--;
+					cout&lt;&lt;&quot;一颗导弹炸毁了一层护盾\n&quot;;
+				}
+			}
+			if(l&gt;=4&amp;&amp;l&lt;=5){
+				if(o2==0)
+					if(tk!=0){
+						cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，炸毁一辆坦克\n&quot;;
+						tk--;
+					}
+					else if(hd!=0){
+						cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，炸毁了一层护盾\n&quot;;
+						hd--;
+					}
+					else{
+						cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，向你方飞来\n&quot;;
+						o1-=80;
+					}
+				else{
+					o2-=40;
+					if(o2&lt;0) o2=0;
+					cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，炸死一批小兵\n&quot;;
+				}
+			}
+			if(l&gt;=6&amp;&amp;l&lt;=7){
+				cout&lt;&lt;&quot;一块巨石忽忽悠悠地飞来\n&quot;;
+				o2-=35;
+				if(o2&lt;0) o2=0;
+			}
+			if(l&gt;=8&amp;&amp;l&lt;=9){
+				cout&lt;&lt;&quot;一颗狙击枪子弹射来，&quot;;
+				if(pj!=0){
+					cout&lt;&lt;&quot;一门迫击炮炸了\n&quot;;
+					pj--;
+				}
+				else if(jg!=0){
+					cout&lt;&lt;&quot;一门激光炮炸了\n&quot;;
+					jg--;
+				}
+				else if(ts!=0){
+					cout&lt;&lt;&quot;一门投石机炸了\n&quot;;
+					ts--;
+				}
+				else if(bt!=0){
+					cout&lt;&lt;&quot;一座哨兵塔炸了\n&quot;;
+					bt--;
+				}
+				else if(hd!=0){
+					cout&lt;&lt;&quot;一层护盾炸了\n&quot;;
+					hd--;
+				}
+				else{
+					cout&lt;&lt;&quot;扣血150点\n&quot;;
+					o1-=150;
+				}
+			}
+			if(l&gt;=10&amp;&amp;l&lt;=10){
+				srand(time(NULL));
+				sl=rand()%3+1;
+				if(sl==3) sl=2;
+				else sl=1;
+				cout&lt;&lt;sl&lt;&lt;&quot;辆坦克轰然出现\n&quot;;
+				tke+=sl;
+			}
+			if(l&gt;=11&amp;&amp;l&lt;=11){
+				if(beta){
+					cout&lt;&lt;&quot;咻！一架歼击机穿过云层\n&quot;;
+					jjje++;
+				}else cout&lt;&lt;&quot;这轮什么也没出现\n&quot;;
+			}
+			if(l&gt;=13&amp;&amp;l&lt;=13){
+				cout&lt;&lt;&quot;敌方建造了一个护盾\n&quot;;
+				hde++;
+			}
+			if(l&gt;=14&amp;&amp;l&lt;=15){
+				if(fj!=0){
+					cout&lt;&lt;&quot;高射炮向天空扫去，一架飞机掉了下来\n&quot;;
+					fj--;
+				}
+				else{
+					if(tk!=0){
+						cout&lt;&lt;&quot;高射炮向地面扫去，炸毁一辆坦克\n&quot;;
+						tk--;
+					}
+					else{
+						if(o2!=0){
+							cout&lt;&lt;&quot;高射炮向地面扫去，炸死一个小兵\n&quot;;
+							o2--;
+						}
+						else cout&lt;&lt;&quot;高射炮没有目标\n&quot;;
+					}
+				}
+			}
+			if(l&gt;=16&amp;&amp;l&lt;=16){
+				cout&lt;&lt;&quot;一架飞机出现了\n&quot;;
+				fje++;
+			}
+			if(l&gt;=17&amp;&amp;l&lt;=18){
+				cout&lt;&lt;&quot;瘟疫发生了\n&quot;;
+				o2/=2;
+			}
+			if(l&gt;=19&amp;&amp;l&lt;=19){
+				if(fj&gt;=2){
+					cout&lt;&lt;&quot;一束激光射向天空，两架飞机掉了下来\n&quot;;
+					fj-=2;
+				}
+				else{
+					if(fj==1){
+						cout&lt;&lt;&quot;一束激光射向天空，一架飞机掉了下来\n&quot;;
+						fj--;
+					}
+					else if(tk!=0&amp;&amp;o2!=0){
+						cout&lt;&lt;&quot;一束激光平射而来，击毁了&quot;&lt;&lt;min(3,tk)&lt;&lt;&quot;辆坦克，炸死&quot;&lt;&lt;min(20,o2)&lt;&lt;&quot;个小兵\n&quot;;
+						tk-=min(3,tk);
+						o2-=min(20,o2);
+					}
+					else{
+						if(tk!=0){
+							cout&lt;&lt;&quot;一束激光平射而来，击毁了&quot;&lt;&lt;min(3,tk)&lt;&lt;&quot;辆坦克\n&quot;;
+							tk-=min(3,tk);
+						}
+						else{
+							if(o2!=0){
+								cout&lt;&lt;&quot;一束激光平射而来，炸死&quot;&lt;&lt;min(20,o2)&lt;&lt;&quot;个小兵\n&quot;;
+								o2-=min(20,o2);
+							}
+							else if(hd!=0){
+								cout&lt;&lt;&quot;一束激光平射而来，一层护盾炸了\n&quot;;
+								hd--;
+							}
+							else{
+								cout&lt;&lt;&quot;一束激光向你方平射而来\n&quot;;
+								o1-=100;
+							}
+						}
+					}
+				}
+			}
+			if(l&lt;=20&amp;&amp;l&gt;=20){
+				cout&lt;&lt;&quot;对方使用了神秘的法术，小兵数量变成了两倍\n&quot;;
+				e2*=2;
+			}
+			if(l&lt;=21&amp;&amp;l&gt;=21){
+				cout&lt;&lt;&quot;这轮什么也没出现\n&quot;;
+				jde++;
+			}
+			if(l&gt;=12&amp;&amp;l&lt;=12||l&gt;=22&amp;&amp;l&lt;=23||l&gt;=28&amp;&amp;l&lt;=30){
+				cout&lt;&lt;&quot;这轮什么也没出现\n&quot;;
+			}
+			if(l&gt;=24&amp;&amp;l&lt;=25){
+				cout&lt;&lt;&quot;敌方建造了一个屏障\n&quot;;
+				pze++;
+			}
+			if(l&gt;=26&amp;&amp;l&lt;=26){
+				cout&lt;&lt;&quot;敌方建造了一个量子屏障\n&quot;;
+				lzpze++;
+			}
+			if(l&gt;=27&amp;&amp;l&lt;=27){
+				cout&lt;&lt;&quot;这轮什么也没出现\n&quot;;
+				dle++;
+			}
+			if(i==1) Sleep(2000);
+		}
+		dd=rand()%(beta?40:30)+1+jk*5;
+		cout&lt;&lt;&quot;你得到了&quot;&lt;&lt;dd&lt;&lt;&quot;个金币\n&quot;;
+		g+=dd;
+		Sleep(2000);
+		system(&quot;cls&quot;);
+		while(d!='0'){
+			xs(ch);
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;1   派出小兵 3$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             2   导弹 50$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;3   迫击炮 120$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             4   投石机 100$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;5   坦克 60$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             6   哨兵塔 100$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;7   高射炮 120$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             8   飞机 80$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;9   瘟疫 50$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             a   激光炮 180$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;b   护盾 80$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             c   克隆法术 80$/1&quot;;
+			if(ch=='3') cout&lt;&lt;&quot;禁用\n&quot;;
+			else cout&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;d   金矿开采机 50$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             e   间谍 80$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;f   诈降书 150$/1&quot;;
+			if(zx!=0) cout&lt;&lt;&quot;禁用&quot;;
+			else cout&lt;&lt;&quot;&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             g   屏障 2$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;h   量子屏障 10$/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             i   岩石地雷 50$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;j   晶坷垃开采器 5G/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;            k   头铁少年 5G/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;l   钻地少年 5G/1&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;             m   回血药水(回250) 10G+20$/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;n   回血器(一次回50) 30G+60$/1&quot;&lt;&lt;&quot;\n&quot;;
+			if(beta) cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;o   歼击机 120$+25G/1&quot;&lt;&lt;&quot;\n&quot;;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;p   打怪(实在不行去刷)&quot;&lt;&lt;endl;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;q   查看注释&quot;&lt;&lt;endl;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;r   开宝箱&quot;&lt;&lt;endl;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;s   查看成就&quot;&lt;&lt;endl;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;t   查看如何获得成就&quot;&lt;&lt;endl;
+			cout&lt;&lt;left&lt;&lt;setw(20)&lt;&lt;&quot;u   抽奖&quot;&lt;&lt;endl;
+			if(beta) cout&lt;&lt;&quot;*   升级主塔 100$+20G/1\n&quot;;
+			cout&lt;&lt;&quot;\\   关闭\n&quot;;
+			cout&lt;&lt;&quot;#   礼包码(hehe为官方礼包码)\n&quot;;
+			cout&lt;&lt;&quot;0   继续&quot;;
+			d=getch();
+			if(d=='u'){
+				cj();
+			}
+			if(d=='t'){
+				system(&quot;cls&quot;);
+				printf(&quot;买到终极宝箱（终极奥义）\n&quot;);
+				printf(&quot;买宝箱20次  （奉献精神）\n&quot;);
+				printf(&quot;杀死20个怪  （怪物猎人）\n&quot;);
+				printf(&quot;买回血器5个 （回血大师）\n&quot;);
+				printf(&quot;打死十级怪物（打怪大师）\n&quot;);
+				Sleep(5000);
+			}
+			if(d=='s'){
+				system(&quot;cls&quot;);
+				if(zjay) printf(&quot;终极奥义\n&quot;);
+				if(fxjs) printf(&quot;奉献精神\n&quot;);
+				if(gwlr) printf(&quot;怪物猎人\n&quot;);
+				if(hxds) printf(&quot;回血大师\n&quot;);
+				if(dgds) printf(&quot;打怪大师\n&quot;);
+				Sleep(5000);
+			}
+			if(d=='r'){
+				kaibx();
+			}
+			if(d=='q'){
+				system(&quot;cls&quot;);
+				printf(&quot;因打怪，宝箱模板没有时间了，所以做得简陋一点\n&quot;);
+				printf(&quot;下个版本升级的打怪\n&quot;);
+				Sleep(5000);
+			}
+			if(d=='p'){
+				bdaguai();
+			}
+			if(d=='#'){
+				system(&quot;cls&quot;);
+				cout&lt;&lt;&quot;请输入礼包码形如 *** 及你名字的缩写的小写形式\n&quot;;
+				cout&lt;&lt;&quot;请输入:&quot;;
+				string str;
+				cin&gt;&gt;str;
+				if(str==ssss)
+				  g+=100,jkl+=100,e1+=100;
+				cout&lt;&lt;&quot;正在处理...&quot;;
+				Sleep(1500);
+				system(&quot;cls&quot;);
+				continue;
+			}
+			if(d=='\\'){
+				system(&quot;cls&quot;);
+				return;
+			}
+			if(beta&amp;&amp;d=='*'){
+				if(g&gt;=100&amp;&amp;jkl&gt;=20){
+					g-=100;
+					jkl-=20;
+					Lv++;
+					o1_max+=500;
+					o1+=500;
+					lzpz+=10;
+				}
+			}
+			if(d=='1'){
+				system(&quot;cls&quot;);
+				xs(ch);
+				cout&lt;&lt;&quot;数量:&quot;;
+				cin&gt;&gt;s;
+				while(s*3&gt;g){
+					system(&quot;cls&quot;);
+					xs(ch);
+					cout&lt;&lt;&quot;数量:&quot;;
+					cin&gt;&gt;s;
+				}
+				o2+=s;
+				g-=s*3;
+				system(&quot;cls&quot;);
+			}
+			if(d=='2'){
+				if(g&gt;=50){
+					g-=50;
+					if(hde!=0){
+						e1-=100;
+					}
+					else{
+						hde--;
+					}
+				}
+			}
+			if(d=='3'){
+				if(g&gt;=120){
+					g-=120;
+					pj++;
+				}
+			}
+			if(d=='4'){
+				if(g&gt;=100){
+					g-=100;
+					ts++;
+				}
+			}
+			if(d=='5'){
+				if(g&gt;=60){
+					g-=60;
+					tk++;
+				}
+			}
+			if(d=='6'){
+				if(g&gt;=100){
+					g-=100;
+					bt++;
+				}
+			}
+			if(d=='7'){
+				if(g&gt;=120){
+					g-=120;
+					gs++;
+				}
+			}
+			if(d=='8'){
+				if(g&gt;=80){
+					g-=80;
+					fj++;
+				}
+			}
+			if(d=='9'){
+				if(g&gt;=50){
+					g-=50;
+					e2/=2;
+				}
+			}
+			if(d=='a'){
+				if(g&gt;=180){
+					g-=180;
+					jg++;
+				}
+			}
+			if(d=='b'){
+				if(g&gt;=80){
+					g-=80;
+					hd++;
+				}
+			}
+			if(d=='c'){
+				if(g&gt;=80&amp;&amp;ch!='3'){
+					g-=80;
+					system(&quot;cls&quot;);
+					cout&lt;&lt;&quot;一抹神秘的光辉映在天空中，小兵变成了原来的两倍\n&quot;;
+					Sleep(2500);
+					o2*=2;
+				}
+			}
+			if(d=='d'){
+				if(g&gt;=50){
+					g-=50;
+					jk++;
+				}
+			}
+			if(d=='e'){
+				if(g&gt;=80){
+					g-=80;
+					jd++;
+				}
+			}
+			if(d=='f'){
+				if(g&gt;=150&amp;&amp;zx==0){
+					g-=150;
+					zx+=5;
+				}
+			}
+			if(d=='g'){
+				system(&quot;cls&quot;);
+				xs(ch);
+				cout&lt;&lt;&quot;数量:&quot;;
+				cin&gt;&gt;s;
+				while(s*2&gt;g){
+					system(&quot;cls&quot;);
+					xs(ch);
+					cout&lt;&lt;&quot;数量:&quot;;
+					cin&gt;&gt;s;
+				}
+				pz+=s;
+				g-=s*2;
+				system(&quot;cls&quot;);
+			}
+			if(d=='h'){
+				system(&quot;cls&quot;);
+				xs(ch);
+				cout&lt;&lt;&quot;数量:&quot;;
+				cin&gt;&gt;s;
+				while(s*10&gt;g){
+					system(&quot;cls&quot;);
+					xs(ch);
+					cout&lt;&lt;&quot;数量:&quot;;
+					cin&gt;&gt;s;
+				}
+				lzpz+=s;
+				g-=s*10;
+				system(&quot;cls&quot;);
+			}
+			if(d=='i'){
+				if(g&gt;=50){
+					g-=50;
+					dl+=5;
+				}
+			}
+			if(d=='j'){
+				if(jkl&gt;=5){
+					jkl-=5;
+					jkl_kc++;
+				}
+			}
+			if(d=='k'){
+				if(jkl&gt;=5){
+					jkl-=5;
+					tt++;
+				}
+			}
+			if(d=='l'){
+				if(jkl&gt;=5){
+					jkl-=5;
+					zd++;
+				}
+			}
+			if(d=='m'){
+				if(jkl&gt;=10&amp;&amp;g&gt;=20){
+					jkl-=10;
+					g-=20;
+					o1=min(o1_max,o1+250);
+				}
+			}
+			if(d=='n'){
+				if(jkl&gt;=30&amp;&amp;g&gt;=60){
+					jkl-=30;
+					g-=60;
+					reblood++;
+					hxcs++;
+					if(hxcs&gt;=5&amp;&amp;hxds!=1){
+						hxds=1;
+						system(&quot;cls&quot;);
+						printf(&quot;恭喜你取得了回血大师的成就！！！\n&quot;);
+						Sleep(5000);
+						printf(&quot;奖励10晶坷垃,100金币&quot;);
+						g+=100;
+						jkl+=10;
+						Sleep(5000);
+					}
+				}
+			}
+			if(d=='o'){
+				if(g&gt;=120&amp;&amp;jkl&gt;=25){
+					g-=120;
+					jkl-=25;
+					jjj++;
+				}
+			}
+			system(&quot;cls&quot;);
+		}
+		if(dl!=0){
+			if(dl%5!=0)
+			  dl-=(dl/5+1);else
+			  dl-=dl/5;
+			if(dl%5==0){
+				cout&lt;&lt;&quot;一声惊天巨响，敌方小兵化为骨灰\n&quot;;
+				e2=0;
+			}
+		}
+		if(dle!=0){
+			if(dle%5!=0)
+			  dle-=(dle/5+1);else
+			  dle-=dle/5;
+			if(dle%5==0){
+				cout&lt;&lt;&quot;一声惊天巨响，我方小兵化为骨灰\n&quot;;
+				o2=0;
+			}
+		}
+		if(jd!=0){
+			if(e2!=0){
+				cout&lt;&lt;&quot;我方间谍使敌方&quot;&lt;&lt;min(jd,e2)&lt;&lt;&quot;个小兵叛变了\n&quot;;
+				e2-=min(jd,e2);
+				o2+=min(jd,e2);
+			}
+			else{
+				cout&lt;&lt;&quot;我方间谍被发现！\n&quot;;
+				jd=0;
+			}
+		}
+		if(jde!=0){
+			if(o2!=0){
+				o2-=min(jde,o2);
+				e2+=min(jde,o2);
+			}
+			else{
+				cout&lt;&lt;&quot;敌方间谍被发现！\n&quot;;
+				jde=0;
+			}
+		}
+		if(tt!=0){
+			if(hde!=0){
+				hde-=min(min(tt,hde),jkl);
+				jkl-=min(min(tt,hde),jkl);
+			}
+			if(hde&lt;=0) hde=0;
+		}
+		if(zd!=0){
+			if(e2!=0){
+				e2-=min(min(e2/10,zd),jkl);
+				jkl-=min(min(e2/10,zd),jkl);
+			}
+			if(e2&lt;=0) e2=0;
+		}
+		for(i=1;i&lt;=pj;i++)
+			if(e2==0)
+				if(tke!=0){
+					cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，炸毁一辆坦克\n&quot;;
+					tke--;
+				}
+				else{
+					if(hde!=0){
+						cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，击毁一层护盾\n&quot;;
+						hde--;
+					}
+					else{
+						cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，向敌方飞去\n&quot;;
+						e1-=80;
+					}
+				}
+			else{
+				if(e2&gt;=40){
+					g+=80;
+					e2-=40;
+				}
+				else{
+					g+=e2*2;
+					e2=0;
+				}
+				if(e2&lt;0) e2=0;
+				cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，炸死一批小兵\n&quot;;
+			}
+		for(i=1;i&lt;=ts;i++){
+			if(e2&gt;=35){
+				e2-=35;
+				g+=70;
+			}
+			else{
+				g+=e2*2;
+				e2=0;
+			}
+			cout&lt;&lt;&quot;一块巨石忽忽悠悠地飞去\n&quot;;
+		}
+		for(i=1;i&lt;=bt;i++){
+			cout&lt;&lt;&quot;5个小兵慢悠悠地从哨兵塔里走出来\n&quot;;
+			o2+=5;
+		}
+		for(i=1;i&lt;=gs;i++){
+			if(fje!=0){
+				cout&lt;&lt;&quot;高射炮向天空扫去，一架飞机掉了下来\n&quot;;
+				fje--;
+			}
+			else{
+				if(tke!=0){
+					cout&lt;&lt;&quot;高射炮向地面扫去，炸毁一辆坦克\n&quot;;
+					tke--;
+				}
+				else{
+					if(e2!=0){
+						cout&lt;&lt;&quot;高射炮向地面扫去，炸死一个小兵\n&quot;;
+						e2--;
+					}
+					else cout&lt;&lt;&quot;高射炮没有目标\n&quot;;
+				}
+			}
+		}
+		for(i=1;i&lt;=jg;i++)
+			if(fje&gt;=2){
+				cout&lt;&lt;&quot;一束激光射向天空，两架飞机掉了下来\n&quot;;
+				fje-=2;
+			}
+			else{
+				if(fje==1){
+					cout&lt;&lt;&quot;一束激光射向天空，一架飞机掉了下来\n&quot;;
+					fje--;
+				}
+				else if(tke!=0&amp;&amp;e2!=0){
+					cout&lt;&lt;&quot;一束激光平射出去，击毁了&quot;&lt;&lt;min(3,tke)&lt;&lt;&quot;辆坦克，炸死&quot;&lt;&lt;min(15,e2)&lt;&lt;&quot;个小兵\n&quot;;
+					tke-=min(3,tke);
+					e2-=min(15,e2);
+				}
+				else{
+					if(tke!=0){
+						cout&lt;&lt;&quot;一束激光平射出去，击毁了&quot;&lt;&lt;min(3,tke)&lt;&lt;&quot;辆坦克\n&quot;;
+						tke-=min(3,tke);
+					}
+					else{
+						if(e2!=0){
+							cout&lt;&lt;&quot;一束激光平射出去，炸死&quot;&lt;&lt;min(15,e2)&lt;&lt;&quot;个小兵\n&quot;;
+							e2-=min(15,e2);
+						}
+						else{
+							if(hde!=0){
+								cout&lt;&lt;&quot;一束激光平射出去，击毁一层护盾\n&quot;;
+								hde--;
+							}
+							else{
+								cout&lt;&lt;&quot;一束激光向敌方平射出去\n&quot;;
+								e1-=150;
+							}
+
+						}
+					}
+				}
+			}
+		if(fj!=0&amp;&amp;fje!=0){
+			fk=fj&lt;fje?fj:fje;
+			fj-=fk;fje-=fk;
+			cout&lt;&lt;&quot;双方都有&quot;&lt;&lt;fk&lt;&lt;&quot;架飞机从空中落下来了\n&quot;;
+		}
+		for(i=1;i&lt;=fj;i++){
+			if(hde!=0){
+				cout&lt;&lt;&quot;我方飞机击毁一层护盾\n&quot;;
+				hde--;
+			}
+			else{
+				cout&lt;&lt;&quot;我方飞机俯冲轰炸！\n&quot;;
+				e1-=150;
+			}
+		}
+		for(i=1;i&lt;=fje;i++){
+			if(hd!=0){
+				cout&lt;&lt;&quot;敌方飞机击毁我方一层护盾\n&quot;;
+				hd--;
+			}
+			else{
+				cout&lt;&lt;&quot;敌方飞机俯冲轰炸！\n&quot;;
+				o1-=150;
+			}
+		}
+		if(jjj!=0&amp;&amp;jjje!=0){
+			fk=jjj&lt;jjje?jjj:jjje;
+			jjj-=fk;jjje-=fk;
+			cout&lt;&lt;&quot;双方都有&quot;&lt;&lt;fk&lt;&lt;&quot;架歼击机从空中落下来了\n&quot;;
+		}
+		for(i=1;i&lt;=jjj;i++){
+			if(hde!=0){
+				cout&lt;&lt;&quot;我方歼击机击毁一层护盾\n&quot;;
+				hde--;
+			}
+			else{
+				cout&lt;&lt;&quot;我方歼击机俯冲轰炸！\n&quot;;
+				e1-=200;
+			}
+		}
+		for(i=1;i&lt;=jjje;i++){
+			if(hd!=0){
+				cout&lt;&lt;&quot;敌方歼击机击毁我方一层护盾\n&quot;;
+				hd--;
+			}
+			else{
+				cout&lt;&lt;&quot;敌方歼击机俯冲轰炸！\n&quot;;
+				o1-=200;
+			}
+		}
+		if(tk!=0&amp;&amp;tke!=0){
+			tkk=tk&lt;tke?tk:tke;
+			cout&lt;&lt;&quot;坦克开炮了，双方都有&quot;&lt;&lt;tkk&lt;&lt;&quot;门坦克损毁了\n&quot;;
+			tk-=tkk;tke-=tkk;
+		}
+		if(o2!=0&amp;&amp;tke*20&gt;o2){
+			cout&lt;&lt;&quot;坦克开炮了，&quot;&lt;&lt;o2&lt;&lt;&quot;个小兵死去了\n&quot;;
+			if(o2/20!=0)
+				cout&lt;&lt;o2/20&lt;&lt;&quot;门坦克损毁了\n&quot;;
+			o2=0;tke-=o2/20;
+		}
+		if(tke!=0&amp;&amp;o2&gt;=tke*20){
+			cout&lt;&lt;&quot;坦克开炮了，&quot;&lt;&lt;tke*20&lt;&lt;&quot;个小兵死去了\n&quot;;
+			g+=tke*60;
+			cout&lt;&lt;tke&lt;&lt;&quot;门坦克损毁了\n&quot;;
+			o2-=tke*20;tke=0;
+		}
+		if(o2!=0&amp;&amp;e2!=0)
+			cout&lt;&lt;&quot;有小兵倒下去了\n&quot;;
+		else cout&lt;&lt;&quot;没有小兵倒下\n&quot;;
+		if(e2!=0&amp;&amp;tk*20&gt;e2){
+			cout&lt;&lt;&quot;坦克开炮了，&quot;&lt;&lt;e2&lt;&lt;&quot;个小兵死去了\n&quot;;
+			g+=tk*60;
+			if(e2/20!=0)
+				cout&lt;&lt;e2/20&lt;&lt;&quot;门坦克损毁了\n&quot;;
+			e2=0;tk-=e2/20;
+		}
+		if(tk!=0&amp;&amp;e2&gt;=tk*20){
+			cout&lt;&lt;&quot;坦克开炮了，&quot;&lt;&lt;tk*20&lt;&lt;&quot;个小兵死去了\n&quot;;
+			g+=tk*60;
+			cout&lt;&lt;tk&lt;&lt;&quot;门坦克损毁了\n&quot;;
+			e2-=tk*20;tk=0;
+		}
+		if(ttt-o2&gt;50){
+			o2-=(ttt-o2)/10;
+			cout&lt;&lt;&quot;我方有&quot;&lt;&lt;(ttt-o2)/10&lt;&lt;&quot;个小兵逃走了&quot;;
+		}
+		if(fff-e2&gt;50){
+			e2-=(fff-e2)/10;
+			cout&lt;&lt;&quot;敌方有&quot;&lt;&lt;(fff-e2)/10&lt;&lt;&quot;个小兵逃走了&quot;;
+		}
+		if(o2&gt;e2){
+			g+=e2*2;
+			o2-=e2;
+			e2=0;
+		}
+		else{
+			g+=o2*2;
+			e2-=o2;
+			o2=0;
+		}
+		if(o2!=0){
+			e1-=o2*5;
+			cout&lt;&lt;&quot;我方小兵围殴敌方，扣血&quot;&lt;&lt;o2*5&lt;&lt;&quot;点\n&quot;;
+		}
+		if(tk!=0){
+			e1-=tk*20;
+			cout&lt;&lt;&quot;我方坦克围殴敌方，扣血&quot;&lt;&lt;tk*20&lt;&lt;&quot;点\n&quot;;
+		}
+		if(e2!=0){
+			k=e2;
+			if(pj*30&gt;k){
+				if(k/30!=0)
+					cout&lt;&lt;k/30&lt;&lt;&quot;门迫击炮损坏了\n&quot;;
+				pj-=k/30;
+			}
+			else{
+				if(pj!=0)
+					cout&lt;&lt;pj&lt;&lt;&quot;门迫击炮损坏了\n&quot;;
+				k-=pj*30;pj=0;
+				if(ts*25&gt;k){
+					if(k/25!=0)
+						cout&lt;&lt;k/25&lt;&lt;&quot;门投石机损坏了\n&quot;;
+					ts-=k/25;
+				}
+				else{
+					if(ts!=0)
+						cout&lt;&lt;ts&lt;&lt;&quot;门投石机损坏了\n&quot;;
+					k-=ts*25;ts=0;
+					if(jg*35&gt;k){
+						if(k/35!=0)
+							cout&lt;&lt;k/35&lt;&lt;&quot;架激光炮损坏了\n&quot;;
+						jg-=k/35;
+					}
+					else{
+						if(jg!=0)
+							cout&lt;&lt;jg&lt;&lt;&quot;架激光炮损坏了\n&quot;;
+						k-=jg*35;jg=0;
+						if(bt*20&gt;k){
+							if(k/20!=0)
+								cout&lt;&lt;k/20&lt;&lt;&quot;座哨兵塔损坏了\n&quot;;
+							bt-=k/20;
+						}
+						else{
+							if(bt!=0)
+								cout&lt;&lt;bt&lt;&lt;&quot;座哨兵塔损坏了\n&quot;;
+							k-=bt*20;bt=0;
+							if(k!=0){
+								cout&lt;&lt;&quot;敌方小兵围殴我方，扣血&quot;&lt;&lt;k*5&lt;&lt;&quot;点\n&quot;;
+								o1-=k*5;
+							}
+						}
+					}
+				}
+			}
+		}
+		for(i=1;i&lt;=tke;i++){
+			if(pj!=0){
+				pj--;
+				cout&lt;&lt;&quot;1门迫击炮损坏了\n&quot;;
+			}
+			else if(jg!=0){
+				jg--;
+				cout&lt;&lt;&quot;1架激光炮损坏了\n&quot;;
+			}
+			else if(ts!=0){
+				ts--;
+				cout&lt;&lt;&quot;1门投石机损坏了\n&quot;;
+			}
+			else if(bt!=0){
+				bt--;
+				cout&lt;&lt;&quot;1座哨兵塔损坏了\n&quot;;
+			}
+			else{
+				o1-=(tke-i+1)*100;
+				cout&lt;&lt;&quot;敌方坦克围殴我方，扣血&quot;&lt;&lt;(tke-i+1)*100&lt;&lt;&quot;点\n&quot;;
+				i=tke;
+			}
+		}
+		if(o1&lt;last_hp) o1+=min(lzpz,last_hp-o1);
+		if(o1&lt;last_hp){
+			o1+=min(pz,last_hp-o1);
+			pz-=min(pz,last_hp-o1);
+		}
+		if(e1&lt;last_hpe) e1+=min(lzpze,last_hpe-e1);
+		if(e1&lt;last_hpe){
+			e1+=min(pze,last_hpe-e1);
+			pze-=min(pze,last_hpe-e1);
+		}
+		cout&lt;&lt;&quot;咕嘟嘟,+&quot;&lt;&lt;reblood*50&lt;&lt;&quot;血\n&quot;;
+		o1=min(o1_max,o1+reblood*50);
+		Sleep(3000);
+		system(&quot;cls&quot;);
+		if(ch=='3') ++iii;
+	}
+	if(g&gt;10000||o1&gt;10000) bg();
+	if(o1&lt;=0){
+		if(e1&gt;500&amp;&amp;e1&lt;1500) cout&lt;&lt;&quot;城池被攻破，人类的最后一道防线破碎，人类沦为了宇宙中的一片尘埃。\n&quot;;
+		if(e1&gt;=1500) cout&lt;&lt;&quot;你已经很努力了，但敌方太强，你无法抗衡\n人类不堪的淹没在了历史的长河中。\n&quot;;
+		if(e1&lt;=500) cout&lt;&lt;&quot;你的各个方面都很强，但在最后无法力挽狂澜，才使人类文明灭亡。\n&quot;;
+	}
+	else{
+		if(o1&gt;500&amp;&amp;o1&lt;1500) cout&lt;&lt;&quot;你靠自己的顽强决心守住了城池，救回了人类文明。\n&quot;;
+		if(o1&lt;=500) cout&lt;&lt;&quot;你在最后的紧要关头击退了人类异种，挽救了人类文明。\n&quot;;
+		if(o1&gt;=1500) cout&lt;&lt;&quot;你以自己的高超指挥能力击退了人类异种，拯救了整个人类！！！\n\n&quot;;
+	}
+	Sleep(3000);
+	system(&quot;cls&quot;);
+	if(ssss!=&quot;16391639&quot;){
+		system(&quot;cls&quot;);
+		cout&lt;&lt;&quot;若有bug,加入需求及新想法,请发表\n&quot;;
+		cout&lt;&lt;&quot;goodbye&quot;&lt;&lt;endl;
+		Sleep(2500);
+		return;
+	}
+	//system(&quot;taskkill -f -im bgm.exe&quot;);
+	//system(&quot;cls&quot;);
+	//system(&quot;start second.exe&quot;);
+	//Sleep(5000);
+	//system(&quot;start third.exe&quot;);
+	//system(&quot;pause&quot;);
+	return;
+}
+void bg(){
+	system(&quot;cls&quot;);
+	cout&lt;&lt;&quot;小朋友想走不正当途径是不好的\n&quot;;
+	Sleep(3000);
+	xs(ch);
+	for(i=1;i&lt;=10000;i++)
+		 cout&lt;&lt;&quot;迫击炮轰然发射出一颗炮弹，向你方飞来\n&quot;;
+	cout&lt;&lt;&quot;你死了！&quot;;
+}
+int main(){
+	//system(&quot;start f_bgm.exe&quot;);
+	//system(&quot;start first.exe&quot;);
+	//system(&quot;cls&quot;);
+	std::srand(time(0));
+	printf(&quot;加载中...\n&quot;);
+	for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+	Beep(1500,200);
+	for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+	Beep(1500,200);
+	for(i=0;i&lt;=12;i++) cout&lt;&lt;'&lt;',Sleep(100);
+	Beep(1500,200);
+	for(i=0;i&lt;=14;i++) cout&lt;&lt;'&lt;',Sleep(100);
+	Beep(2000,1000);
+	cout&lt;&lt;&quot; 100%&quot;;
+	Sleep(1500);
+	system(&quot;cls&quot;);
+	cout&lt;&lt;&quot;黑_白(永远的CC) 段建泽出品\n&quot;;
+	cout&lt;&lt;&quot;请输入姓名\n&quot;;
+	cout&lt;&lt;&quot;格式为***，前后没有空格，全部为小写\n&quot;;
+	cin&gt;&gt;ssss;
+	system(&quot;cls&quot;),aa(ssss);
+	return 0;
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      永远的CC
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://yydcc-blog.github.io/post/ren-lei-lun-xian-shi-shi-ji-ju-zuo/" title="人类沦陷-史诗级巨作">https://yydcc-blog.github.io/post/ren-lei-lun-xian-shi-shi-ji-ju-zuo/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/"># 颓废</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
       
+    </div>
+    <div class="nav-next">
       
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://yydcc-blog.github.io/post/ru-he-yong-cwan-generalsio/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              01-26
-              <small>如何用C++玩generals.io</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://yydcc-blog.github.io/post/yorgio-jin-jie-gong-lue/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              01-09
-              <small>yorg.io 进阶攻略</small>
-            </h1>
-          </div>
-        </div>
-      </a>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        <a class="nav-pc-next" title="快读快写是什么？怎么写？可以用来卡常吗？" href="https://yydcc-blog.github.io/post/kuai-du-kuai-xie-shi-shi-me-zen-me-xie-ke-yi-yong-lai-qia-chang-ma/">快读快写是什么？怎么写？可以用来卡常吗？</a>
+        <a class="nav-mobile-next" title="快读快写是什么？怎么写？可以用来卡常吗？" href="https://yydcc-blog.github.io/post/kuai-du-kuai-xie-shi-shi-me-zen-me-xie-ke-yi-yong-lai-qia-chang-ma/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
 </div>
-          </section>
+            
+            
+  
+
+          </div>
         </div>
       </div>
     </div>
@@ -599,6 +3121,223 @@
     parent.insertBefore(aelem, next);
   });
 </script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip"> </p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        jQuery.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        jQuery.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        jQuery.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        jQuery.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      jQuery.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      jQuery.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -4603,6 +7342,5 @@ void Add(int u, int v, int w) {  //起点u, 终点v, 权值w
 
   <div class="snow-container"></div>
   <script src="/media/js/bg/snow.js"></script>
-
 
 </html>
