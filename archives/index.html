@@ -9,7 +9,7 @@
 <meta name="description" content="永远的CC，永远为你">
 <meta name="theme-color" content="#000">
 <title>永远的CC的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1643774268042">
+<link rel="shortcut icon" href="/favicon.ico?v=1643774912255">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -723,8 +723,162 @@
 &lt;li&gt;冰冻：跳过杀人阶段&lt;/li&gt;
 &lt;li&gt;近视：只能杀编号相邻的人（没有编号相邻的人就杀不了QWQ）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1 id=&#34;游戏下载&#34;&gt;游戏下载：&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://hydro.ac/file/2867/LIVE.exe&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;游戏代码&#34;&gt;游戏代码：&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;//LIVE
+#include&amp;lt;bits/stdc++.h&amp;gt;
+#include&amp;lt;windows.h&amp;gt;
+#include&amp;lt;conio.h&amp;gt;
+using namespace std;
+void print(char a[]){for(int i=0;i&amp;lt;strlen(a);i++){cout&amp;lt;&amp;lt;a[i];Sleep(10);}puts(&amp;quot;&amp;quot;);}
+void cls(){system(&amp;quot;cls&amp;quot;);}
+void pause(){system(&amp;quot;pause&amp;quot;);}
+void hehe(){print(&amp;quot;小朋友想走不当途径是不好的&amp;quot;);print(&amp;quot;你死了&amp;quot;);exit(1);}
+int f,a,last,live[10000],skill[10000];
+int main(){
+	srand(time(NULL));
+	system(&amp;quot;title LIVE-by black_white&amp;quot;);
+	system(&amp;quot;MODE CON: COLS=50 LINES=30&amp;quot;);
+	std::srand(time(NULL));
+	print(&amp;quot;LIVE活着&amp;quot;);pause();cls();
+	print(&amp;quot;by 黑_白（永远的CC）&amp;quot;);pause();cls();
+	printf(&amp;quot;输入人数（推荐7人）：&amp;quot;);
+	cin&amp;gt;&amp;gt;last;
+	if(last&amp;lt;=0)hehe();
+	for(int i=1;i&amp;lt;=last;i++)live[i]=i;
+	print(&amp;quot;规则：一共n个人，每个人选择一个击杀目标，最后剩下的人胜利&amp;quot;);pause();cls();
+	print(&amp;quot;游戏开始！&amp;quot;);cls();
+	printf(&amp;quot;输入你的编号（1~n）：&amp;quot;);
+	cin&amp;gt;&amp;gt;a;cls();
+	if(a==114514)print(&amp;quot;成功开启人机对打！&amp;quot;);
+	else if(!(a&amp;gt;=1&amp;amp;&amp;amp;a&amp;lt;=last))hehe();
+	cls();
+	for(int I=1;;I++){
+		cls();
+		printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
+		printf(&amp;quot;第%d个回合：\n&amp;quot;,I);
+		for(int i=1;i&amp;lt;=last;i++){
+			if(live[i]==0)continue;
+			int Cnt=0;
+			for(int j=1;j&amp;lt;=last;j++)if(live[j]!=0)Cnt++;
+			printf(&amp;quot;还剩%d人\n&amp;quot;,Cnt);
+			printf(&amp;quot;还活着的人：&amp;quot;);
+			for(int j=1;j&amp;lt;=last;j++)if(live[j]!=0)printf(&amp;quot;%d &amp;quot;,live[j]);
+			puts(&amp;quot;&amp;quot;);
+			if(skill[i]==1){
+				printf(&amp;quot;%d号解冻\n&amp;quot;,i);
+				skill[i]=0;
+				continue;
+			}
+			int mb=rand()%(last+1);
+			while(live[mb]==0&amp;amp;&amp;amp;mb==i&amp;amp;&amp;amp;mb==0)mb=rand()%(last+1);
+			if(a!=live[i])printf(&amp;quot;%d选择了%d号\n&amp;quot;,live[i],live[mb]);
+			else{
+				printf(&amp;quot;你的目标是（输入0放弃猎杀）：&amp;quot;);
+				cin&amp;gt;&amp;gt;mb;
+				bool ff=0;
+				for(int j=1;j&amp;lt;=last;j++)if(live[j]==mb)ff=1;
+				if(!ff)hehe();
+			}
+			if(mb==0){
+				print(&amp;quot;他放弃了猎杀...&amp;quot;);
+				getch();
+				continue;
+			}
+			if(skill[i]==2){
+				if(mb-i&amp;gt;1||mb-i&amp;lt;-1){
+					print(&amp;quot;近视生效...&amp;quot;);
+					print(&amp;quot;打不到目标...&amp;quot;);
+					skill[i]=0;
+					continue;
+				}
+				skill[i]=0;
+			}
+			print(&amp;quot;正在生成判定数字...\n&amp;quot;);
+			int pd[7],cnt=1;memset(pd,0,sizeof(pd));
+			for(int j=1;j&amp;lt;=6;j++){
+				int t=rand()%j;
+				if(t!=0)break;
+				int tt=rand()%6;
+				pd[cnt]=tt;
+				cnt++;
+			}
+			printf(&amp;quot;可判定的数字为：&amp;quot;);
+			for(int j=1;j&amp;lt;=cnt;j++)pd[j]++,printf(&amp;quot;%d &amp;quot;,pd[j]);
+			puts(&amp;quot;&amp;quot;);
+			int s=rand()%3;
+			if(s==0){
+				print(&amp;quot;有人篡改了判定数字。&amp;quot;);
+				pd[rand()%cnt+1]=rand()%6+1;
+				printf(&amp;quot;现可判定的数字为：&amp;quot;);
+				for(int j=1;j&amp;lt;=cnt;j++)printf(&amp;quot;%d &amp;quot;,pd[j]);
+				puts(&amp;quot;&amp;quot;);
+			}
+			getch();
+			int sz=rand()%6;sz++;
+			printf(&amp;quot;%d号抛出了%d\n&amp;quot;,live[i],sz);
+			bool kill=0;
+			for(int i=1;i&amp;lt;=cnt;i++)
+				if(sz==pd[i]){
+					kill=1;
+					break;
+				}
+			if(!kill)print(&amp;quot;未杀死目标。\n&amp;quot;),getch();
+			else{
+				int ttt=rand()%3;
+				if(ttt&amp;gt;0){
+					live[mb]=0,print(&amp;quot;成功杀死目标！\n&amp;quot;);
+					int tttt=rand()%2;
+					if(tttt){
+						int mb3=rand()%(last+1);
+						while(live[mb3]==0&amp;amp;&amp;amp;mb3==i&amp;amp;&amp;amp;mb3==0)mb3=rand()%(last+1);
+						printf(&amp;quot;并发动技能：&amp;quot;);
+						int aa=rand()%2;
+						if(aa==0){
+							printf(&amp;quot;冻结\n&amp;quot;);
+							printf(&amp;quot;%d号被冻结了。\n&amp;quot;,mb3);
+							skill[mb3]=1;
+						}else if(aa==1){
+							printf(&amp;quot;近视\n&amp;quot;);
+							printf(&amp;quot;%d号近视了。\n&amp;quot;,mb3);
+							skill[mb3]=2;
+						}
+					}
+					getch();
+				}
+				else{
+					int mb2=rand()%(last+1);
+					while(live[mb2]==0&amp;amp;&amp;amp;mb==mb2&amp;amp;&amp;amp;mb2==0)mb2=rand()%(last+1);
+					printf(&amp;quot;%d号复活了，并随机诅咒了%d号\n&amp;quot;,live[mb],live[mb2]);
+					getch();
+					int tttt=rand()%2;
+					if(tttt)printf(&amp;quot;%d号死了\n&amp;quot;,live[mb2]),live[mb2]=0;
+					else printf(&amp;quot;但他没死。\n\n&amp;quot;);
+					getch();
+				}
+			}
+			int sum=0;
+			for(int i=1;i&amp;lt;=last;i++)if(live[i]!=0)sum++;
+			if(sum==0){
+				cls();
+				print(&amp;quot;每个人都倒下了...&amp;quot;);
+				print(&amp;quot;无人胜利...&amp;quot;);
+				pause();
+				return 0;
+			}
+			if(sum==1){
+				for(int k=1;k&amp;lt;=last;k++)
+					if(live[k]!=0){
+						printf(&amp;quot;%d挺到了最后...\n&amp;quot;,live[k]);
+						if(k==a)print(&amp;quot;你胜利了！&amp;quot;);
+						pause();
+						return 0;
+					}
+			}
+		}
+	}
+	return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
 ">LIVE-活着</a>
       </div>
       
