@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-01-31T14:03:24.079Z</updated>
+    <updated>2022-02-02T03:58:53.062Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -18,12 +18,16 @@
         <updated>2022-01-31T13:48:51.000Z</updated>
         <content type="html"><![CDATA[<h1 id="前言">前言</h1>
 <p>by 黑_白（永远的CC）</p>
+<h1 id="代码行数149行">代码行数：149行</h1>
 <h1 id="更新日志">更新日志</h1>
 <ul>
-<li>写了第一个版本</li>
-<li>添加了不同人数</li>
-<li>添加了对作弊者的惩治</li>
-<li>添加了亡语</li>
+<li>第一个版本1️⃣</li>
+<li>添加了不同人数🚻</li>
+<li>添加了对作弊者的惩治☠️</li>
+<li>添加了亡语👻</li>
+<li>第二个版本2️⃣</li>
+<li>避免了自杀🤡</li>
+<li>添加了技能🎌</li>
 </ul>
 <h1 id="判定数字机制">判定数字机制</h1>
 <p>第一个1/1<br>
@@ -32,6 +36,11 @@
 第四个1/4<br>
 第五个1/5<br>
 第六个1/6</p>
+<h1 id="技能列表">技能列表</h1>
+<ul>
+<li>冰冻：跳过杀人阶段</li>
+<li>近视：只能杀编号相邻的人（没有编号相邻的人就杀不了QWQ）</li>
+</ul>
 <h1 id="游戏下载">游戏下载：</h1>
 <p><a href="https://hydro.ac/file/2867/LIVE.exe">link</a></p>
 ]]></content>
