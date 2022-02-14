@@ -2049,7 +2049,7 @@ p > code {
   }
 }
 body {
-      background-color: #212529;
+      background-color: #eee;
     }.header {
         width: 960px;
         margin: 0 auto;
@@ -2131,8 +2131,8 @@ body {
       transition-duration: 59s;
       transition-timing-function: cubic-bezier(.34,0,.84,1);
     }.markdownIt-TOC a {
-      color: #eee;
-      border-bottom-color: #eee;
+      color: #7950f2;
+      border-bottom-color: #7950f2;
     }.markdownIt-TOC a:hover {
       color: #fff;
       border-bottom-color: #fff;
