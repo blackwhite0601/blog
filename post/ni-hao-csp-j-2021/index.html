@@ -9,7 +9,7 @@
 <meta name="description" content="永远的CC，永远爱斯卡帝">
 <meta name="theme-color" content="#000">
 <title>你好！CSP-J-2021 | 永远的CC的博客</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1644824410735">
+<link rel="shortcut icon" href="/favicon.ico?v=1644915755799">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -243,7 +243,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">11</span>
+        <span class="site-item-stat-count">12</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -1712,6 +1712,73 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/"" data-c="
+          &lt;h1 id=&#34;part0前言&#34;&gt;Part0：前言&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果你在考提高组前一天还在问这个问题，那么你会与一等奖失之交臂；如果你还在冲击普及组一等奖，那么这篇博客会浪费你人生中宝贵的5~20分钟。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;part1概念引入建树以区间求和为例&#34;&gt;Part1：概念引入+建树（以区间求和为例）&lt;/h1&gt;
+&lt;h2 id=&#34;part11概念引入&#34;&gt;Part1.1：概念引入&lt;/h2&gt;
+&lt;p&gt;线段树，顾名思义，用线性的方式保存一颗二叉树。&lt;/p&gt;
+&lt;p&gt;举个例子：&lt;/p&gt;
+&lt;p&gt;有一串数&lt;code&gt;1 2 3 4 5 6 7 8 9&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;那么构造出的线段树就为：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;                     1(123456789)
+          2(1234)                    3(56789)
+   4(12)       5(34)          6(56)           7(789)
+8(1) 9(2)     10(3) 11(4)   12(5) 13(6)      14(7) 15(89)
+                                                  16(8) 17(9)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中括号内的数表示当前这个下标维护的范围。&lt;/p&gt;
+&lt;h2 id=&#34;part12建树&#34;&gt;Part1.2：建树&lt;/h2&gt;
+&lt;p&gt;用递归的方法建树。&lt;code&gt;void build(int p,int l,int r)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;code&gt;p&lt;/code&gt;表示下标，&lt;code&gt;l r&lt;/code&gt;表示区间的范围。&lt;/p&gt;
+&lt;p&gt;如果 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;l=r&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.01968em;&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.02778em;&#34;&gt;r&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;，说明此时为叶子节点，直接赋值。&lt;/p&gt;
+&lt;p&gt;否则将区间分为两个，分别建树，下标为&lt;code&gt;*2&lt;/code&gt;和&lt;code&gt;*2+1&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;最后维护各节点的信息，为它的两个子节点的和。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;void build(int p,int l,int r){
+    if(l==r){tree[p]=a[l];return ;}
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    build(p*2,l,mid);
+    build(p*2+1,mid+1,r);
+    push_up(p);//维护信息
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;part2区间查询修改以区间求和为例&#34;&gt;Part2：区间查询+修改（以区间求和为例）&lt;/h1&gt;
+&lt;h2 id=&#34;part21区间查询&#34;&gt;Part2.1：区间查询&lt;/h2&gt;
+&lt;p&gt;递归法查询。&lt;/p&gt;
+&lt;p&gt;如果查询区间在当前区间中，返回线段树数组中当前下标所对应的值。&lt;/p&gt;
+&lt;p&gt;不然将查询分成两部分。&lt;/p&gt;
+&lt;p&gt;如果有一部分在左区间，就将左区间的查询结果加上。右区间同理。&lt;/p&gt;
+&lt;p&gt;最终返回左区间和右区间的查询结果之和即可。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int search(int i,int l,int r){
+    if(tree[i].l&amp;gt;=l &amp;amp;&amp;amp; tree[i].r&amp;lt;=r)//如果这个区间被完全包括在目标区间里面，直接返回这个区间的值
+        return tree[i].sum;
+    if(tree[i].r&amp;lt;l || tree[i].l&amp;gt;r)  return 0;//如果这个区间和目标区间毫不相干，返回0
+    int s=0;
+    if(tree[i*2].r&amp;gt;=l)  s+=search(i*2,l,r);//如果这个区间的左儿子和目标区间又交集，那么搜索左儿子
+    if(tree[i*2+1].l&amp;lt;=r)  s+=search(i*2+1,l,r);//如果这个区间的右儿子和目标区间又交集，那么搜索右儿子
+    return s;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;part22区间修改&#34;&gt;Part2.2：区间修改&lt;/h2&gt;
+&lt;p&gt;和区间查询类似。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;void add(int i,int dis,int k){
+    if(tree[i].l==tree[i].r){//如果是叶子节点，那么说明找到了
+        tree[i].sum+=k;
+        return ;
+    }
+    if(dis&amp;lt;=tree[i*2].r)  add(i*2,dis,k);//在哪往哪跑
+    else  add(i*2+1,dis,k);
+    tree[i].sum=tree[i*2].sum+tree[i*2+1].sum;//返回更新
+    return ;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;part-3标记操作到下一篇讲&#34;&gt;Part 3：标记操作到下一篇讲&lt;/h1&gt;
+">线段树，从入门到退坑</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://yydcc-blog.github.io/post/windowsh-zhong-dao-di-you-shi-me/"" data-c="

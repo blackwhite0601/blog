@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-02-14T07:40:13.535Z</updated>
+    <updated>2022-02-15T09:03:19.800Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,76 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[线段树，从入门到退坑]]></title>
+        <id>https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/</id>
+        <link href="https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/">
+        </link>
+        <updated>2022-02-15T08:13:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="part0前言">Part0：前言</h1>
+<blockquote>
+<p>如果你在考提高组前一天还在问这个问题，那么你会与一等奖失之交臂；如果你还在冲击普及组一等奖，那么这篇博客会浪费你人生中宝贵的5~20分钟。</p>
+</blockquote>
+<h1 id="part1概念引入建树以区间求和为例">Part1：概念引入+建树（以区间求和为例）</h1>
+<h2 id="part11概念引入">Part1.1：概念引入</h2>
+<p>线段树，顾名思义，用线性的方式保存一颗二叉树。</p>
+<p>举个例子：</p>
+<p>有一串数<code>1 2 3 4 5 6 7 8 9</code></p>
+<p>那么构造出的线段树就为：</p>
+<pre><code class="language-cpp">                     1(123456789)
+          2(1234)                    3(56789)
+   4(12)       5(34)          6(56)           7(789)
+8(1) 9(2)     10(3) 11(4)   12(5) 13(6)      14(7) 15(89)
+                                                  16(8) 17(9)
+</code></pre>
+<p>其中括号内的数表示当前这个下标维护的范围。</p>
+<h2 id="part12建树">Part1.2：建树</h2>
+<p>用递归的方法建树。<code>void build(int p,int l,int r)</code></p>
+<p>其中<code>p</code>表示下标，<code>l r</code>表示区间的范围。</p>
+<p>如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l=r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>，说明此时为叶子节点，直接赋值。</p>
+<p>否则将区间分为两个，分别建树，下标为<code>*2</code>和<code>*2+1</code>。</p>
+<p>最后维护各节点的信息，为它的两个子节点的和。</p>
+<pre><code class="language-cpp">void build(int p,int l,int r){
+    if(l==r){tree[p]=a[l];return ;}
+    int mid=(l+r)&gt;&gt;1;
+    build(p*2,l,mid);
+    build(p*2+1,mid+1,r);
+    push_up(p);//维护信息
+}
+</code></pre>
+<h1 id="part2区间查询修改以区间求和为例">Part2：区间查询+修改（以区间求和为例）</h1>
+<h2 id="part21区间查询">Part2.1：区间查询</h2>
+<p>递归法查询。</p>
+<p>如果查询区间在当前区间中，返回线段树数组中当前下标所对应的值。</p>
+<p>不然将查询分成两部分。</p>
+<p>如果有一部分在左区间，就将左区间的查询结果加上。右区间同理。</p>
+<p>最终返回左区间和右区间的查询结果之和即可。</p>
+<pre><code class="language-cpp">int search(int i,int l,int r){
+    if(tree[i].l&gt;=l &amp;&amp; tree[i].r&lt;=r)//如果这个区间被完全包括在目标区间里面，直接返回这个区间的值
+        return tree[i].sum;
+    if(tree[i].r&lt;l || tree[i].l&gt;r)  return 0;//如果这个区间和目标区间毫不相干，返回0
+    int s=0;
+    if(tree[i*2].r&gt;=l)  s+=search(i*2,l,r);//如果这个区间的左儿子和目标区间又交集，那么搜索左儿子
+    if(tree[i*2+1].l&lt;=r)  s+=search(i*2+1,l,r);//如果这个区间的右儿子和目标区间又交集，那么搜索右儿子
+    return s;
+}
+</code></pre>
+<h2 id="part22区间修改">Part2.2：区间修改</h2>
+<p>和区间查询类似。</p>
+<pre><code class="language-cpp">void add(int i,int dis,int k){
+    if(tree[i].l==tree[i].r){//如果是叶子节点，那么说明找到了
+        tree[i].sum+=k;
+        return ;
+    }
+    if(dis&lt;=tree[i*2].r)  add(i*2,dis,k);//在哪往哪跑
+    else  add(i*2+1,dis,k);
+    tree[i].sum=tree[i*2].sum+tree[i*2+1].sum;//返回更新
+    return ;
+}
+</code></pre>
+<h1 id="part-3标记操作到下一篇讲">Part 3：标记操作到下一篇讲</h1>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[windows.h中到底有什么]]></title>
         <id>https://yydcc-blog.github.io/post/windowsh-zhong-dao-di-you-shi-me/</id>
@@ -3679,265 +3749,6 @@ int main() {
     swap(head, nxt_head);
   }
   return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[树形DP总结]]></title>
-        <id>https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/</id>
-        <link href="https://yydcc-blog.github.io/post/shu-xing-dp-zong-jie/">
-        </link>
-        <updated>2022-01-09T03:04:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="part-0-前言">Part 0 前言</h1>
-<p>刚学完了树形DP，是时候来总结一下了！😀</p>
-<h1 id="part-1-基础部分">Part 1 基础部分</h1>
-<p>树形DP就是在树上的DP。</p>
-<p>这里先放一下遍历树的模板：</p>
-<pre><code class="language-cpp">void dfs(int u,int fa){
-	for(int i=head[u];i;i=nxt[i]){
-		int v=to[i];
-		if(v==fa)continue;
-		dfs(v);
-	}
-}
-</code></pre>
-<p>DP的操作就放在dfs操作的后面，再加上初值和特判，就变成了这样：</p>
-<pre><code class="language-cpp">void dfs(int u,int fa){
-	|初值定义| 
-	if(|特判条件|)|特判操作| 
-	for(int i=head[u];i;i=nxt[i]){
-		int v=to[i];
-		if(v==fa)continue;
-		dfs(v);
-		|DP操作|
-	}
-}
-</code></pre>
-<h1 id="part-2-练习部分">Part 2 练习部分</h1>
-<h3 id="p1352-没有上司的舞会">P1352 没有上司的舞会</h3>
-<p><strong>难度</strong>：★★☆☆☆</p>
-<p><strong>题目大意</strong>：给你一棵带点权的树，每次只能取父节点的权或子节点的权，求最大的点权和为多少。</p>
-<p><strong>分析</strong>：因为能不能区由子节点决定，那么可以设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">f_{i  ,0/1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04964em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span><span class="mord mtight">/</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span> 为节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 取（1）和不取（0）的最大权值和。转移方程就为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>f</mi><mrow><mi>j</mi><mo separator="true">,</mo><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_{i,1} = f_{j,0} + a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>i</mi><mo separator="true">,</mo><mn>0</mn></mrow></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><msub><mi>f</mi><mrow><mi>j</mi><mo separator="true">,</mo><mn>0</mn></mrow></msub><mo separator="true">,</mo><msub><mi>f</mi><mrow><mi>j</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mo>)</mo><mo>+</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_{i,0} = max(f_{j,0} , f_{j,1})+ a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> （<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的子节点，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的权值）。答案就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><msub><mi>f</mi><mrow><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo separator="true">,</mo><mn>0</mn></mrow></msub><mo separator="true">,</mo><msub><mi>f</mi><mrow><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">max(f_{root,0},f_{root,1})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 。</p>
-<p><strong>代码实现</strong>：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-#define maxn 6005
-using namespace std;
-int n,head[maxn],nex[maxn],to[maxn],f[maxn][2],num[maxn],edgenum;
-bool root[maxn];
-void addedge(int u,int v){ 
-	nex[++edgenum]=head[u];
-	to[edgenum]=v;
-	head[u]=edgenum;
-	root[v]=1;
-}
-void dp(int u){
-	f[u][0]=0;//定义初值 
-	f[u][1]=num[u];
-	for(int i=head[u];i;i=nex[i]){
-		int v=to[i];
-		dp(v);
-		f[u][0]+=max(f[v][0],f[v][1]);//DP操作 
-		f[u][1]+=f[v][0];
-	}
-}
-int main(){
-	scanf(&quot;%d&quot;,&amp;n);
-	for(int i=1;i&lt;=n;i++)
-		scanf(&quot;%d&quot;,&amp;num[i]);
-	for(int i=1;i&lt;n;i++){
-		int u,v;
-		scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
-		addedge(v,u);
-	}
-	for(int i=1;i&lt;=n;i++)
-		if(!root[i]){//是否为根节点 
-			dp(i);
-			printf(&quot;%d\n&quot;,max(f[i][0],f[i][1]));//输出答案 
-			break;
-		}
-	return 0;
-}
-</code></pre>
-<h3 id="p1122-最大子树和">P1122 最大子树和</h3>
-<p><strong>难度</strong>：★☆☆☆☆</p>
-<p><strong>题目大意</strong>：给你一棵带点权的树，让你求最大的子树权值和。</p>
-<p><strong>分析</strong>：因为要求最大子树和，所以设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>u</mi></msub></mrow><annotation encoding="application/x-tex">f_u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为以节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 为根的最大子树和。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>u</mi></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mn>0</mn><mo separator="true">,</mo><msub><mi>f</mi><mi>v</mi></msub><mo>)</mo><mo>+</mo><msub><mi>a</mi><mi>u</mi></msub></mrow><annotation encoding="application/x-tex">f_u = max(0,f_v)+a_u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> （<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 的子节点，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>u</mi></msub></mrow><annotation encoding="application/x-tex">a_u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 的权值）。答案就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>u</mi></msub></mrow><annotation encoding="application/x-tex">f_u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的最大值。</p>
-<p><strong>代码实现</strong>：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-struct edge {
-	int next,to;
-} e[100000];
-int n,a[100000],head[100000],cnt,f[100000],ans;
-void add(int x,int y) {
-	e[++cnt].next=head[x];
-	e[cnt].to=y;
-	head[x]=cnt;
-}
-void dfs(int u,int fa) {
-	f[u]=a[u];
-	for(int i=head[u]; i; i=e[i].next) {
-		int v=e[i].to;
-		if(v!=fa) { 
-			dfs(v,u);
-			f[u]+=max(0,f[v]);//相加 
-		}
-	}
-	ans=max(ans,f[u]);//记录最大值 
-}
-int main() {
-	scanf(&quot;%d&quot;,&amp;n);
-	for(int i=1; i&lt;=n; i++)
-		scanf(&quot;%d&quot;,&amp;a[i]);
-	for(int i=1;i&lt;n; i++) {
-		int x,y; 
-		scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
-		add(x,y);
-		add(y,x);
-	}
-	dfs(1,0);
-	printf(&quot;%d&quot;,ans);
-	return 0;
-}
-</code></pre>
-<h3 id="p2015-二叉苹果树">P2015 二叉苹果树</h3>
-<p><strong>难度</strong>：★★★☆☆</p>
-<p><strong>题目大意</strong>：给你一棵带点权的二叉树，求一颗有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Q</mi></mrow><annotation encoding="application/x-tex">Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">Q</span></span></span></span> 条边的子树的最大点权和。</p>
-<p><strong>分析</strong>：通过样例可以看出这是一道树上的 <a href="https://baike.baidu.com/item/01%E8%83%8C%E5%8C%85/4301245?fr=aladdin">01背包</a> 题目，通过类比思想把状态转化为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>x</mi><mo separator="true">,</mo><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{x,i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 表示当前节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的子树上保留 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 条边的最大点权和。转移就变成了这样：</p>
-<pre><code class="language-cpp">for(int j=q;j&gt;=1;j--)
-	for(int k=j-1;k&gt;=0;k--)
-		f[x][j]=max(f[x][j],len[i]+f[v][k]+f[x][j-k-1]);
-</code></pre>
-<p>搜索，每一个点找出以它为根节点的1~q的最大利益，除叶节点外。因为连接父节点和子节点还有一条边，所以父节点自己留的可用边-1。</p>
-<p><strong>代码实现</strong>：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int n,q;
-int f[1005][1005],edgenum,len[1009],head[1009],to[1005],nxt[1005];
-void addedge(int u,int v,int l){
-	nxt[++edgenum]=head[u];
-	to[edgenum]=v;
-	len[edgenum]=l;
-	head[u]=edgenum;
-}
-void dfs(int x,int fa){
-	for(int i=head[x];i;i=nxt[i]){
-		int v=to[i];
-		if(v==fa)continue;
-		used[v]=1;
-		dfs(v,u);
-		for(int j=q;j&gt;=1;j--)//01背包要倒着做 
-			for(int k=j-1;k&gt;=0;k--)
-				f[x][j]=max(f[x][j],len[i]+f[v][k]+f[x][j-k-1]);
-	}
-}
-
-int main(){
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;q);
-	for(int i=1;i&lt;n;i++){
-		int x,y,z;
-		scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;z);
-		addedge(x,y,z);//双向建边 
-		addedge(y,x,z);
-	}
-	dfs(1,0);
-	printf(&quot;%d&quot;,f[1][q]);
-	return 0;
-}
-</code></pre>
-<h3 id="p2014-ctsc1997选课">P2014 [CTSC1997]选课</h3>
-<p><strong>难度</strong>：★★★☆☆</p>
-<p><strong>题目大意</strong>：给你一棵带点权的树，求一棵有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> 个点的子树的最大权值和。</p>
-<p><strong>分析</strong>：跟上面一题差不多，只是变成了单向边。</p>
-<p><strong>代码实现</strong>：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int N=305,M=2001;
-int f[N][N],edgenum,n,m;
-int head[M],nxt[M],to[M];
-void addedge(int u,int v){
-    nxt[++edgenum]=head[u];
-    to[edgenum]=v;
-    head[u]=edgenum;
-}
-void dp(int x){
-    for(int e=head[x];e;e=nxt[e]){
-        int v=to[e];
-        dp(v);
-        for(int i=m+1;i&gt;1;i--)
-            for(int j=i-1;j&gt;=1;j--)
-                f[x][i]=max(f[x][i],f[x][i-j]+f[v][j]);
-    }
-}
-int main(){
-    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-    for(int i=1;i&lt;=n;i++){
-        int a,b;
-        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
-        f[i][1]=b;
-        addedge(a,i);
-    }
-    dp(0);
-    printf(&quot;%d\n&quot;,f[0][m+1]);
-    return 0;
-}
-</code></pre>
-<h3 id="p1273-有线电视网">P1273 有线电视网</h3>
-<p><strong>难度</strong>：★★★★☆</p>
-<p><strong>题目大意</strong>：选出一个节点数量最多的叶子节点的集合，使这些点到根节点的路径上的权值和减去集合中所有的点的权值大于等于零。</p>
-<p><strong>分析</strong>：设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 表示在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的子树中，选择 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 个叶子节点，点权-边权的最大值。<code>dp[u][j]=max(dp[u][j],dp[u][j-i]+dp[v][i]-edge[e].w);</code>，最后找第一个大于等于零的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mrow><mn>1</mn><mo separator="true">,</mo><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{1,i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 即为答案。</p>
-<p><strong>代码实现</strong>：</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int n,m,head[3010],edgenum,val[3010],dp[3010][3010];
-struct node {
-	int to,next,w;
-} edge[10000];
-void adde(int u,int v,int w) {
-	edge[++edgenum].to=v;
-	edge[edgenum].next=head[u];
-	edge[edgenum].w=w;
-	head[u]=edgenum;
-}
-int dfs(int u) {
-	if(u&gt;n-m) {
-		dp[u][1]=val[u];
-		return 1;
-	}
-	int sum=0,t;
-	for(int e=head[u]; e; e=edge[e].next) {
-		int v=edge[e].to;
-		t=dfs(v);
-		sum+=t;
-		for(int j=sum; j&gt;0; j--)
-			for(int i=1; i&lt;=t; i++)
-				if(j-i&gt;=0) dp[u][j]=max(dp[u][j],dp[u][j-i]+dp[v][i]-edge[e].w);
-	}
-	return sum;
-}
-int main() {
-	memset(dp,~0x3f,sizeof(dp));
-	scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
-	for(int u=1; u&lt;=n-m; u++) {
-		int size,v,w;
-		scanf(&quot;%d&quot;,&amp;size);
-		for(int j=1; j&lt;=size; j++) {
-			scanf(&quot;%d%d&quot;,&amp;v,&amp;w);
-			adde(u,v,w);
-		}
-	}
-	for(int i=n-m+1; i&lt;=n; i++)
-		scanf(&quot;%d&quot;,&amp;val[i]);
-	for (int i=1; i&lt;=n; i++)
-		dp[i][0]=0;
-	dfs(1);
-	for (int i=m; i&gt;=1; i--)
-		if (dp[1][i]&gt;=0) {
-			printf(&quot;%d&quot;,i);
-			break;
-		}
-	return 0;
 }
 </code></pre>
 ]]></content>
