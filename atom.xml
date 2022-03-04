@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yydcc-blog.github.io/</id>
     <title>永远的CC的博客</title>
-    <updated>2022-02-21T11:32:32.894Z</updated>
+    <updated>2022-03-04T13:21:29.201Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yydcc-blog.github.io/"/>
     <link rel="self" href="https://yydcc-blog.github.io/atom.xml"/>
@@ -10,6 +10,29 @@
     <logo>https://yydcc-blog.github.io/images/avatar.png</logo>
     <icon>https://yydcc-blog.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 永远的CC的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[浅谈IDA*]]></title>
+        <id>https://yydcc-blog.github.io/post/qian-tan-ida/</id>
+        <link href="https://yydcc-blog.github.io/post/qian-tan-ida/">
+        </link>
+        <updated>2022-03-04T13:02:16.000Z</updated>
+        <content type="html"><![CDATA[<p>为什么想到写这个了呢，因为实在是太好用了。</p>
+<p><s>文章其实是转载来的</s></p>
+<h1 id="ida算法迭代加深的评估函数">IDA*算法：迭代加深的+评估函数</h1>
+<p>A<em>算法的本质时带评估函数的优先队列BFS，其最关键的部分在于评估函数的选取。那么可以考虑在DFS中也采用相同的优化。IDA</em>就是这部一种算法，IDA*=迭代加深DFS+评估函数（迭代加深：限定深度搜索，如果当前深度找不到，再增大深度限制）。</p>
+<p>由于迭代加深DFS和优先队列BFS的特性不同，此时评估函数评估的内容应该是当前状态到目标状态的步数，并且估计数不超过实际数，那么判断是否过深度限制时，可以用当前步数+估计步数，如果该值超过深度限制，则不需要继续搜索，可以立即回溯。</p>
+<p>IDA*算法实现简单，效率高，通过不搜索当前步数+估计步数超过深度限制的状态，减少了很多搜索量，是一种良好的优化方式。</p>
+<h1 id="例题">例题</h1>
+<h2 id="排书poj3460acwing180">排书(POJ3460/AcWing180)</h2>
+<h3 id="题目大意">题目大意</h3>
+<p>N本书，编号<code>1~n</code>，给出初始排列顺序，每次抽取连续的一段书插到另一个位置，求让书按1~n排列最少的操作数。（n&lt;=15，若干组数据）超过5次搜索，直接输出5 or more。</p>
+<h3 id="解析">解析</h3>
+<p>采用IDA*。目标状态为书本按顺序排列，因此第i本书后应该是第i+1本书，即i+1是i的正确后继。对任意状态，若整个排列中书的错误后继数量为t，那么一次操作最多改变3本书的后继，那么即便是理想状态要进行的操作也至少为t//3（向上取整）。可以用t//3（向上取整）作为评估函数。<br>
+采用迭代加深，从1~4依次限制深度，从起始状态出发DFS，枚举各种抽书排书的可能；进入一个状态后，如果当前操作数+评估函数超过深度限制，就直接回溯。</p>
+<h1 id="总结">总结：</h1>
+<p>可以看到，IDA<em>的实现相对比较简单，只需要确定对应的评估函数，就可以在原本的迭代加深DFS代码上修改判断依据即可，在代码量上不会增加多少难度。它的关键在于如何确定一个合适的评估函数，既要不超过实际剩余步数，又要尽可能贴近实际剩余步数，展示一定剩余步数的趋势（和A</em>一样）</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[线段树，从入门到退坑]]></title>
         <id>https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/</id>
@@ -3544,213 +3567,6 @@ int main() {
 <li>在这个通道周围布满武器塔。</li>
 </ul>
 <h3 id="第四步还没有第四步">第四步：还没有第四步😙</h3>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CSP-J2021 题解]]></title>
-        <id>https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/</id>
-        <link href="https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/">
-        </link>
-        <updated>2022-01-09T03:08:08.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="分糖果">分糖果</h2>
-<h3 id="题意">题意</h3>
-<p>选择<code>L~R</code>中的某个数 ， 使得<code>x mod k</code>的结果最大。</p>
-<h3 id="思路">思路</h3>
-<p>分两种情况考虑：</p>
-<p>若 L 和 R 对 K 取模后在同一区间，则必然在 x=R 位置取到最大值；<br>
-否则 L~R 必然跨越多个区间，则取模后的结果必然有 k-1。<br>
-而对于是否在同一区间，在除以 k 后，商是否一致判断即可。</p>
-<h3 id="参考代码">参考代码</h3>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-int main() {
-  ll n, l, r;
-  cin &gt;&gt; n &gt;&gt; l &gt;&gt; r;
-  if (l / n != r / n) cout &lt;&lt; n - 1 &lt;&lt; endl;
-  else cout &lt;&lt; r % n &lt;&lt; endl;
-  return 0;
-}
-</code></pre>
-<h2 id="插入排序">插入排序</h2>
-<h3 id="题意-2">题意</h3>
-<p>给定长度为 n 的整数序列 ，有 Q 种操作：</p>
-<p>1：x v 修改序列 a 中的第 x 个元素 <code>a[x]</code> 为 v ，该操作次数不超过5000次；<br>
-2：x 将数组进行稳定排序，求原先第 x 个元素排序后的位置。</p>
-<h3 id="思路-2">思路</h3>
-<p>不如维护将原先所有的 a 排序后的升序数组。对于所有操作，我们需要维护原位置到有序数组中的映射。</p>
-<p>对于 1 操作，找到 <code>a[x]</code> 对应位置，显然修改值将使其往前或往后。联系到题目中提示的插入排序，可以不断向前/向后比较。注意同时维护映射关系。<br>
-对于 2 操作，直接输出映射即可。<br>
-注：如果该题中的数组长度更长、操作次数更多，我们可使用平衡树来解决该题。</p>
-<h3 id="参考代码-2">参考代码</h3>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-typedef pair&lt;int, int&gt; pii;
-const int N = 8e3+5;
-int a[N];
-pii p[N];
-
-int main() {
-  ios::sync_with_stdio(false);
-  int n, q; cin &gt;&gt; n &gt;&gt; q;
-  for (int i = 1; i &lt;= n; i++) {
-    cin &gt;&gt; a[i];
-    p[i] = {a[i], i};
-  }
-  sort(p + 1, p + 1 + n);
-  for (int i = 1; i &lt;= n; i++) a[p[i].second] = i;
-  for (int i = 0, op, x, v; i &lt; q; i++) {
-    cin &gt;&gt; op; 
-    // 5000 * 8000 = 4e7
-    if (op == 1) {
-      cin &gt;&gt; x &gt;&gt; v;
-      int pos = a[x];
-      p[pos].first = v;
-      while (pos &gt; 1 &amp;&amp; p[pos] &lt; p[pos - 1]) {
-        swap(a[p[pos].second], a[p[pos - 1].second]);
-        swap(p[pos], p[pos - 1]);
-        pos--;
-      } 
-      while (pos &lt; n &amp;&amp; p[pos] &gt; p[pos + 1]) {
-        swap(a[p[pos].second], a[p[pos + 1].second]);
-        swap(p[pos], p[pos + 1]);
-        pos++;
-      }
-    } else {
-      cin &gt;&gt; x;
-      cout &lt;&lt; a[x] &lt;&lt; endl;
-    }
-  }
-  return 0;
-}
-</code></pre>
-<h2 id="网络连接">网络连接</h2>
-<h3 id="题意-3">题意</h3>
-<p>解析带端口的IP地址串，按服务器和客户端角色判断连接情况。</p>
-<h3 id="思路-3">思路</h3>
-<p>若将带端口的IP地址串记为 a.b.c.d:e，则需要检查的项目有：</p>
-<ul>
-<li>有三个点号和一个冒号分隔字符串，且冒号出现在最后；</li>
-<li>a,b,c,d,e均不为空，且不含有前导零；</li>
-</ul>
-<p>可将对字符串的解析抽象为函数，简化代码逻辑。</p>
-<h3 id="参考代码-3">参考代码</h3>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-map&lt;string, int&gt; dict;
-const int IP = 256;
-const int PORT = 65536;
-
-bool check(string s, int limit) {
-  // &quot;.0.0.1:80&quot; -&gt; &quot;&quot;
-  if (s.empty()) return false;
-  // &quot;0127.0.0.1:80&quot; -&gt; &quot;0127&quot;
-  if (s[0] == '0' &amp;&amp; s.size() &gt; 1) return false;
-  int val = 0;
-  for (int i = 0; i &lt; s.size(); i++) {
-    val = val * 10 + s[i] - '0'; 
-    if (val &gt;= limit) return false;
-  }
-  return true;
-}
-
-bool parse(string ip) {
-  string s = &quot;&quot;;
-  int dot_cnt = 0, port_cnt = 0;
-  for (int i = 0; i &lt; ip.size(); i++) {
-    if (ip[i] == '.') dot_cnt += 1;
-    if (ip[i] == ':') {
-      if (dot_cnt != 3) return false;
-      port_cnt += 1;
-    }
-    if (!isdigit(ip[i])) {
-      if (!check(s, IP)) return false;
-      s = &quot;&quot;;
-    } else s += ip[i];
-  }
-  return check(s, PORT) &amp;&amp; dot_cnt == 3 &amp;&amp; port_cnt == 1;
-}
-
-void process_server(string ip, int id) {
-  bool valid = parse(ip);
-  if (!valid) {cout &lt;&lt; &quot;ERR&quot; &lt;&lt; endl; return;}
-  if (dict.count(ip)) {cout &lt;&lt; &quot;FAIL&quot; &lt;&lt; endl; return;}
-  dict[ip] = id;
-  cout &lt;&lt; &quot;OK&quot; &lt;&lt; endl;
-}
-
-void process_client(string ip) {
-  bool valid = parse(ip);
-  if (!valid) {cout &lt;&lt; &quot;ERR&quot; &lt;&lt; endl; return;}
-  if (!dict.count(ip)) {cout &lt;&lt; &quot;FAIL&quot; &lt;&lt; endl; return;}
-  cout &lt;&lt; dict[ip] &lt;&lt; endl;
-}
-
-int main() {
-  ios::sync_with_stdio(false);
-  int n; cin &gt;&gt; n;
-  for (int i = 1; i &lt;= n; i++) {
-    string name, ip;
-    cin &gt;&gt; name &gt;&gt; ip;
-    if (name[0] == 'S') process_server(ip, i);
-    else process_client(ip);
-  }
-  return 0;
-}
-</code></pre>
-<h2 id="小熊的果篮">小熊的果篮</h2>
-<h3 id="题意-4">题意</h3>
-<p>有两类共 n 个水果拍成一排，称连续的排在一起的同一种水果称为“块”。</p>
-<p>每次将每一个“块”中最左边的水果同时挑出。重复该操作直至水果用完。</p>
-<p>每次水果被挑出后“块”会发生动态变化。</p>
-<h3 id="思路-4">思路</h3>
-<p>尝试建模每个块，使用块头来表示每个块的开始位置，即第一个元素或与上一个元素类型不同的位置。</p>
-<p>每个元素之间使用双向链表相连接。</p>
-<p>对于每次输出选出的元素，我们只需要依次输出块头元素，并从双向链表中删除该元素。</p>
-<p>当块头元素输出后，需要更新块头列表。<br>
-考虑在原块头位置的下一个元素，只有当：</p>
-<ul>
-<li>该下一个元素与原块头位置的上一个元素类型不同；</li>
-<li>该下一个元素不是原块头。</li>
-</ul>
-<p>则能够成为新的块头位置。</p>
-<h3 id="参考代码-4">参考代码</h3>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-const int N = 2e5+5;
-struct Node {
-  int pre, nxt, v;
-}a[N];
-vector&lt;int&gt; head, nxt_head;
-
-int main() {
-  ios::sync_with_stdio(false);
-  int n; cin &gt;&gt; n;
-  a[0].v = a[n + 1].v = -1;
-  a[0].nxt = 1;
-  a[n + 1].pre = n;
-  for (int i = 1; i &lt;= n; i++) {
-    cin &gt;&gt; a[i].v;
-    a[i].pre = i - 1;
-    a[i].nxt = i + 1;
-    if (a[i].v != a[i - 1].v) head.push_back(i);
-  }
-  while(head.size()) {
-    nxt_head.clear();
-    for (int id : head) {
-      cout &lt;&lt; id &lt;&lt; &quot; &quot;;
-      Node&amp; node = a[id];
-      a[node.pre].nxt = node.nxt;
-      a[node.nxt].pre = node.pre;
-      if (node.v == a[node.nxt].v &amp;&amp; node.v != a[node.pre].v)
-        nxt_head.push_back(node.nxt);
-    }
-    cout &lt;&lt; endl;
-    swap(head, nxt_head);
-  }
-  return 0;
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>

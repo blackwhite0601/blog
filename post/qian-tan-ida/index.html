@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="永远的CC，永远爱斯卡帝">
 <meta name="theme-color" content="#000">
-<title>yorg.io 进阶攻略 | 永远的CC的博客</title>
+<title>浅谈IDA* | 永远的CC的博客</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1646400085021">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -41,8 +41,8 @@
 
 
 
-  <meta name="description" content="yorg.io 进阶攻略" />
-  <meta name="keywords" content="颓废" />
+  <meta name="description" content="浅谈IDA*" />
+  <meta name="keywords" content="C++" />
 </head>
 
 <body>
@@ -282,24 +282,18 @@
   <div class="toc-wrapper  auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#ida%E7%AE%97%E6%B3%95%E8%BF%AD%E4%BB%A3%E5%8A%A0%E6%B7%B1%E7%9A%84%E8%AF%84%E4%BC%B0%E5%87%BD%E6%95%B0">IDA*算法：迭代加深的+评估函数</a></li>
+<li><a href="#%E4%BE%8B%E9%A2%98">例题</a>
 <ul>
-<li>
+<li><a href="#%E6%8E%92%E4%B9%A6poj3460acwing180">排书(POJ3460/AcWing180)</a>
 <ul>
-<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
-<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%BA%A6%E8%BF%87%E5%89%8D%E6%9C%9F%E7%AC%AC1~50%E5%A4%A9">第一步：度过前期（第1~50天）</a>
-<ul>
-<li><a href="#tips">tips:</a></li>
-<li><a href="#%E7%BB%93%E6%9D%9F%E5%89%8D%E6%9C%9F%E8%BF%99%E6%97%B6level10-%E7%8E%B0%E6%9C%89%E6%B0%B4%E6%99%B6%E5%9C%A81%E5%8D%83%E4%B8%87%E4%BB%A5%E4%B8%8A">结束前期，这时Level10+。现有水晶在1千万以上。</a></li>
-</ul>
-</li>
-<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E5%88%9D%E6%AD%A5%E8%BD%AC%E5%9E%8B50%E5%A4%A9%E5%90%8E">第二步：初步转型（50天后）</a></li>
-<li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E5%9B%B4%E5%A2%99%E8%BD%AC%E5%9E%8B">第三步：围墙转型</a></li>
-<li><a href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E8%BF%98%E6%B2%A1%E6%9C%89%E7%AC%AC%E5%9B%9B%E6%AD%A5">第四步：还没有第四步😙</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
+<li><a href="#%E8%A7%A3%E6%9E%90">解析</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结：</a></li>
 </ul>
 
   </div>
@@ -565,14 +559,14 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://yydcc-blog.github.io/post/yorgio-jin-jie-gong-lue/"> yorg.io 进阶攻略 </a>
+    <a class="post-title-link" href="https://yydcc-blog.github.io/post/qian-tan-ida/"> 浅谈IDA* </a>
   </h1>
   <div class="post-meta">
     
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2022-01-09 21:04:17">2022-01-09</span>
+      <span class="publish-time" data-t="2022-03-04 21:02:16">2022-03-04</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -580,8 +574,8 @@
       <i class="fa fa-folder-o"></i>
       <span class="pc-show language" data-lan="category-in">标签:</span>
        
-      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/">
-        <span>颓废</span>
+      <a href="https://yydcc-blog.github.io/tag/6CprhTvCM/">
+        <span>C++</span>
       </a>
        
     </span>
@@ -599,7 +593,7 @@
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
       <span
-        >734<span class="pc-show language" data-lan="words"
+        >665<span class="pc-show language" data-lan="words"
           >字数</span
         ></span
       >
@@ -609,41 +603,21 @@
 </section>
 
             <div class="post-body next-md-body" id="post_body">
-              <p>这是我精心编写的攻略，喜欢大家喜欢😄</p>
-<h3 id="前言">前言</h3>
-<p>这是一个休闲类塔防网页游戏，也有单机版。</p>
-<p>游戏地址：<a href="https://yorg.io/">link</a></p>
-<h3 id="第一步度过前期第1~50天">第一步：度过前期（第1~50天）</h3>
-<ul>
-<li>基地建在附近有最多水晶的地方，水晶之间距离越近越好。</li>
-<li>前十几关都不需要建攻击塔，所有经济用于升级基地、水晶以及建墙，把所有水晶矿机升级到最高级。</li>
-<li>前期不用建攻击塔怎么解决掉小兵和boss呢？靠墙拖着，拖到白天，所有小兵和boss都会在3/4的白天前被烧死，基地本身有的攻击力也会发挥作用。建墙有一定的技巧，一是在墙快要被摧毁的时候升级，它就回到满血状态，这样可以把时间拖到最长，操作的注意点是受到攻击时经常性按下暂停，升级墙；二是只需要特别加强4个方向的墙：东南、东北、西南、西北，大部分小兵主要是攻击这4个方向，三是保险一点围2层的墙，在4个方向上可以加到3-4层；</li>
-<li>基地升到第6级时，开始建闪电塔，闪电塔是最有效的攻击武器；不要建其他攻击塔；</li>
-<li>前期把所有技能点都点到提升矿机生产效率上，然后是工厂生产，最后是闪电攻击；</li>
-</ul>
-<h4 id="tips">tips:</h4>
-<ul>
-<li>boss一般是在防御最弱的方向发起攻击的；</li>
-<li>如果你的建筑相隔较远，比如矿机、工厂和攻击塔之间，最好将连接的传输器升到最高级，这样可以大大加快运输的速度，快速补充弹药；</li>
-<li>如果某一关搞砸了，可以读取存档，不过会损失一些资源；如果你在白天保存游戏，然后回到主界面，再进入，小兵就会消失（算是作弊把..）</li>
-</ul>
-<h4 id="结束前期这时level10-现有水晶在1千万以上">结束前期，这时Level10+。现有水晶在1千万以上。</h4>
-<h3 id="第二步初步转型50天后">第二步：初步转型（50天后）</h3>
-<ul>
-<li>拆除你的所有设施。</li>
-<li>重新安排你的水晶矿机，围绕着主基地排列。</li>
-<li>重新安排其他矿机，让他们围绕着水晶矿机排列，我们把这个区域叫做一个矿区。</li>
-<li>用运输线连接矿机，将各种工厂安置在运输线上。（如果你已经解锁了空间翘曲技术，请跳过这步）</li>
-<li>在每个矿区周围安置弓箭塔8个，闪电塔4个。</li>
-</ul>
-<h3 id="第三步围墙转型">第三步：围墙转型</h3>
-<ul>
-<li>如果水晶多，定位到地图的边缘，按住字母E的同时按住ASDW控制方向，绘制出连续的城墙。</li>
-<li>如果水晶少，在每个矿区周围搭建围墙。</li>
-<li>制造僵尸通道（在围墙上开洞通往主基地）</li>
-<li>在这个通道周围布满武器塔。</li>
-</ul>
-<h3 id="第四步还没有第四步">第四步：还没有第四步😙</h3>
+              <p>为什么想到写这个了呢，因为实在是太好用了。</p>
+<p><s>文章其实是转载来的</s></p>
+<h1 id="ida算法迭代加深的评估函数">IDA*算法：迭代加深的+评估函数</h1>
+<p>A<em>算法的本质时带评估函数的优先队列BFS，其最关键的部分在于评估函数的选取。那么可以考虑在DFS中也采用相同的优化。IDA</em>就是这部一种算法，IDA*=迭代加深DFS+评估函数（迭代加深：限定深度搜索，如果当前深度找不到，再增大深度限制）。</p>
+<p>由于迭代加深DFS和优先队列BFS的特性不同，此时评估函数评估的内容应该是当前状态到目标状态的步数，并且估计数不超过实际数，那么判断是否过深度限制时，可以用当前步数+估计步数，如果该值超过深度限制，则不需要继续搜索，可以立即回溯。</p>
+<p>IDA*算法实现简单，效率高，通过不搜索当前步数+估计步数超过深度限制的状态，减少了很多搜索量，是一种良好的优化方式。</p>
+<h1 id="例题">例题</h1>
+<h2 id="排书poj3460acwing180">排书(POJ3460/AcWing180)</h2>
+<h3 id="题目大意">题目大意</h3>
+<p>N本书，编号<code>1~n</code>，给出初始排列顺序，每次抽取连续的一段书插到另一个位置，求让书按1~n排列最少的操作数。（n&lt;=15，若干组数据）超过5次搜索，直接输出5 or more。</p>
+<h3 id="解析">解析</h3>
+<p>采用IDA*。目标状态为书本按顺序排列，因此第i本书后应该是第i+1本书，即i+1是i的正确后继。对任意状态，若整个排列中书的错误后继数量为t，那么一次操作最多改变3本书的后继，那么即便是理想状态要进行的操作也至少为t//3（向上取整）。可以用t//3（向上取整）作为评估函数。<br>
+采用迭代加深，从1~4依次限制深度，从起始状态出发DFS，枚举各种抽书排书的可能；进入一个状态后，如果当前操作数+评估函数超过深度限制，就直接回溯。</p>
+<h1 id="总结">总结：</h1>
+<p>可以看到，IDA<em>的实现相对比较简单，只需要确定对应的评估函数，就可以在原本的迭代加深DFS代码上修改判断依据即可，在代码量上不会增加多少难度。它的关键在于如何确定一个合适的评估函数，既要不超过实际剩余步数，又要尽可能贴近实际剩余步数，展示一定剩余步数的趋势（和A</em>一样）</p>
 
             </div>
             
@@ -656,7 +630,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://yydcc-blog.github.io/post/yorgio-jin-jie-gong-lue/" title="yorg.io 进阶攻略">https://yydcc-blog.github.io/post/yorgio-jin-jie-gong-lue/</a>
+      <a href="https://yydcc-blog.github.io/post/qian-tan-ida/" title="浅谈IDA*">https://yydcc-blog.github.io/post/qian-tan-ida/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -665,21 +639,17 @@
   </ul>
   <div class="tags">
     
-      <a href="https://yydcc-blog.github.io/tag/lXxnjkxcU/"># 颓废</a>
+      <a href="https://yydcc-blog.github.io/tag/6CprhTvCM/"># C++</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="你好！CSP-J-2021" href="https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/">你好！CSP-J-2021</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="你好！CSP-J-2021" href="https://yydcc-blog.github.io/post/ni-hao-csp-j-2021/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="CSP-J2021 题解" href="https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/">CSP-J2021 题解</a>
-        <a class="nav-mobile-next" title="CSP-J2021 题解" href="https://yydcc-blog.github.io/post/cf222b-cosmic-tables-ti-jie/">下一篇</a>
+        <a class="nav-pc-next" title="线段树，从入门到退坑" href="https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/">线段树，从入门到退坑</a>
+        <a class="nav-mobile-next" title="线段树，从入门到退坑" href="https://yydcc-blog.github.io/post/xian-duan-shu-cong-ru-men-dao-tui-keng/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
